@@ -376,12 +376,7 @@ export default function Home() {
         </div>
 
         <div className="container h-full flex flex-col items-center justify-center text-center">
-          <motion.div
-            variants={containerStagger}
-            initial={useAnim ? "hidden" : false}
-            animate={useAnim ? "show" : false}
-            custom={0.1}
-          >
+          <div>
             <motion.h1
               variants={fadeUp}
               className="hero-title text-balance mx-auto font-extrabold tracking-tight text-white leading-[0.98]
@@ -405,7 +400,7 @@ export default function Home() {
             >
               <TypeMotto />
             </motion.div>
-          </motion.div>
+          </div>
 
           <a
             href="#about"
@@ -419,11 +414,7 @@ export default function Home() {
       {/* ABOUT */}
       <section id="about" className="relative z-10 py-16 md:py-24">
         <div className="container">
-          <motion.div
-            variants={fadeIn}
-            initial={useAnim ? "hidden" : false}
-            whileInView={useAnim ? "show" : false}
-            viewport={{ once: true, margin: "-20% 0px -20% 0px" }}
+          <div
             className="rounded-2xl"
             onMouseMove={(e) => {
               const r = e.currentTarget.getBoundingClientRect();
@@ -439,17 +430,8 @@ export default function Home() {
           >
             <SectionTitle>About Me</SectionTitle>
 
-            <motion.div
-              variants={containerStagger}
-              initial={useAnim ? "hidden" : false}
-              whileInView={useAnim ? "show" : false}
-              viewport={{ once: true }}
-              className="mt-6 md:mt-8 grid md:grid-cols-2 gap-6 md:gap-8"
-            >
-              <motion.p
-                variants={fadeUp}
-                className="text-base md:text-lg leading-relaxed text-gray-200 p-2"
-              >
+            <div className="mt-6 md:mt-8 grid md:grid-cols-2 gap-6 md:gap-8">
+              <p className="text-base md:text-lg leading-relaxed text-gray-200 p-2">
                 I’m Luka — a frontend engineer and product builder. I create{" "}
                 <b>fast</b>, <b>beautifully designed</b> web and mobile apps.
                 Clean UIs, subtle but powerful animation, and crystal-clear UX.
@@ -459,34 +441,28 @@ export default function Home() {
                 <b> Maximal Player 13</b>: focus, speed, problem-solving and
                 delivery. Currently pushing <i>PartyGate</i>,{" "}
                 <i>Tarot/Natal AI</i> and client work (SEO, sales, booking).
-              </motion.p>
+              </p>
 
-              <motion.ul variants={containerStagger} className="grid gap-3">
+              <ul className="grid gap-3">
                 {[
                   ["Speed", "Prototype in 24–48h. Fast → validate → iterate."],
                   ["Clarity", "One clean path to value. No friction."],
                   ["Delivery", "No excuses. Shipped > perfect."],
                 ].map(([t, d], i) => (
-                  <motion.li key={i} variants={fadeUp} className="card p-4">
+                  <li key={i} className="card p-4">
                     <div className="font-semibold text-emerald-200">{t}</div>
                     <div className="text-sm opacity-80 mt-1">{d}</div>
-                  </motion.li>
+                  </li>
                 ))}
-              </motion.ul>
-            </motion.div>
+              </ul>
+            </div>
 
-            <motion.div
-              variants={containerStagger}
-              initial={useAnim ? "hidden" : false}
-              whileInView={useAnim ? "show" : false}
-              viewport={{ once: true }}
-              className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4"
-            >
+            <div className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
               <Stat to={35} label="Shipped features / month" />
               <Stat to={12} label="Production projects" />
               <Stat to={48} label="Hours to first prototype" />
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -585,13 +561,12 @@ export default function Home() {
           <SectionTitle>Skills</SectionTitle>
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {skills.map((s, i) => (
-              <motion.span
+              <span
                 key={i}
-                variants={fadeUp}
                 className="skill-chip text-[11px] px-2 py-0.5 rounded-full border chip-glow"
               >
                 {s}
-              </motion.span>
+              </span>
             ))}
           </div>
         </div>

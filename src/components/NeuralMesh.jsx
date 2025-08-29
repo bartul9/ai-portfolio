@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
 export default function NeuralMesh({
   color = "rgba(34,255,136,",
@@ -155,7 +156,11 @@ export default function NeuralMesh({
   }, [color, density, maxLinks, speed]);
 
   return (
-    <canvas
+    <motion.canvas
+      initial={{ y: -12, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -12, opacity: 0 }}
+      transition={{ type: "tween", duration: 12, ease: "easeInOut" }}
       ref={ref}
       className={`absolute inset-0 -z-[1] opacity-60 [mix-blend-mode:screen] ${className}`}
       aria-hidden
