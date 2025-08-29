@@ -424,7 +424,7 @@ export default function Home() {
             initial={useAnim ? "hidden" : false}
             whileInView={useAnim ? "show" : false}
             viewport={{ once: true, margin: "-20% 0px -20% 0px" }}
-            className="rounded-2xl p-6 md:p-8"
+            className="rounded-2xl"
             onMouseMove={(e) => {
               const r = e.currentTarget.getBoundingClientRect();
               e.currentTarget.style.setProperty(
@@ -448,7 +448,7 @@ export default function Home() {
             >
               <motion.p
                 variants={fadeUp}
-                className="text-base md:text-lg leading-relaxed text-gray-200"
+                className="text-base md:text-lg leading-relaxed text-gray-200 p-2"
               >
                 I’m Luka — a frontend engineer and product builder. I create{" "}
                 <b>fast</b>, <b>beautifully designed</b> web and mobile apps.

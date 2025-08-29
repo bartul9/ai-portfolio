@@ -3,8 +3,8 @@ import { useEffect, useRef } from "react";
 
 export default function NeuralMesh({
   color = "rgba(34,255,136,",
-  density = 0.0002, // nodes per pixel (auto scales with width/height)
-  maxLinks = 4, // how many connections each node can draw
+  density = 0.0001, // nodes per pixel (auto scales with width/height)
+  maxLinks = 3, // how many connections each node can draw
   speed = 0.3, // px per frame
   className = "",
 }) {
