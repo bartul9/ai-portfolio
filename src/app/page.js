@@ -6,6 +6,56 @@ import MatrixRain from "@/components/MatrixRain";
 import SectionTitle from "@/components/SectionTitle";
 import Stat from "@/components/Stat";
 
+/* -------- scroll spy + matrix fade + magnetic -------- */
+
+function useScrollSpy(selectors = []) {
+  const [active, setActive] = useState(null);
+  useEffect(() => {
+    const els = selectors.map((s) => document.querySelector(s)).filter(Boolean);
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(`#${e.target.id}`);
+        });
+      },
+      { rootMargin: "-35% 0px -55% 0px", threshold: 0.01 }
+    );
+
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [selectors]);
+
+  return active;
+}
+
+function useMatrixFade(headerPx = 64) {
+  const [overlay, setOverlay] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const h = Math.max(200, window.innerHeight - headerPx);
+      const y = window.scrollY;
+      const v = Math.min(1, Math.max(0, y / (h * 0.75))); // 0 → 1 as you leave hero
+      setOverlay(v * 0.45); // up to 45% black overlay
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [headerPx]);
+  return overlay;
+}
+
+function magneticMove(e, strength = 0.06) {
+  const el = e.currentTarget;
+  const r = el.getBoundingClientRect();
+  const mx = e.clientX - r.left - r.width / 2;
+  const my = e.clientY - r.top - r.height / 2;
+  el.style.transform = `translate(${mx * strength}px, ${my * strength}px)`;
+}
+function magneticReset(e) {
+  e.currentTarget.style.transform = "";
+}
+
 /* -------- data -------- */
 
 const projects = [
@@ -27,6 +77,16 @@ const projects = [
     link: "https://tebaca-adem.vercel.app",
     tags: ["HTML", "CSS", "Maps", "SEO"],
   },
+];
+
+const backend = [
+  "Node.js",
+  "Express",
+  "Prisma",
+  "Supabase / Postgres",
+  "Edge Functions",
+  "Webhooks",
+  "Redis (basics)",
 ];
 
 const skills = [
@@ -79,16 +139,20 @@ function TypeMotto({
 
   useEffect(() => {
     const full = items[i];
-    if (!del && sub <= full.length)
-      return void setTimeout(() => setSub((s) => s + 1), typing);
-    if (!del && sub > full.length)
-      return void setTimeout(() => setDel(true), pause);
-    if (del && sub > 0)
-      return void setTimeout(() => setSub((s) => s - 1), deleting);
-    if (del && sub === 0) {
+    let id;
+
+    if (!del && sub <= full.length) {
+      id = setTimeout(() => setSub((s) => s + 1), typing);
+    } else if (!del && sub > full.length) {
+      id = setTimeout(() => setDel(true), pause);
+    } else if (del && sub > 0) {
+      id = setTimeout(() => setSub((s) => s - 1), deleting);
+    } else if (del && sub === 0) {
       setDel(false);
-      setI((i + 1) % items.length);
+      setI((idx) => (idx + 1) % items.length);
     }
+
+    return () => clearTimeout(id); // << important
   }, [sub, del, i, items, typing, pause, deleting]);
 
   return (
@@ -118,6 +182,15 @@ export default function Home() {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const active = useScrollSpy([
+    "#about",
+    "#projects",
+    "#ai",
+    "#skills",
+    "#contact",
+  ]);
+  const matrixOverlay = useMatrixFade(64);
+
   return (
     <main className="relative min-h-screen overflow-x-clip site-bg">
       {/* BACKGROUND (lighter & larger columns on phones for perf) */}
@@ -127,6 +200,11 @@ export default function Home() {
         speedMax={isMobile ? 0.95 : 1.1}
         opacity={isMobile ? 0.22 : 0.28}
       />
+      <div
+        className="fixed inset-0 z-0 bg-black pointer-events-none"
+        style={{ opacity: matrixOverlay }}
+      />
+
       <div className="fixed inset-0 -z-[1] bg-noise opacity-60" />
 
       {/* NAV */}
@@ -136,21 +214,35 @@ export default function Home() {
             MP13<span className="opacity-60">.portfolio</span>
           </a>
 
-          {/* desktop nav */}
           <nav className="hidden md:flex h-full items-center gap-1">
-            <a className="nav-link" href="#about">
+            <a
+              className={`nav-link ${active === "#about" ? "active" : ""}`}
+              href="#about"
+            >
               About
             </a>
-            <a className="nav-link" href="#projects">
+            <a
+              className={`nav-link ${active === "#projects" ? "active" : ""}`}
+              href="#projects"
+            >
               Projects
             </a>
-            <a className="nav-link" href="#ai">
+            <a
+              className={`nav-link ${active === "#ai" ? "active" : ""}`}
+              href="#ai"
+            >
               AI Lab
             </a>
-            <a className="nav-link" href="#skills">
+            <a
+              className={`nav-link ${active === "#skills" ? "active" : ""}`}
+              href="#skills"
+            >
               Skills
             </a>
-            <a className="nav-link" href="#contact">
+            <a
+              className={`nav-link ${active === "#contact" ? "active" : ""}`}
+              href="#contact"
+            >
               Contact
             </a>
           </nav>
@@ -249,8 +341,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="mt-5 px-3 sm:px-4 py-2 rounded-lg border border-white/12 bg-black/35 text-sm text-white/90
-                       max-w-[92vw] md:max-w-[60ch]"
+            className="mt-5 px-3 sm:px-4 py-2 rounded-lg ambient-neon text-sm text-white/90 max-w-[92vw] md:max-w-[60ch]"
           >
             <TypeMotto />
           </motion.div>
@@ -266,7 +357,10 @@ export default function Home() {
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="relative z-10 py-16 md:py-24">
+      <section
+        id="about"
+        className="section-scrim relative z-10 py-16 md:py-24"
+      >
         <div className="container">
           <SectionTitle>About Me</SectionTitle>
           <div className="mt-6 md:mt-8 grid md:grid-cols-2 gap-6 md:gap-8">
@@ -274,14 +368,18 @@ export default function Home() {
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-base md:text-lg leading-relaxed text-[--color-neon-200]"
+              className="text-base md:text-lg leading-relaxed text-gray-200"
             >
               I’m Luka — a frontend engineer and product builder. I create{" "}
               <b>fast</b>, <b>beautifully designed</b> web and mobile apps.
-              Clean UIs, subtle but powerful animation, and crystal-clear UX. My
-              mindset is <b>Maximal Player 13</b>: focus, speed, problem-solving
-              and delivery. Currently pushing <i>PartyGate</i>,{" "}
-              <i>Tarot/Natal AI</i> and client projects (SEO, sales, booking).
+              Clean UIs, subtle but powerful animation, and crystal-clear UX.
+              I’m also interested in the <b>backend</b> side — Node.js,
+              Supabase/Postgres, Prisma, webhooks and Edge functions — so I can
+              own the full vertical slice. My mindset is
+              <b>Maximal Player 13</b>: focus, speed, problem-solving and
+              delivery. Currently pushing <i>PartyGate</i>,{" "}
+              <i>Tarot/Natal AI</i>
+              and client work (SEO, sales, booking).
             </motion.p>
 
             <motion.ul
@@ -324,7 +422,7 @@ export default function Home() {
                 target="_blank"
                 rel="noreferrer"
                 whileHover={{ y: -6, scale: 1.02 }}
-                className="group card p-5"
+                className="group card ambient-neon sheen-static p-5"
                 onMouseMove={(e) => {
                   const el = e.currentTarget,
                     r = el.getBoundingClientRect();
@@ -373,7 +471,7 @@ export default function Home() {
               <motion.div
                 key={i}
                 whileHover={{ scale: 1.02 }}
-                className="card p-5"
+                className="card ambient-neon sheen-static p-5"
               >
                 <div className="font-semibold text-white">{c.title}</div>
                 <div className="mt-2 text-sm opacity-85">{c.desc}</div>
@@ -413,8 +511,20 @@ export default function Home() {
                 whileHover={{ scale: 1.03 }}
                 className="card px-4 py-3 text-sm"
               >
-                {s}
+                <span className="text-[11px] px-2 py-0.5 rounded-full border chip-glow">
+                  {s}
+                </span>
               </motion.div>
+            ))}
+          </div>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {backend.map((b) => (
+              <span
+                key={b}
+                className="text-[11px] px-2 py-0.5 rounded-full border border-white/15 bg-black/30"
+              >
+                {b}
+              </span>
             ))}
           </div>
         </div>

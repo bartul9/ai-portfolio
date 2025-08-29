@@ -317,3 +317,153 @@ header nav a {
 .section-scroll {
   scroll-margin-top: calc(var(--header-h) + 12px);
 }
+
+.card-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.card-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: auto -40% -40% -40%;
+  height: 140%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(34, 255, 136, 0),
+    rgba(34, 255, 136, 0.22),
+    rgba(34, 255, 136, 0)
+  );
+  transform: translateY(60%) rotate(12deg);
+  filter: blur(22px);
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.5s;
+  pointer-events: none;
+}
+.card-shimmer:hover::after {
+  opacity: 0.5;
+  transform: translateY(-20%) rotate(12deg);
+}
+
+/* --- Always-on ambient neon for cards/panels --- */
+.ambient-neon {
+  position: relative;
+  overflow: hidden;
+  background: rgba(2, 6, 12, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.ambient-neon::before,
+.ambient-neon::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(40px);
+  opacity: 0.22;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.ambient-neon::before {
+  width: 320px;
+  height: 320px;
+  left: -80px;
+  top: -60px;
+  background: radial-gradient(
+    closest-side,
+    rgba(34, 255, 136, 0.16),
+    transparent
+  );
+  animation: neonDrift1 24s ease-in-out infinite;
+}
+.ambient-neon::after {
+  width: 280px;
+  height: 280px;
+  right: -60px;
+  bottom: -80px;
+  background: radial-gradient(
+    closest-side,
+    rgba(56, 189, 248, 0.12),
+    transparent
+  );
+  animation: neonDrift2 28s ease-in-out infinite;
+}
+@keyframes neonDrift1 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(14px, 10px);
+  }
+}
+@keyframes neonDrift2 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-12px, -8px);
+  }
+}
+
+/* --- Slow, subtle sheen sweep (always-on) --- */
+.sheen-static {
+  position: relative;
+  overflow: hidden;
+}
+.sheen-static::after {
+  content: "";
+  position: absolute;
+  inset: -50% -40% -50% -40%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(34, 255, 136, 0),
+    rgba(34, 255, 136, 0.22),
+    rgba(34, 255, 136, 0)
+  );
+  transform: translateY(50%) rotate(12deg);
+  filter: blur(22px);
+  opacity: 0.25;
+  pointer-events: none;
+  animation: sheenSweep 22s linear infinite;
+}
+@keyframes sheenSweep {
+  0% {
+    transform: translateY(60%) rotate(12deg);
+  }
+  100% {
+    transform: translateY(-25%) rotate(12deg);
+  }
+}
+
+/* --- Chips pop a bit more --- */
+.chip-glow {
+  background: radial-gradient(
+      90px 50px at 30% 40%,
+      rgba(34, 255, 136, 0.14),
+      transparent 60%
+    ),
+    rgba(0, 0, 0, 0.28);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.section-scrim {
+  position: relative;
+}
+.section-scrim::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+      80% 60% at 25% 30%,
+      rgba(0, 0, 0, 0.55),
+      transparent 70%
+    ),
+    radial-gradient(80% 60% at 85% 40%, rgba(0, 0, 0, 0.35), transparent 75%);
+}
+.section-scrim > * {
+  position: relative;
+  z-index: 1;
+}
