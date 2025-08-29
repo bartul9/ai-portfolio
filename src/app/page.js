@@ -224,13 +224,6 @@ const fadeIn = {
   show: { opacity: 1, transition: { duration: D, ease: EASE } },
 };
 
-const containerStagger = {
-  hidden: {},
-  show: (delay = 0) => ({
-    transition: { staggerChildren: 0.08, delayChildren: delay, ease: EASE },
-  }),
-};
-
 /* ---------------- page ---------------- */
 
 export default function Home() {
@@ -382,6 +375,7 @@ export default function Home() {
           <div>
             <motion.h1
               variants={fadeUp}
+              viewport={{ once: true }}
               className="hero-title text-balance mx-auto font-extrabold tracking-tight text-white leading-[0.98]
                          text-[clamp(2.2rem,8.5vw,5.6rem)]"
             >
@@ -390,6 +384,7 @@ export default function Home() {
 
             <motion.p
               variants={fadeIn}
+              viewport={{ once: true }}
               className="mt-3 text-[clamp(1rem,3.2vw,1.35rem)] text-[--color-neon-200] max-w-[80ch]"
             >
               Turning Ideas into{" "}
@@ -399,6 +394,7 @@ export default function Home() {
 
             <motion.div
               variants={fadeUp}
+              viewport={{ once: true }}
               className="mt-5 w-full text-sm text-white/90 "
             >
               <TypeMotto />
@@ -475,9 +471,8 @@ export default function Home() {
           <SectionTitle>Projects</SectionTitle>
           <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {projects.map((p, i) => (
-              <motion.a
+              <a
                 key={i}
-                variants={fadeUp}
                 href={p.link}
                 target="_blank"
                 rel="noreferrer"
@@ -516,7 +511,7 @@ export default function Home() {
                   <span>Open</span>
                   <span aria-hidden>↗</span>
                 </div>
-              </motion.a>
+              </a>
             ))}
           </div>
         </div>
