@@ -424,7 +424,7 @@ export default function Home() {
             initial={useAnim ? "hidden" : false}
             whileInView={useAnim ? "show" : false}
             viewport={{ once: true, margin: "-20% 0px -20% 0px" }}
-            className="glass crt rounded-2xl p-6 md:p-8"
+            className="rounded-2xl p-6 md:p-8"
             onMouseMove={(e) => {
               const r = e.currentTarget.getBoundingClientRect();
               e.currentTarget.style.setProperty(
@@ -468,7 +468,7 @@ export default function Home() {
                   ["Delivery", "No excuses. Shipped > perfect."],
                 ].map(([t, d], i) => (
                   <motion.li key={i} variants={fadeUp} className="card p-4">
-                    <div className="font-semibold text-white">{t}</div>
+                    <div className="font-semibold text-emerald-200">{t}</div>
                     <div className="text-sm opacity-80 mt-1">{d}</div>
                   </motion.li>
                 ))}
