@@ -45,17 +45,6 @@ function useMatrixFade(headerPx = 64) {
   return overlay;
 }
 
-function magneticMove(e, strength = 0.06) {
-  const el = e.currentTarget;
-  const r = el.getBoundingClientRect();
-  const mx = e.clientX - r.left - r.width / 2;
-  const my = e.clientY - r.top - r.height / 2;
-  el.style.transform = `translate(${mx * strength}px, ${my * strength}px)`;
-}
-function magneticReset(e) {
-  e.currentTarget.style.transform = "";
-}
-
 /* -------- data -------- */
 
 const projects = [
@@ -79,16 +68,6 @@ const projects = [
   },
 ];
 
-const backend = [
-  "Node.js",
-  "Express",
-  "Prisma",
-  "Supabase / Postgres",
-  "Edge Functions",
-  "Webhooks",
-  "Redis (basics)",
-];
-
 const skills = [
   "React / Next.js",
   "React Native",
@@ -96,7 +75,6 @@ const skills = [
   "Tailwind / MUI",
   "Supabase",
   "Node.js",
-  "Framer Motion",
   "SEO / Performance",
   "Product Thinking",
   "Pitch & Storytelling",
@@ -478,25 +456,6 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
-          <div className="mt-8 flex flex-wrap gap-2">
-            {[
-              "OpenAI / GPT",
-              "Claude",
-              "Gemini",
-              "Supabase pgvector",
-              "Edge Functions",
-              "RAG",
-              "Prompt Eval",
-              "Guardrails",
-            ].map((b) => (
-              <span
-                key={b}
-                className="text-[11px] px-2 py-0.5 rounded-full border border-white/15 bg-black/30"
-              >
-                {b}
-              </span>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -515,16 +474,6 @@ export default function Home() {
                   {s}
                 </span>
               </motion.div>
-            ))}
-          </div>
-          <div className="mt-6 flex flex-wrap gap-2">
-            {backend.map((b) => (
-              <span
-                key={b}
-                className="text-[11px] px-2 py-0.5 rounded-full border border-white/15 bg-black/30"
-              >
-                {b}
-              </span>
             ))}
           </div>
         </div>
