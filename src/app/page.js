@@ -551,8 +551,9 @@ export default function Home() {
 
       {/* AI LAB */}
       <section id="ai" className="relative z-10 py-16 md:py-24">
-        <NeuralMesh className="container p-5" />
         <div className="container relative">
+          <NeuralMesh className=" p-2" />
+
           <SectionTitle>AI Lab</SectionTitle>
           <motion.p
             variants={fadeIn}
