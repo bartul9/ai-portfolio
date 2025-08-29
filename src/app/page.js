@@ -1,12 +1,17 @@
 "use client";
 
+import { Github, Linkedin, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import MatrixRain from "@/components/MatrixRain";
 import SectionTitle from "@/components/SectionTitle";
 import Stat from "@/components/Stat";
 
-/* -------- scroll spy + matrix fade + magnetic -------- */
+function onSheenMove(e) {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty("--x", `${e.clientX - r.left}px`);
+  e.currentTarget.style.setProperty("--y", `${e.clientY - r.top}px`);
+}
 
 /* -------- scroll spy (center-of-viewport) -------- */
 function useScrollSpy(selectors = [], { offset = "header" } = {}) {
@@ -521,60 +526,62 @@ export default function Home() {
       {/* CONTACT */}
       <section id="contact" className="relative z-10 py-20 md:py-28">
         <div className="container text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-semibold text-white"
-          >
+          <h2 className="reveal up text-3xl md:text-4xl font-semibold text-white">
             Let’s Build Something Legendary
-          </motion.h2>
-          <p className="mt-4 opacity-90">
+          </h2>
+
+          <p className="reveal up mt-4 opacity-90">
             Open to frontend / React / RN roles and ambitious AI products.
           </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-4"
+          <div
+            className="cta-wrap mx-auto mt-8 w-fit  max-w-3xl"
+            onMouseMove={onSheenMove}
           >
-            <a
-              href="mailto:bartul123@outlook.com"
-              className="btn btn-outline btn-lg btn-press btn-glow w-full sm:w-auto min-w-[160px]"
-              onMouseMove={(e) => {
-                const r = e.currentTarget.getBoundingClientRect();
-                e.currentTarget.style.setProperty(
-                  "--x",
-                  e.clientX - r.left + "px"
-                );
-              }}
-            >
-              Email me
-            </a>
-            <a
-              href="https://github.com/bartul9"
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-outline btn-lg btn-press btn-glow w-full sm:w-auto min-w-[160px]"
-              onMouseMove={(e) => {
-                const r = e.currentTarget.getBoundingClientRect();
-                e.currentTarget.style.setProperty(
-                  "--x",
-                  e.clientX - r.left + "px"
-                );
-              }}
-            >
-              GitHub
-            </a>
-          </motion.div>
+            <div className="flex items-stretch justify-center gap-2">
+              <a
+                title="Send Email"
+                href="mailto:bartul123@outlook.com"
+                className="cta-btn"
+              >
+                <Mail className="w-5 h-5" />
+              </a>
 
-          <p className="mt-6 text-xs opacity-60">
+              <span className="cta-sep" />
+
+              <a
+                href="https://github.com/bartul9"
+                target="_blank"
+                rel="noreferrer"
+                title="GitHub"
+                className="cta-btn"
+              >
+                <Github className="w-5 h-5" />
+              </a>
+
+              <span className="cta-sep" />
+
+              <a
+                href="https://www.linkedin.com/in/luka-bartulović-5b562b200/"
+                target="_blank"
+                rel="noreferrer"
+                className="cta-btn"
+                title="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="relative z-10 py-6 border-t border-white/10 bg-black/40 backdrop-blur-sm">
+        <div className="container flex flex-col sm:flex-row items-center justify-center gap-3">
+          <p className="text-xs opacity-60">
             © {new Date().getFullYear()} Luka Bartulović — MP13
           </p>
         </div>
-      </section>
+      </footer>
     </main>
   );
 }

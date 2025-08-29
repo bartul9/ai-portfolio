@@ -522,3 +522,115 @@ header nav a {
     clip: rect(12px, 9999px, 15px, 0);
   }
 }
+
+/* --- Neon button variant --- */
+.btn-neon {
+  border: 1.5px solid rgba(255, 255, 255, 0.55); /* neon green */
+  border-color: rgba(34, 255, 136, 0.9);
+  box-shadow: 0 0 8px rgba(34, 255, 136, 0.55),
+    0 0 18px rgba(34, 255, 136, 0.35);
+  transform: translateY(-1px) scale(1.02);
+  background: rgba(57, 151, 74, 0.2);
+  color: #fff;
+  transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 0 0px rgba(34, 255, 136, 0);
+}
+
+.btn-neon:hover {
+  border-color: rgba(34, 255, 136, 0.9);
+  box-shadow: 0 0 8px rgba(34, 255, 136, 0.55),
+    0 0 18px rgba(34, 255, 136, 0.35);
+  transform: translateY(-1px) scale(1.02);
+}
+
+.btn-neon:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 0 4px rgba(34, 255, 136, 0.6);
+}
+
+/* --- Holographic Command Bar --- */
+.cta-wrap {
+  --r: 16px; /* radius */
+  --g1: #22ff88;
+  --g2: #18d4a3;
+  --g3: #47ffd2;
+
+  position: relative;
+  border-radius: var(--r);
+  padding: 6px;
+  background: linear-gradient(#000, #000) padding-box,
+    conic-gradient(from 180deg, var(--g1), var(--g2), var(--g3), var(--g1))
+      border-box;
+  border: 1.5px solid transparent;
+  box-shadow: inset 0 0 0 1px rgba(34, 255, 136, 0.06);
+  overflow: hidden;
+}
+
+/* moving glass sheen across the whole bar */
+.cta-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(
+      140px 60px at var(--x, 50%) var(--y, 0%),
+      rgba(34, 255, 136, 0.15),
+      transparent 60%
+    ),
+    radial-gradient(
+      240px 80px at var(--x, 50%) calc(var(--y, 0%) + 50px),
+      rgba(71, 255, 210, 0.08),
+      transparent 65%
+    );
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transition: opacity 0.2s ease;
+  opacity: 0.6;
+}
+
+.cta-btn {
+  border-radius: calc(var(--r) - 6px);
+  background: rgba(2, 12, 8, 0.55);
+  border: 1px solid rgba(34, 255, 136, 0.35);
+  color: #eafff7;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.18s,
+    box-shadow 0.18s;
+  box-shadow: 0 1px 0 rgba(34, 255, 136, 0.12),
+    inset 0 0 0 1px rgba(34, 255, 136, 0.06);
+}
+
+/* separators between buttons (subtle) */
+.cta-sep {
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(
+    transparent,
+    rgba(34, 255, 136, 0.25),
+    transparent
+  );
+  align-self: center;
+}
+
+.cta-btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(34, 255, 136, 0.85);
+  box-shadow: 0 0 10px rgba(34, 255, 136, 0.25),
+    inset 0 0 16px rgba(34, 255, 136, 0.08);
+}
+.cta-btn:active {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-wrap::before {
+    display: none;
+  }
+  .cta-btn {
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+}
