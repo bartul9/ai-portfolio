@@ -2,12 +2,21 @@
 
 import { Github, Linkedin, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import MatrixRain from "@/components/MatrixRain";
 import SectionTitle from "@/components/SectionTitle";
 import Stat from "@/components/Stat";
+import NeuralMesh from "@/components/NeuralMesh";
+
+/* ---------------- helpers ---------------- */
 
 function onSheenMove(e) {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty("--x", `${e.clientX - r.left}px`);
+  e.currentTarget.style.setProperty("--y", `${e.clientY - r.top}px`);
+}
+
+function onPanelMove(e) {
   const r = e.currentTarget.getBoundingClientRect();
   e.currentTarget.style.setProperty("--x", `${e.clientX - r.left}px`);
   e.currentTarget.style.setProperty("--y", `${e.clientY - r.top}px`);
@@ -24,7 +33,6 @@ function useScrollSpy(selectors = [], { offset = "header" } = {}) {
 
     const getOffset = () => {
       if (offset === "header") {
-        // try CSS var --header-h, fallback to 64
         const v = getComputedStyle(document.documentElement)
           .getPropertyValue("--header-h")
           .trim();
@@ -36,7 +44,7 @@ function useScrollSpy(selectors = [], { offset = "header" } = {}) {
 
     let ticking = false;
     const recalc = () => {
-      const y = window.scrollY + window.innerHeight * 0.5 + getOffset(); // check center
+      const y = window.scrollY + window.innerHeight * 0.5 + getOffset();
       let cur = null;
 
       for (const el of sections) {
@@ -48,7 +56,7 @@ function useScrollSpy(selectors = [], { offset = "header" } = {}) {
         }
       }
 
-      setActive(cur); // null at the very top (no active)
+      setActive(cur);
     };
 
     const onScroll = () => {
@@ -63,7 +71,6 @@ function useScrollSpy(selectors = [], { offset = "header" } = {}) {
     recalc();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
-
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
@@ -79,8 +86,8 @@ function useMatrixFade(headerPx = 64) {
     const onScroll = () => {
       const h = Math.max(200, window.innerHeight - headerPx);
       const y = window.scrollY;
-      const v = Math.min(1, Math.max(0, y / (h * 0.75))); // 0 → 1 as you leave hero
-      setOverlay(v * 0.45); // up to 45% black overlay
+      const v = Math.min(1, Math.max(0, y / (h * 0.75)));
+      setOverlay(v * 0.45);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -174,7 +181,7 @@ function TypeMotto({
       setI((idx) => (idx + 1) % items.length);
     }
 
-    return () => clearTimeout(id); // << important
+    return () => clearTimeout(id);
   }, [sub, del, i, items, typing, pause, deleting]);
 
   return (
@@ -198,11 +205,35 @@ function useIsMobile() {
   return m;
 }
 
-/* -------- page -------- */
+/* ---------------- animation system (1s tween, smooth) ---------------- */
+
+const ANIMATIONS_ENABLED = true; // set to false to remove all animations
+const D = 1; // seconds
+const EASE = [0.25, 0.1, 0.25, 1]; // "ease" cubic-bezier
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: D, ease: EASE } },
+};
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: D, ease: EASE } },
+};
+
+const containerStagger = {
+  hidden: {},
+  show: (delay = 0) => ({
+    transition: { staggerChildren: 0.08, delayChildren: delay, ease: EASE },
+  }),
+};
+
+/* ---------------- page ---------------- */
 
 export default function Home() {
   const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   const active = useScrollSpy([
     "#about",
@@ -213,9 +244,12 @@ export default function Home() {
   ]);
   const matrixOverlay = useMatrixFade(64);
 
+  // if the user prefers reduced motion or animations are disabled, no variants
+  const useAnim = ANIMATIONS_ENABLED && !reduceMotion;
+
   return (
     <main className="relative min-h-screen overflow-x-clip site-bg">
-      {/* BACKGROUND (lighter & larger columns on phones for perf) */}
+      {/* BACKGROUND */}
       <MatrixRain
         fontBase={isMobile ? 20 : 16}
         speedMin={0.45}
@@ -224,7 +258,7 @@ export default function Home() {
       />
       <div
         className="fixed inset-0 z-0 bg-black pointer-events-none"
-        style={{ opacity: matrixOverlay }}
+        style={{ opacity: matrixOverlay, transition: "opacity 600ms ease" }}
       />
 
       <div className="fixed inset-0 -z-[1] bg-noise opacity-60" />
@@ -232,7 +266,10 @@ export default function Home() {
       {/* NAV */}
       <header className="fixed top-0 left-0 right-0 z-20 h-16 backdrop-blur-sm bg-black/40 border-b border-white/5">
         <div className="mx-auto max-w-6xl h-full px-4 sm:px-6 flex items-center justify-between">
-          <a href="#" className="text-white text-lg font-semibold">
+          <a
+            href="#"
+            className="text-white text-lg font-semibold transition-opacity duration-1000 ease-in-out"
+          >
             MP13<span className="opacity-60">.portfolio</span>
           </a>
 
@@ -272,7 +309,7 @@ export default function Home() {
           {/* mobile hamburger */}
           <button
             aria-label="Menu"
-            className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-white/15 hover:border-white/30"
+            className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-white/15 hover:border-white/30 transition-all duration-1000 ease-in-out"
             onClick={() => setMenuOpen(true)}
           >
             <span className="sr-only">Open menu</span>
@@ -295,9 +332,10 @@ export default function Home() {
               onClick={() => setMenuOpen(false)}
             />
             <motion.div
-              initial={{ y: -10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 420, damping: 30 }}
+              initial={useAnim ? { y: -12, opacity: 0 } : false}
+              animate={useAnim ? { y: 0, opacity: 1 } : false}
+              exit={useAnim ? { y: -12, opacity: 0 } : false}
+              transition={{ type: "tween", duration: 0.5, ease: EASE }}
               className="mobile-panel"
             >
               <div className="p-2">
@@ -323,7 +361,7 @@ export default function Home() {
         )}
       </header>
 
-      {/* HERO (100vh minus header, mobile-friendly type sizes) */}
+      {/* HERO */}
       <section className="relative h-[calc(100svh-var(--header-h))] overflow-hidden">
         {/* glow */}
         <div className="pointer-events-none absolute inset-0 -z-[1] flex items-center justify-center">
@@ -332,46 +370,46 @@ export default function Home() {
             style={{
               background:
                 "radial-gradient(ellipse at center, rgba(34,255,136,.22), transparent 60%)",
+              transition: "opacity 1000ms ease",
             }}
           />
         </div>
 
         <div className="container h-full flex flex-col items-center justify-center text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: -14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="hero-title text-balance mx-auto font-extrabold tracking-tight text-white leading-[0.98]
-                       text-[clamp(2.2rem,8.5vw,5.6rem)]"
-          >
-            Luka <span className="text-[--color-neon-500]">Bartulović</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.25 }}
-            className="mt-3 text-[clamp(1rem,3.2vw,1.35rem)] text-[--color-neon-200] max-w-[80ch]"
-          >
-            Turning Ideas into{" "}
-            <span className="text-[--color-neon-500]">Scalable</span>, Beautiful
-            Apps
-          </motion.p>
-
-          {/* motto */}
           <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="mt-5 px-3 sm:px-4 py-2 rounded-lg ambient-neon text-sm text-white/90 max-w-[92vw] md:max-w-[60ch]"
+            variants={containerStagger}
+            initial={useAnim ? "hidden" : false}
+            animate={useAnim ? "show" : false}
+            custom={0.1}
           >
-            <TypeMotto />
+            <motion.h1
+              variants={fadeUp}
+              className="hero-title text-balance mx-auto font-extrabold tracking-tight text-white leading-[0.98]
+                         text-[clamp(2.2rem,8.5vw,5.6rem)]"
+            >
+              Luka <span className="text-[--color-neon-500]">Bartulović</span>
+            </motion.h1>
+
+            <motion.p
+              variants={fadeIn}
+              className="mt-3 text-[clamp(1rem,3.2vw,1.35rem)] text-[--color-neon-200] max-w-[80ch]"
+            >
+              Turning Ideas into{" "}
+              <span className="text-[--color-neon-500]">Scalable</span>,
+              Beautiful Apps
+            </motion.p>
+
+            <motion.div
+              variants={fadeUp}
+              className="mt-5 w-full text-sm text-white/90 "
+            >
+              <TypeMotto />
+            </motion.div>
           </motion.div>
 
-          {/* scroll cue */}
           <a
             href="#about"
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-70 hover:opacity-100 transition text-sm"
+            className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-70 hover:opacity-100 transition-opacity duration-1000 ease-in-out text-sm"
           >
             ↓ Scroll
           </a>
@@ -379,56 +417,76 @@ export default function Home() {
       </section>
 
       {/* ABOUT */}
-      <section
-        id="about"
-        className="section-scrim relative z-10 py-16 md:py-24"
-      >
+      <section id="about" className="relative z-10 py-16 md:py-24">
         <div className="container">
-          <SectionTitle>About Me</SectionTitle>
-          <div className="mt-6 md:mt-8 grid md:grid-cols-2 gap-6 md:gap-8">
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-base md:text-lg leading-relaxed text-gray-200"
-            >
-              I’m Luka — a frontend engineer and product builder. I create{" "}
-              <b>fast</b>, <b>beautifully designed</b> web and mobile apps.
-              Clean UIs, subtle but powerful animation, and crystal-clear UX.
-              I’m also interested in the <b>backend</b> side — Node.js,
-              Supabase/Postgres, Prisma, webhooks and Edge functions — so I can
-              own the full vertical slice. My mindset is
-              <b>Maximal Player 13</b>: focus, speed, problem-solving and
-              delivery. Currently pushing <i>PartyGate</i>,{" "}
-              <i>Tarot/Natal AI</i>
-              and client work (SEO, sales, booking).
-            </motion.p>
+          <motion.div
+            variants={fadeIn}
+            initial={useAnim ? "hidden" : false}
+            whileInView={useAnim ? "show" : false}
+            viewport={{ once: true, margin: "-20% 0px -20% 0px" }}
+            className="glass crt rounded-2xl p-6 md:p-8"
+            onMouseMove={(e) => {
+              const r = e.currentTarget.getBoundingClientRect();
+              e.currentTarget.style.setProperty(
+                "--mx",
+                `${e.clientX - r.left}px`
+              );
+              e.currentTarget.style.setProperty(
+                "--my",
+                `${e.clientY - r.top}px`
+              );
+            }}
+          >
+            <SectionTitle>About Me</SectionTitle>
 
-            <motion.ul
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
+            <motion.div
+              variants={containerStagger}
+              initial={useAnim ? "hidden" : false}
+              whileInView={useAnim ? "show" : false}
               viewport={{ once: true }}
-              className="grid gap-3"
+              className="mt-6 md:mt-8 grid md:grid-cols-2 gap-6 md:gap-8"
             >
-              {[
-                ["Speed", "Prototype in 24–48h. Fast → validate → iterate."],
-                ["Clarity", "One clean path to value. No friction."],
-                ["Delivery", "No excuses. Shipped > perfect."],
-              ].map(([t, d], i) => (
-                <li key={i} className="card p-4">
-                  <div className="font-semibold text-white">{t}</div>
-                  <div className="text-sm opacity-80 mt-1">{d}</div>
-                </li>
-              ))}
-            </motion.ul>
-          </div>
+              <motion.p
+                variants={fadeUp}
+                className="text-base md:text-lg leading-relaxed text-gray-200"
+              >
+                I’m Luka — a frontend engineer and product builder. I create{" "}
+                <b>fast</b>, <b>beautifully designed</b> web and mobile apps.
+                Clean UIs, subtle but powerful animation, and crystal-clear UX.
+                I’m also interested in the <b>backend</b> side — Node.js,
+                Supabase/Postgres, Prisma, webhooks and Edge functions — so I
+                can own the full vertical slice. My mindset is
+                <b> Maximal Player 13</b>: focus, speed, problem-solving and
+                delivery. Currently pushing <i>PartyGate</i>,{" "}
+                <i>Tarot/Natal AI</i> and client work (SEO, sales, booking).
+              </motion.p>
 
-          {/* Stats */}
-          <div className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
-            <Stat to={35} label="Shipped features / month" />
-            <Stat to={12} label="Production projects" />
-            <Stat to={48} label="Hours to first prototype" />
-          </div>
+              <motion.ul variants={containerStagger} className="grid gap-3">
+                {[
+                  ["Speed", "Prototype in 24–48h. Fast → validate → iterate."],
+                  ["Clarity", "One clean path to value. No friction."],
+                  ["Delivery", "No excuses. Shipped > perfect."],
+                ].map(([t, d], i) => (
+                  <motion.li key={i} variants={fadeUp} className="card p-4">
+                    <div className="font-semibold text-white">{t}</div>
+                    <div className="text-sm opacity-80 mt-1">{d}</div>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </motion.div>
+
+            <motion.div
+              variants={containerStagger}
+              initial={useAnim ? "hidden" : false}
+              whileInView={useAnim ? "show" : false}
+              viewport={{ once: true }}
+              className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4"
+            >
+              <Stat to={35} label="Shipped features / month" />
+              <Stat to={12} label="Production projects" />
+              <Stat to={48} label="Hours to first prototype" />
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
@@ -436,15 +494,26 @@ export default function Home() {
       <section id="projects" className="relative z-10 py-16 md:py-24">
         <div className="container">
           <SectionTitle>Projects</SectionTitle>
-          <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          <motion.div
+            variants={containerStagger}
+            initial={useAnim ? "hidden" : false}
+            whileInView={useAnim ? "show" : false}
+            viewport={{ once: true }}
+            className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6"
+          >
             {projects.map((p, i) => (
               <motion.a
                 key={i}
+                variants={fadeUp}
                 href={p.link}
                 target="_blank"
                 rel="noreferrer"
-                whileHover={{ y: -6, scale: 1.02 }}
-                className="group card ambient-neon sheen-static p-5"
+                whileHover={{
+                  y: -4,
+                  scale: 1.01,
+                  transition: { duration: 0.4, ease: EASE },
+                }}
+                className="group card ambient-neon sheen-static p-5 transition-transform duration-1000 ease-in-out"
                 onMouseMove={(e) => {
                   const el = e.currentTarget,
                     r = el.getBoundingClientRect();
@@ -476,30 +545,54 @@ export default function Home() {
                 </div>
               </motion.a>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* AI LAB */}
       <section id="ai" className="relative z-10 py-16 md:py-24">
-        <div className="container">
+        <NeuralMesh className="container p-5" />
+        <div className="container relative">
           <SectionTitle>AI Lab</SectionTitle>
-          <p className="mt-6 max-w-3xl opacity-90">
+          <motion.p
+            variants={fadeIn}
+            initial={useAnim ? "hidden" : false}
+            whileInView={useAnim ? "show" : false}
+            viewport={{ once: true }}
+            className="mt-6 max-w-3xl opacity-90"
+          >
             I build AI features that serve the user: structured outputs, stable
             chains, evaluation, and real product value. No fog — only results.
-          </p>
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          </motion.p>
+
+          <motion.div
+            variants={containerStagger}
+            initial={useAnim ? "hidden" : false}
+            whileInView={useAnim ? "show" : false}
+            viewport={{ once: true }}
+            className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4"
+          >
             {aiCaps.map((c, i) => (
-              <motion.div
+              <div
                 key={i}
-                whileHover={{ scale: 1.02 }}
-                className="card ambient-neon sheen-static p-5"
+                className="ai-card p-5"
+                onMouseMove={(e) => {
+                  const r = e.currentTarget.getBoundingClientRect();
+                  e.currentTarget.style.setProperty(
+                    "--x",
+                    `${e.clientX - r.left}px`
+                  );
+                  e.currentTarget.style.setProperty(
+                    "--y",
+                    `${e.clientY - r.top}px`
+                  );
+                }}
               >
                 <div className="font-semibold text-white">{c.title}</div>
                 <div className="mt-2 text-sm opacity-85">{c.desc}</div>
-              </motion.div>
+              </div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -509,15 +602,13 @@ export default function Home() {
           <SectionTitle>Skills</SectionTitle>
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
             {skills.map((s, i) => (
-              <motion.div
+              <motion.span
                 key={i}
-                whileHover={{ scale: 1.03 }}
-                className="card px-4 py-3 text-sm"
+                variants={fadeUp}
+                className="skill-chip text-[11px] px-2 py-0.5 rounded-full border chip-glow"
               >
-                <span className="text-[11px] px-2 py-0.5 rounded-full border chip-glow">
-                  {s}
-                </span>
-              </motion.div>
+                {s}
+              </motion.span>
             ))}
           </div>
         </div>
@@ -526,11 +617,11 @@ export default function Home() {
       {/* CONTACT */}
       <section id="contact" className="relative z-10 py-20 md:py-28">
         <div className="container text-center">
-          <h2 className="reveal up text-3xl md:text-4xl font-semibold text-white">
+          <h2 className="text-3xl md:text-4xl font-semibold text-white">
             Let’s Build Something Legendary
           </h2>
 
-          <p className="reveal up mt-4 opacity-90">
+          <p className="mt-4 opacity-90">
             Open to frontend / React / RN roles and ambitious AI products.
           </p>
 
@@ -542,30 +633,26 @@ export default function Home() {
               <a
                 title="Send Email"
                 href="mailto:bartul123@outlook.com"
-                className="cta-btn"
+                className="cta-btn transition-all duration-1000 ease-in-out"
               >
                 <Mail className="w-5 h-5" />
               </a>
-
               <span className="cta-sep" />
-
               <a
                 href="https://github.com/bartul9"
                 target="_blank"
                 rel="noreferrer"
                 title="GitHub"
-                className="cta-btn"
+                className="cta-btn transition-all duration-1000 ease-in-out"
               >
                 <Github className="w-5 h-5" />
               </a>
-
               <span className="cta-sep" />
-
               <a
                 href="https://www.linkedin.com/in/luka-bartulović-5b562b200/"
                 target="_blank"
                 rel="noreferrer"
-                className="cta-btn"
+                className="cta-btn transition-all duration-1000 ease-in-out"
                 title="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />

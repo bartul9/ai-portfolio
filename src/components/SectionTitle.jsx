@@ -7,6 +7,7 @@ export default function SectionTitle({ children, id }) {
       id={id}
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       viewport={{ once: true }}
       className="section-scroll text-3xl md:text-4xl font-semibold border-b border-white/10 pb-3"
     >
