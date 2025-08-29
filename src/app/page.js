@@ -8,23 +8,62 @@ import Stat from "@/components/Stat";
 
 /* -------- scroll spy + matrix fade + magnetic -------- */
 
-function useScrollSpy(selectors = []) {
+/* -------- scroll spy (center-of-viewport) -------- */
+function useScrollSpy(selectors = [], { offset = "header" } = {}) {
   const [active, setActive] = useState(null);
+
   useEffect(() => {
-    const els = selectors.map((s) => document.querySelector(s)).filter(Boolean);
+    const sections = selectors
+      .map((s) => document.querySelector(s))
+      .filter(Boolean);
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(`#${e.target.id}`);
-        });
-      },
-      { rootMargin: "-35% 0px -55% 0px", threshold: 0.01 }
-    );
+    const getOffset = () => {
+      if (offset === "header") {
+        // try CSS var --header-h, fallback to 64
+        const v = getComputedStyle(document.documentElement)
+          .getPropertyValue("--header-h")
+          .trim();
+        const n = parseInt(v, 10);
+        return Number.isFinite(n) ? n : 64;
+      }
+      return Number(offset) || 0;
+    };
 
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, [selectors]);
+    let ticking = false;
+    const recalc = () => {
+      const y = window.scrollY + window.innerHeight * 0.5 + getOffset(); // check center
+      let cur = null;
+
+      for (const el of sections) {
+        const top = el.offsetTop;
+        const bottom = top + el.offsetHeight;
+        if (y >= top && y < bottom) {
+          cur = `#${el.id}`;
+          break;
+        }
+      }
+
+      setActive(cur); // null at the very top (no active)
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        recalc();
+        ticking = false;
+      });
+    };
+
+    recalc();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [JSON.stringify(selectors), offset]);
 
   return active;
 }
