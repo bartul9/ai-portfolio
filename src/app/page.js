@@ -16,12 +16,6 @@ function onSheenMove(e) {
   e.currentTarget.style.setProperty("--y", `${e.clientY - r.top}px`);
 }
 
-function onPanelMove(e) {
-  const r = e.currentTarget.getBoundingClientRect();
-  e.currentTarget.style.setProperty("--x", `${e.clientX - r.left}px`);
-  e.currentTarget.style.setProperty("--y", `${e.clientY - r.top}px`);
-}
-
 /* -------- scroll spy (center-of-viewport) -------- */
 function useScrollSpy(selectors = [], { offset = "header" } = {}) {
   const [active, setActive] = useState(null);
@@ -157,6 +151,15 @@ function TypeMotto({
     `In code, “impossible” just means “not shipped yet.”`,
     `Speed. Clarity. Delivery.`,
     `Ship > Perfect.`,
+    `Break limits, not focus.`,
+    `Chaos is just order waiting for a deadline.`,
+    `Build faster than doubt can speak.`,
+    `Vision > Excuses.`,
+    `Code is war. Shipping is victory.`,
+    `Perfection is procrastination in disguise.`,
+    `Ideas die in drafts. Winners ship.`,
+    `Fear slows. Action wins.`,
+    `Be the bug, fix the world.`,
   ],
   typing = 28,
   pause = 1200,
