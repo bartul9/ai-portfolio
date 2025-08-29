@@ -494,13 +494,7 @@ export default function Home() {
       <section id="projects" className="relative z-10 py-16 md:py-24">
         <div className="container">
           <SectionTitle>Projects</SectionTitle>
-          <motion.div
-            variants={containerStagger}
-            initial={useAnim ? "hidden" : false}
-            whileInView={useAnim ? "show" : false}
-            viewport={{ once: true }}
-            className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6"
-          >
+          <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {projects.map((p, i) => (
               <motion.a
                 key={i}
@@ -545,7 +539,7 @@ export default function Home() {
                 </div>
               </motion.a>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -555,24 +549,12 @@ export default function Home() {
           <NeuralMesh className=" p-2" />
 
           <SectionTitle>AI Lab</SectionTitle>
-          <motion.p
-            variants={fadeIn}
-            initial={useAnim ? "hidden" : false}
-            whileInView={useAnim ? "show" : false}
-            viewport={{ once: true }}
-            className="mt-6 max-w-3xl opacity-90"
-          >
+          <p className="mt-6 max-w-3xl opacity-90">
             I build AI features that serve the user: structured outputs, stable
             chains, evaluation, and real product value. No fog — only results.
-          </motion.p>
+          </p>
 
-          <motion.div
-            variants={containerStagger}
-            initial={useAnim ? "hidden" : false}
-            whileInView={useAnim ? "show" : false}
-            viewport={{ once: true }}
-            className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4"
-          >
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {aiCaps.map((c, i) => (
               <div
                 key={i}
@@ -593,7 +575,7 @@ export default function Home() {
                 <div className="mt-2 text-sm opacity-85">{c.desc}</div>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
