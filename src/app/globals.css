@@ -467,3 +467,58 @@ header nav a {
   position: relative;
   z-index: 1;
 }
+.hero-title {
+  position: relative;
+  font-size: clamp(
+    2.2rem,
+    8vw,
+    5rem
+  ); /* ✅ scales from ~35px on phones up to 80px on desktop */
+  font-weight: 900;
+  color: #00ffcc;
+  text-shadow: 0 0 2px #00ffcc, 0 0 10px #00ffcc;
+}
+
+.hero-title::before,
+.hero-title::after {
+  content: "Luka Bartulović";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background: transparent;
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+}
+
+.hero-title::before {
+  left: 2px;
+  text-shadow: -2px 0 red;
+  animation: glitch 2s infinite linear alternate-reverse;
+}
+
+.hero-title::after {
+  left: -2px;
+  text-shadow: -2px 0 blue;
+  animation: glitch 1.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch {
+  0% {
+    clip: rect(42px, 9999px, 44px, 0);
+  }
+  20% {
+    clip: rect(12px, 9999px, 20px, 0);
+  }
+  40% {
+    clip: rect(62px, 9999px, 65px, 0);
+  }
+  60% {
+    clip: rect(82px, 9999px, 85px, 0);
+  }
+  80% {
+    clip: rect(22px, 9999px, 25px, 0);
+  }
+  100% {
+    clip: rect(12px, 9999px, 15px, 0);
+  }
+}

@@ -297,7 +297,7 @@ export default function Home() {
             initial={{ opacity: 0, y: -14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-balance mx-auto font-extrabold tracking-tight text-white leading-[0.98]
+            className="hero-title text-balance mx-auto font-extrabold tracking-tight text-white leading-[0.98]
                        text-[clamp(2.2rem,8.5vw,5.6rem)]"
           >
             Luka <span className="text-[--color-neon-500]">Bartulović</span>
