@@ -408,7 +408,7 @@ export default function Home() {
             </div>
 
             <div className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
-              <Stat to={35} label="Shipped features / month" />
+              <Stat to={25} label="Shipped features / month" />
               <Stat to={12} label="Production projects" />
               <Stat to={48} label="Hours to first prototype" />
             </div>
