@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Luka Bartulović — Maximal Player 13",
+  title: "Luka Bartulović",
   description: "Turning Ideas into Scalable, Beautiful Apps",
 };
 

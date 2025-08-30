@@ -217,7 +217,7 @@ export default function Home() {
             href="#"
             className="text-white text-lg font-semibold transition-opacity duration-1000 ease-in-out"
           >
-            MP13<span className="opacity-60">.portfolio</span>
+            LB<span className="opacity-60">.portfolio</span>
           </a>
 
           <nav className="hidden md:flex h-full items-center gap-1">
@@ -388,7 +388,7 @@ export default function Home() {
                 I’m also interested in the <b>backend</b> side — Node.js,
                 Supabase/Postgres, Prisma, webhooks and Edge functions — so I
                 can own the full vertical slice. My mindset is
-                <b> Maximal Player 13</b>: focus, speed, problem-solving and
+                <b> Maximum Game</b>: focus, speed, problem-solving and
                 delivery. Currently pushing <i>PartyGate</i>,{" "}
                 <i>Tarot/Natal AI</i> and client work (SEO, sales, booking).
               </p>
