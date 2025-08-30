@@ -15,11 +15,15 @@ export default function ChessShowcase() {
   return (
     <section id="chess" className="section-scrim relative z-10 py-16 md:py-24">
       <div className="container">
-        <SectionTitle>The Chess Challenge</SectionTitle>
-        <p className="text-sm text-gray-200 mt-2">
-          Click on board to read the story
-        </p>
-        <div className="mt-6 md:mt-10 space-y-6 md:space-y-8">
+        {/* Header */}
+        <div className="mx-auto max-w-3xl text-center">
+          <SectionTitle>The Chess Challenge</SectionTitle>
+          <p className="mt-2 text-sm md:text-base text-white/70">
+            Click on the board to read the story
+          </p>
+        </div>
+
+        <div className="mt-6 md:mt-10 flex flex-col items-center gap-6 md:gap-8">
           <BoardCard />
         </div>
       </div>
@@ -336,7 +340,7 @@ function SquarePiece({
                 delay: animatePath.delay || 0,
               },
             }
-          : { opacity: 1, scale: 1 }
+          : { opacity: 0, scale: 1 }
       }
     >
       <span
