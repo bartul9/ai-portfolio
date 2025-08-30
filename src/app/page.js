@@ -474,35 +474,37 @@ export default function Home() {
       {/* AI LAB */}
       <section id="ai" className="py-16 md:py-24">
         <div className="container relative z-10 ">
-          <NeuralMesh />
-
           <SectionTitle>AI Lab</SectionTitle>
-          <p className="mt-6 max-w-3xl opacity-90">
-            I build AI features that serve the user: structured outputs, stable
-            chains, evaluation, and real product value. No fog — only results.
-          </p>
+          <div className="relative z-10 backdrop-blur-xs bg-emerald-200/5 pt-2 px-4 pb-8  rounded-xl mt-2">
+            <p className="mt-6 max-w-3xl opacity-90">
+              I build AI features that serve the user: structured outputs,
+              stable chains, evaluation, and real product value. No fog — only
+              results.
+            </p>
+            <NeuralMesh />
 
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {aiCaps.map((c, i) => (
-              <div
-                key={i}
-                className="ai-card p-5"
-                onMouseMove={(e) => {
-                  const r = e.currentTarget.getBoundingClientRect();
-                  e.currentTarget.style.setProperty(
-                    "--x",
-                    `${e.clientX - r.left}px`
-                  );
-                  e.currentTarget.style.setProperty(
-                    "--y",
-                    `${e.clientY - r.top}px`
-                  );
-                }}
-              >
-                <div className="font-semibold text-white">{c.title}</div>
-                <div className="mt-2 text-sm opacity-85">{c.desc}</div>
-              </div>
-            ))}
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+              {aiCaps.map((c, i) => (
+                <div
+                  key={i}
+                  className="ai-card p-5 backdrop-blur-lg bg-black/40"
+                  onMouseMove={(e) => {
+                    const r = e.currentTarget.getBoundingClientRect();
+                    e.currentTarget.style.setProperty(
+                      "--x",
+                      `${e.clientX - r.left}px`
+                    );
+                    e.currentTarget.style.setProperty(
+                      "--y",
+                      `${e.clientY - r.top}px`
+                    );
+                  }}
+                >
+                  <div className="font-semibold text-white">{c.title}</div>
+                  <div className="mt-2 text-sm opacity-85">{c.desc}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

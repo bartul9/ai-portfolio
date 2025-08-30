@@ -157,7 +157,7 @@ export default function NeuralMesh({
   return (
     <canvas
       ref={ref}
-      className={`absolute p-6 inset-0 -z-[1] [mix-blend-mode:screen] ${className}`}
+      className={`absolute inset-0 -z-[1] [mix-blend-mode:screen] ${className}`}
       aria-hidden
     />
   );
