@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
 
 export default function NeuralMesh({
   color = "rgba(34,255,136,",
-  density = 0.0002, // nodes per pixel (auto scales with width/height)
+  density = 0.00015, // nodes per pixel (auto scales with width/height)
   maxLinks = 3, // how many connections each node can draw
   speed = 0.3, // px per frame
   className = "",
@@ -156,11 +155,7 @@ export default function NeuralMesh({
   }, [color, density, maxLinks, speed]);
 
   return (
-    <motion.canvas
-      initial={{ y: -12, opacity: 0 }}
-      animate={{ y: 0, opacity: 0.8 }}
-      exit={{ y: 0, opacity: 0 }}
-      transition={{ type: "tween", duration: 12, ease: "easeInOut" }}
+    <canvas
       ref={ref}
       className={`absolute inset-0 -z-[1] [mix-blend-mode:screen] ${className}`}
       aria-hidden
