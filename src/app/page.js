@@ -472,9 +472,9 @@ export default function Home() {
       </section>
 
       {/* AI LAB */}
-      <section id="ai" className="relative z-10 py-16 md:py-24">
-        <div className="container relative">
-          <NeuralMesh className=" p-2" />
+      <section id="ai" className="py-16 md:py-24">
+        <div className="container relative z-10 ">
+          <NeuralMesh />
 
           <SectionTitle>AI Lab</SectionTitle>
           <p className="mt-6 max-w-3xl opacity-90">

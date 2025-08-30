@@ -2,8 +2,8 @@
 import { useEffect, useRef } from "react";
 
 export default function NeuralMesh({
-  color = "rgba(34,255,136,",
-  density = 0.00015, // nodes per pixel (auto scales with width/height)
+  color = "rgba(225, 232, 228,",
+  density = 0.00013, // nodes per pixel (auto scales with width/height)
   maxLinks = 3, // how many connections each node can draw
   speed = 0.3, // px per frame
   className = "",
@@ -157,7 +157,7 @@ export default function NeuralMesh({
   return (
     <canvas
       ref={ref}
-      className={`absolute inset-0 -z-[1] [mix-blend-mode:screen] ${className}`}
+      className={`absolute p-6 inset-0 -z-[1] [mix-blend-mode:screen] ${className}`}
       aria-hidden
     />
   );
