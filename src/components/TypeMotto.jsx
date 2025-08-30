@@ -4,13 +4,10 @@ import { useEffect, useRef, useState } from "react";
 
 export default function TypeMotto({
   items = [
-    `In code, “impossible” just means “not shipped yet.”`,
     `Speed. Clarity. Delivery.`,
-    `Ship > Perfect.`,
     `Break limits, not focus.`,
     `Chaos is just order waiting for a deadline.`,
     `Build faster than doubt can speak.`,
-    `Vision > Excuses.`,
     `Code is war. Shipping is victory.`,
     `Perfection is procrastination in disguise.`,
     `Ideas die in drafts. Winners ship.`,

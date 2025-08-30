@@ -202,17 +202,6 @@ function BoardCard({ onOpenStory }) {
           </div>
         </div>
       </motion.div>
-      {/* replay button */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          replay();
-        }}
-        className="absolute -bottom-0 right-3 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-white/80 hover:bg-white/10"
-        aria-label="Replay animation"
-      >
-        Replay
-      </button>
     </div>
   );
 }
