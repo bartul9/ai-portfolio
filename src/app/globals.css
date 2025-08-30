@@ -786,3 +786,31 @@ header nav a {
     filter: brightness(1.02) contrast(1.02);
   }
 }
+
+.type-line {
+  white-space: nowrap;
+  font-variant-ligatures: none;
+}
+
+.type-caret {
+  display: inline-block;
+  width: 1ch;
+  border-right: 2px solid currentColor;
+  transform: translateY(1px);
+  animation: caret-blink 1s steps(1, end) infinite;
+}
+
+.type-caret.dim {
+  opacity: 0.65;
+}
+
+@keyframes caret-blink {
+  0%,
+  60% {
+    opacity: 1;
+  }
+  61%,
+  100% {
+    opacity: 0;
+  }
+}

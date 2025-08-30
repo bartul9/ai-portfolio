@@ -7,6 +7,8 @@ import MatrixRain from "@/components/MatrixRain";
 import SectionTitle from "@/components/SectionTitle";
 import Stat from "@/components/Stat";
 import NeuralMesh from "@/components/NeuralMesh";
+import TypeMotto from "@/components/TypeMotto";
+import ChessShowcase from "@/components/ChessShowcase";
 
 /* ---------------- helpers ---------------- */
 
@@ -143,57 +145,6 @@ const aiCaps = [
     desc: "Supabase Realtime, Edge Functions, cron & webhooks.",
   },
 ];
-
-/* -------- motto typewriter -------- */
-
-function TypeMotto({
-  items = [
-    `In code, “impossible” just means “not shipped yet.”`,
-    `Speed. Clarity. Delivery.`,
-    `Ship > Perfect.`,
-    `Break limits, not focus.`,
-    `Chaos is just order waiting for a deadline.`,
-    `Build faster than doubt can speak.`,
-    `Vision > Excuses.`,
-    `Code is war. Shipping is victory.`,
-    `Perfection is procrastination in disguise.`,
-    `Ideas die in drafts. Winners ship.`,
-    `Fear slows. Action wins.`,
-    `Be the bug, fix the world.`,
-  ],
-  typing = 28,
-  pause = 1200,
-  deleting = 14,
-}) {
-  const [i, setI] = useState(0);
-  const [sub, setSub] = useState(0);
-  const [del, setDel] = useState(false);
-
-  useEffect(() => {
-    const full = items[i];
-    let id;
-
-    if (!del && sub <= full.length) {
-      id = setTimeout(() => setSub((s) => s + 1), typing);
-    } else if (!del && sub > full.length) {
-      id = setTimeout(() => setDel(true), pause);
-    } else if (del && sub > 0) {
-      id = setTimeout(() => setSub((s) => s - 1), deleting);
-    } else if (del && sub === 0) {
-      setDel(false);
-      setI((idx) => (idx + 1) % items.length);
-    }
-
-    return () => clearTimeout(id);
-  }, [sub, del, i, items, typing, pause, deleting]);
-
-  return (
-    <span className="type-line">
-      {items[i].slice(0, sub)}
-      <span className="type-caret" />
-    </span>
-  );
-}
 
 /* -------- helper: isMobile for Matrix tuning -------- */
 function useIsMobile() {
@@ -395,7 +346,7 @@ export default function Home() {
             <motion.div
               variants={fadeUp}
               viewport={{ once: true }}
-              className="mt-5 w-full text-sm text-white/90 "
+              className="mt-15 w-full text-sm text-white/90 "
             >
               <TypeMotto />
             </motion.div>
@@ -464,6 +415,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* CHESS */}
+      <ChessShowcase />
 
       {/* PROJECTS */}
       <section id="projects" className="relative z-10 py-16 md:py-24">
