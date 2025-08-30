@@ -18,9 +18,6 @@ export default function ChessShowcase() {
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center">
           <SectionTitle>The Chess Challenge</SectionTitle>
-          <p className="mt-2 text-sm md:text-base text-white/70">
-            Click on the board to read the story
-          </p>
         </div>
 
         <div className="mt-6 md:mt-10 flex flex-col items-center gap-6 md:gap-8">
@@ -38,6 +35,11 @@ function BoardCard() {
 
   return (
     <div className="relative mx-auto w-full max-w-[420px] md:max-w-[480px] lg:max-w-[560px]">
+      {key == 0 && (
+        <p className="mb-4 italic text-center text-sm md:text-sm text-white/70">
+          Click on the board to read the story
+        </p>
+      )}
       <motion.div
         key={key}
         ref={ref}
