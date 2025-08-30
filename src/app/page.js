@@ -542,15 +542,15 @@ export default function Home() {
             <div className="flex items-stretch justify-center gap-2">
               <a
                 title="Send Email"
-                href="mailto:bartul123@outlook.com"
-                className="cta-btn transition-all duration-1000 ease-in-out"
+                /*                 href="mailto:bartul123@outlook.com"
+                 */ className="cta-btn transition-all duration-1000 ease-in-out"
               >
                 <Mail className="w-5 h-5" />
               </a>
               <span className="cta-sep" />
               <a
-                href="https://github.com/bartul9"
-                target="_blank"
+                /*                 href="https://github.com/bartul9"
+                 */ target="_blank"
                 rel="noreferrer"
                 title="GitHub"
                 className="cta-btn transition-all duration-1000 ease-in-out"
@@ -559,8 +559,8 @@ export default function Home() {
               </a>
               <span className="cta-sep" />
               <a
-                href="https://www.linkedin.com/in/luka-bartulović-5b562b200/"
-                target="_blank"
+                /*                 href="https://www.linkedin.com/in/luka-bartulović-5b562b200/"
+                 */ target="_blank"
                 rel="noreferrer"
                 className="cta-btn transition-all duration-1000 ease-in-out"
                 title="LinkedIn"
