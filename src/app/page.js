@@ -475,12 +475,12 @@ export default function Home() {
       <section id="ai" className="py-16 md:py-24">
         <div className="container relative z-10 ">
           <SectionTitle>AI Lab</SectionTitle>
-          <div className="relative z-10 backdrop-blur-xs bg-emerald-200/5 pt-2 px-4 pb-8  rounded-xl mt-2">
-            <p className="mt-6 max-w-3xl opacity-90">
-              I build AI features that serve the user: structured outputs,
-              stable chains, evaluation, and real product value. No fog — only
-              results.
-            </p>
+
+          <p className="max-w-3xl text-md mt-8">
+            I build AI features that serve the user: structured outputs, stable
+            chains, evaluation, and real product value. No fog — only results.
+          </p>
+          <div className="relative z-10 ai-section px-6 pt-4 pb-12  rounded-xl mt-8">
             <NeuralMesh />
 
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
