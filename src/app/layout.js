@@ -1,6 +1,9 @@
 export const metadata = {
   title: "Luka Bartulović",
   description: "Turning Ideas into Scalable, Beautiful Apps",
+  verification: {
+    google: "VLQOF6AG39HHR2ijeTNw8WDuIOgmTsHoAj-9MIsvBKw",
+  },
 };
 
 import { Analytics } from "@vercel/analytics/next";
