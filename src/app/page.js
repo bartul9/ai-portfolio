@@ -109,7 +109,7 @@ const projects = [
   },
   {
     title: "Te Baca Adem",
-    desc: "Simple restoraunt website with SEO, maps, booking. Literally built in 30 minutes using AI :P",
+    desc: "Simple restoraunt website with SEO, maps, booking.",
     link: "https://tebaca-adem.vercel.app",
     tags: ["HTML", "CSS", "Maps", "SEO"],
   },
