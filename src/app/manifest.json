@@ -1,6 +1,7 @@
 {
-  "name": "LB",
-  "short_name": "LB",
+  "name": "Luka Bartulović Portfolio",
+  "short_name": "Luka Bartulović",
+  "description": "Portfolio of Luka Bartulović, a Croatia-based frontend developer and product builder.",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
