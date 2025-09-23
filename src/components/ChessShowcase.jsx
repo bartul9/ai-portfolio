@@ -35,11 +35,6 @@ function BoardCard() {
 
   return (
     <div className="relative mx-auto w-full max-w-[420px] md:max-w-[480px] lg:max-w-[560px]">
-      {key == 0 && (
-        <p className="mb-4 italic text-center text-sm md:text-sm text-white/70">
-          Click on the board to read the story
-        </p>
-      )}
       <motion.div
         key={key}
         ref={ref}

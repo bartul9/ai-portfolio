@@ -362,7 +362,7 @@ export default function Home() {
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="relative z-10 py-16 md:py-24">
+      <section id="about" className="relative z-10 py-16 md:py-20">
         <div className="container">
           <div
             className="rounded-2xl"
@@ -420,7 +420,7 @@ export default function Home() {
       <ChessShowcase />
 
       {/* PROJECTS */}
-      <section id="projects" className="relative z-10 py-16 md:py-24">
+      <section id="projects" className="relative z-10 py-16 md:py-20">
         <div className="container">
           <SectionTitle>Projects</SectionTitle>
           <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
@@ -472,7 +472,7 @@ export default function Home() {
       </section>
 
       {/* AI LAB */}
-      <section id="ai" className="py-16 md:py-24">
+      <section id="ai" className="py-16 md:py-20">
         <div className="container relative z-10 ">
           <SectionTitle>AI Lab</SectionTitle>
 
