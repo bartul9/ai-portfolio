@@ -1,7 +1,7 @@
 "use client";
 
 import { Github, Linkedin, Mail } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import MatrixRain from "@/components/MatrixRain";
 import SectionTitle from "@/components/SectionTitle";
@@ -21,9 +21,13 @@ function onSheenMove(e) {
 /* -------- scroll spy (center-of-viewport) -------- */
 function useScrollSpy(selectors = [], { offset = "header" } = {}) {
   const [active, setActive] = useState(null);
+  const selectorList = useMemo(
+    () => (Array.isArray(selectors) ? selectors : [selectors]),
+    [selectors]
+  );
 
   useEffect(() => {
-    const sections = selectors
+    const sections = selectorList
       .map((s) => document.querySelector(s))
       .filter(Boolean);
 
@@ -71,7 +75,7 @@ function useScrollSpy(selectors = [], { offset = "header" } = {}) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [JSON.stringify(selectors), offset]);
+  }, [selectorList, offset]);
 
   return active;
 }
@@ -338,9 +342,10 @@ export default function Home() {
               viewport={{ once: true }}
               className="mt-3 text-[clamp(1rem,3.2vw,1.35rem)] text-[--color-neon-200] max-w-[80ch]"
             >
-              Turning Ideas into{" "}
-              <span className="text-[--color-neon-500]">Scalable</span>,
-              Beautiful Apps
+              Croatia-based front-end engineer building{" "}
+              <span className="text-[--color-neon-500]">scalable</span>,
+              beautiful digital products for startups, founders, and tech
+              teams across Europe.
             </motion.p>
 
             <motion.div
@@ -350,6 +355,10 @@ export default function Home() {
             >
               <TypeMotto />
             </motion.div>
+
+            <p className="mt-6 text-sm uppercase tracking-[0.2em] text-white/60">
+              Luka Bartulović • Luka Bartulovic • Frontend developer Hrvatska
+            </p>
           </div>
 
           <a
@@ -382,15 +391,18 @@ export default function Home() {
 
             <div className="mt-6 md:mt-8 grid md:grid-cols-2 gap-6 md:gap-8">
               <p className="text-base md:text-lg leading-relaxed text-gray-200 p-2">
-                I’m Luka — a frontend engineer and product builder. I create{" "}
-                <b>fast</b>, <b>beautifully designed</b> web and mobile apps.
-                Clean UIs, subtle but powerful animation, and crystal-clear UX.
-                I’m also interested in the <b>backend</b> side — Node.js,
+                I’m Luka Bartulović (often typed as Luka Bartulovic) — a
+                frontend engineer and product builder based in Split,
+                Hrvatska. I create <b>fast</b>, <b>beautifully designed</b> web
+                and mobile apps that rank, convert, and delight. Clean UIs,
+                subtle but powerful animation, and crystal-clear UX. I’m also
+                interested in the <b>backend</b> side — Node.js,
                 Supabase/Postgres, Prisma, webhooks and Edge functions — so I
                 can own the full vertical slice. My mindset is
                 <b> Maximum Game</b>: focus, speed, problem-solving and
                 delivery. Currently pushing <i>PartyGate</i>,{" "}
-                <i>Tarot/Natal AI</i> and client work (SEO, sales, booking).
+                <i>Tarot/Natal AI</i> and client work (SEO, sales, booking) for
+                partners across Croatia and the EU.
               </p>
 
               <ul className="grid gap-3">
@@ -526,6 +538,38 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ / SEO */}
+      <section
+        id="faq"
+        aria-labelledby="faq-heading"
+        className="relative z-10 py-16 md:py-24"
+      >
+        <div className="container">
+          <SectionTitle id="faq-heading">Frequently Asked Questions</SectionTitle>
+          <dl className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {[
+              {
+                q: "Who is Luka Bartulović?",
+                a: "Luka Bartulović (also written Luka Bartulovic) is a Croatia-based front-end developer building high-performing user interfaces with React, Next.js, and product strategy experience.",
+              },
+              {
+                q: "Where does Luka work from?",
+                a: "I live in Split, Hrvatska and partner with clients throughout Croatia and the EU, offering remote-first collaboration with on-site availability when projects need it.",
+              },
+              {
+                q: "Do you offer front end development in Hrvatska?",
+                a: "Yes. I help Croatian startups, agencies, and founders with end-to-end front-end development, performance tuning, SEO, and UI polish so their products stand out in search and in the market.",
+              },
+            ].map(({ q, a }) => (
+              <div key={q} className="card p-5 text-left">
+                <dt className="text-lg font-semibold text-white">{q}</dt>
+                <dd className="mt-2 text-sm opacity-85 leading-relaxed">{a}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
       {/* CONTACT */}
       <section id="contact" className="relative z-10 py-20 md:py-28">
         <div className="container text-center">
@@ -534,8 +578,13 @@ export default function Home() {
           </h2>
 
           <p className="mt-4 opacity-90">
-            Open to frontend / React / RN roles and ambitious AI products.
+            Open to frontend / React / RN roles and ambitious AI products
+            across Croatia, the Balkans, and worldwide.
           </p>
+
+          <address className="mt-2 text-xs uppercase tracking-[0.3em] text-white/50 not-italic">
+            Split • Dalmatia • Croatia / Hrvatska
+          </address>
 
           <div
             className="cta-wrap mx-auto mt-8 w-fit  max-w-3xl"
