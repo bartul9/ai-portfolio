@@ -108,10 +108,10 @@ const projects = [
     tags: ["Next.js", "LLMs", "OG/SEO", "Edge"],
   },
   {
-    title: "Te Baca Adem",
-    desc: "Simple restoraunt website with SEO, maps, booking.",
-    link: "https://tebaca-adem.vercel.app",
-    tags: ["HTML", "CSS", "Maps", "SEO"],
+    title: "DollarTrack",
+    desc: "Expense tracking app for small personal budgets.",
+    link: "https://dollar-track.vercel.app/",
+    tags: ["React", "SQL"],
   },
 ];
 
