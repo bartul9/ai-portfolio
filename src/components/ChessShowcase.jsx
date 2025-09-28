@@ -42,12 +42,8 @@ function BoardCard() {
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.3 }}
-        className="relative card overflow-hidden p-0 cursor-pointer max-w-xl"
+        className="relative card overflow-hidden p-0 max-w-xl"
         title="Click to toggle the story"
-        onClick={() => {
-          setOpen((v) => !v);
-          replay();
-        }}
       >
         <div className="relative w-full aspect-square bg-black/40">
           <div className="absolute inset-4 rounded-xl overflow-hidden ring-1 ring-white/10 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.25)]">
@@ -121,8 +117,8 @@ function BoardCard() {
               e.stopPropagation(); // prevent board click toggle twice
               setOpen((v) => !v);
             }}
-            className="absolute bottom-2 right-2 rounded-md border border-emerald-300/30 bg-black/40
-                       px-2.5 py-1 text-[11px] text-emerald-100/90 hover:bg-black/55
+            className="absolute cursor-pointer bottom-2 right-2 rounded-md border border-emerald-300/30 bg-black/40
+                       px-2.5 py-1 text-[11px] text-emerald-100/90 hover:bg-green-400/10
                        ring-1 ring-white/10"
           >
             {open ? "Hide text" : "Show text"}
