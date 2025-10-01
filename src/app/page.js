@@ -96,16 +96,16 @@ function useMatrixFade(headerPx = 64) {
 
 const projects = [
   {
-    title: "PartyGate",
-    desc: "Tinder for parties — create, discover, and connect IRL.",
-    link: "https://partygate.app",
-    tags: ["React", "Supabase", "Realtime", "RLS"],
+    title: "ConsigliereX",
+    desc: "Gamified self development app with AI guidance.",
+    link: "https://consigliere-x.vercel.app",
+    tags: ["Next.js", "SQL", "AI"],
   },
   {
     title: "Tarot + Natal AI",
     desc: "AI-powered tarot & natal chart. Structured, multilingual, fast.",
     link: "https://tarot-hrvatska.vercel.app",
-    tags: ["Next.js", "LLMs", "OG/SEO", "Edge"],
+    tags: ["Next.js", "AI", "OG/SEO", "Edge"],
   },
   {
     title: "DollarTrack",
@@ -384,13 +384,10 @@ export default function Home() {
               <p className="text-base md:text-lg leading-relaxed text-gray-200 p-2">
                 I’m Luka — a frontend engineer and product builder. I create{" "}
                 <b>fast</b>, <b>beautifully designed</b> web and mobile apps.
-                Clean UIs, subtle but powerful animation, and crystal-clear UX.
-                I’m also interested in the <b>backend</b> side — Node.js,
-                Supabase/Postgres, Prisma, webhooks and Edge functions — so I
-                can own the full vertical slice. My mindset is
+                I’m also interested in the <b>backend</b> side — so I can own
+                the full vertical slice. My mindset is
                 <b> Maximum Game</b>: focus, speed, problem-solving and
-                delivery. Currently pushing <i>PartyGate</i>,{" "}
-                <i>Tarot/Natal AI</i> and client work (SEO, sales, booking).
+                delivery.
               </p>
 
               <ul className="grid gap-3">
