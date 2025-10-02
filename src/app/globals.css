@@ -831,3 +831,37 @@ header nav a {
     opacity: 0;
   }
 }
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card .reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  clip-path: circle(var(--r, 0px) at var(--x, 50%) var(--y, 50%));
+  transition: clip-path 350ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    opacity 250ms ease;
+  opacity: 1;
+}
+
+.project-card:hover .reveal {
+  --r: 140px;
+}
+
+/* content fades out while hover reveal is active */
+.project-card .content {
+  position: relative;
+  z-index: 1;
+  transition: opacity 300ms ease;
+}
+
+.project-card:hover .content {
+  opacity: 0; /* hides text */
+  pointer-events: none;
+}

@@ -100,21 +100,26 @@ const projects = [
     desc: "Gamified self development app with AI guidance.",
     link: "https://consigliere-x.vercel.app",
     tags: ["Next.js", "SQL", "AI"],
+    image: "/images/projects/consigliere-x.png", // put your real path here
+    imageOpacity: 0.55, // tweak per-card if you want
   },
   {
     title: "Tarot + Natal AI",
     desc: "AI-powered tarot & natal chart. Structured, multilingual, fast.",
     link: "https://tarot-hrvatska.vercel.app",
     tags: ["Next.js", "AI", "OG/SEO", "Edge"],
+    image: "/images/projects/tarot.png",
+    imageOpacity: 0.5,
   },
   {
     title: "DollarTrack",
     desc: "Expense tracking app for small personal budgets.",
     link: "https://dollar-track.vercel.app/",
     tags: ["React", "SQL"],
+    image: "/images/projects/dollar-track.png",
+    imageOpacity: 0.5,
   },
 ];
-
 const skills = [
   "React / Next.js",
   "React Native",
@@ -427,40 +432,43 @@ export default function Home() {
                 href={p.link}
                 target="_blank"
                 rel="noreferrer"
-                whileHover={{
-                  y: -4,
-                  scale: 1.01,
-                  transition: { duration: 0.4, ease: EASE },
-                }}
-                className="group card ambient-neon sheen-static p-5 transition-transform duration-1000 ease-in-out"
+                className="group card ambient-neon sheen-static p-5 transition-transform duration-1000 ease-in-out project-card"
                 onMouseMove={(e) => {
-                  const el = e.currentTarget,
-                    r = el.getBoundingClientRect();
-                  el.style.setProperty("--x", e.clientX - r.left + "px");
-                  el.style.setProperty("--y", e.clientY - r.top + "px");
+                  const el = e.currentTarget;
+                  const r = el.getBoundingClientRect();
+                  el.style.setProperty("--x", `${e.clientX - r.left}px`);
+                  el.style.setProperty("--y", `${e.clientY - r.top}px`);
                 }}
-                style={{
-                  background:
-                    "radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(34,255,136,.10), transparent 40%)",
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.setProperty("--r", `0px`);
                 }}
               >
-                <h3 className="text-lg md:text-xl font-semibold text-white">
-                  {p.title}
-                </h3>
-                <p className="mt-2 text-sm opacity-85">{p.desc}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {p.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="text-[11px] px-2 py-0.5 rounded-full border border-white/15 bg-black/30"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-6 flex items-center gap-2 text-[--color-neon-500]">
-                  <span>Open</span>
-                  <span aria-hidden>↗</span>
+                {p.image && (
+                  <span
+                    className="reveal"
+                    style={{ backgroundImage: `url('${p.image}')` }}
+                  />
+                )}
+
+                <div className="content">
+                  <h3 className="text-lg md:text-xl font-semibold text-white">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 text-sm opacity-85">{p.desc}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {p.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="text-[11px] px-2 py-0.5 rounded-full border border-white/15 bg-black/30 backdrop-blur-[2px]"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-6 flex items-center gap-2 text-[--color-neon-500]">
+                    <span>Open</span>
+                    <span aria-hidden>↗</span>
+                  </div>
                 </div>
               </a>
             ))}
