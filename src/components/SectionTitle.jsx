@@ -1,12 +1,24 @@
 "use client";
 
-export default function SectionTitle({ children, id }) {
+export default function SectionTitle({
+  children,
+  id,
+  eyebrow,
+  description,
+  align = "left",
+}) {
   return (
-    <h2
+    <div
       id={id}
-      className="section-scroll text-3xl md:text-4xl font-semibold border-b border-emerald-200/50 pb-3"
+      className={`section-scroll section-heading ${
+        align === "center" ? "is-center" : ""
+      }`}
     >
-      {children}
-    </h2>
+      {eyebrow && <span className="section-eyebrow">{eyebrow}</span>}
+      <h2 className="section-title-text">{children}</h2>
+      {description && (
+        <p className="section-description">{description}</p>
+      )}
+    </div>
   );
 }
