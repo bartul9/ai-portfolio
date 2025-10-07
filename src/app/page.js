@@ -1,12 +1,11 @@
 "use client";
 
 import { Github, Linkedin, Mail } from "lucide-react";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import MatrixRain from "@/components/MatrixRain";
 import SectionTitle from "@/components/SectionTitle";
 import Stat from "@/components/Stat";
-import NeuralMesh from "@/components/NeuralMesh";
 import TypeMotto from "@/components/TypeMotto";
 import ChessShowcase from "@/components/ChessShowcase";
 
@@ -14,13 +13,21 @@ import ChessShowcase from "@/components/ChessShowcase";
 
 function onSheenMove(e) {
   const r = e.currentTarget.getBoundingClientRect();
-  e.currentTarget.style.setProperty("--x", `${e.clientX - r.left}px`);
-  e.currentTarget.style.setProperty("--y", `${e.clientY - r.top}px`);
+  const x = ((e.clientX - r.left) / r.width) * 100;
+  const y = ((e.clientY - r.top) / r.height) * 100;
+  e.currentTarget.style.setProperty("--x", `${x}%`);
+  e.currentTarget.style.setProperty("--y", `${y}%`);
+}
+
+function onSheenLeave(e) {
+  e.currentTarget.style.removeProperty("--x");
+  e.currentTarget.style.removeProperty("--y");
 }
 
 /* -------- scroll spy (center-of-viewport) -------- */
 function useScrollSpy(selectors = [], { offset = "header" } = {}) {
   const [active, setActive] = useState(null);
+  const selectorKey = useMemo(() => JSON.stringify(selectors), [selectors]);
 
   useEffect(() => {
     const sections = selectors
@@ -71,25 +78,9 @@ function useScrollSpy(selectors = [], { offset = "header" } = {}) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [JSON.stringify(selectors), offset]);
+  }, [selectors, selectorKey, offset]);
 
   return active;
-}
-
-function useMatrixFade(headerPx = 64) {
-  const [overlay, setOverlay] = useState(0);
-  useEffect(() => {
-    const onScroll = () => {
-      const h = Math.max(200, window.innerHeight - headerPx);
-      const y = window.scrollY;
-      const v = Math.min(1, Math.max(0, y / (h * 0.75)));
-      setOverlay(v * 0.45);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [headerPx]);
-  return overlay;
 }
 
 /* -------- data -------- */
@@ -101,7 +92,7 @@ const projects = [
     link: "https://consigliere-x.vercel.app",
     tags: ["Next.js", "SQL", "AI"],
     image: "/images/projects/consigliere-x.png", // put your real path here
-    imageOpacity: 0.55, // tweak per-card if you want
+    imageAlt: "ConsigliereX personal growth dashboard",
   },
   {
     title: "Tarot + Natal AI",
@@ -109,7 +100,7 @@ const projects = [
     link: "https://tarot-hrvatska.vercel.app",
     tags: ["Next.js", "AI", "OG/SEO", "Edge"],
     image: "/images/projects/tarot.png",
-    imageOpacity: 0.5,
+    imageAlt: "Tarot and natal AI readings interface",
   },
   {
     title: "DollarTrack",
@@ -117,7 +108,7 @@ const projects = [
     link: "https://dollar-track.vercel.app/",
     tags: ["React", "SQL"],
     image: "/images/projects/dollar-track.png",
-    imageOpacity: 0.5,
+    imageAlt: "DollarTrack budgeting experience",
   },
 ];
 const skills = [
@@ -151,19 +142,6 @@ const aiCaps = [
   },
 ];
 
-/* -------- helper: isMobile for Matrix tuning -------- */
-function useIsMobile() {
-  const [m, setM] = useState(false);
-  useEffect(() => {
-    const q = matchMedia("(max-width: 768px)");
-    const fn = () => setM(q.matches);
-    fn();
-    q.addEventListener?.("change", fn);
-    return () => q.removeEventListener?.("change", fn);
-  }, []);
-  return m;
-}
-
 /* ---------------- animation system (1s tween, smooth) ---------------- */
 
 const ANIMATIONS_ENABLED = true; // set to false to remove all animations
@@ -183,49 +161,26 @@ const fadeIn = {
 /* ---------------- page ---------------- */
 
 export default function Home() {
-  const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
   const reduceMotion = useReducedMotion();
 
-  const active = useScrollSpy([
-    "#about",
-    "#projects",
-    "#ai",
-    "#skills",
-    "#contact",
-  ]);
-  const matrixOverlay = useMatrixFade(64);
-
+  const sectionIds = useMemo(
+    () => ["#about", "#projects", "#ai", "#skills", "#contact"],
+    []
+  );
+  const active = useScrollSpy(sectionIds);
   // if the user prefers reduced motion or animations are disabled, no variants
   const useAnim = ANIMATIONS_ENABLED && !reduceMotion;
 
   return (
     <main className="relative min-h-screen overflow-x-clip site-bg">
-      {/* BACKGROUND */}
-      <MatrixRain
-        fontBase={isMobile ? 20 : 16}
-        speedMin={0.45}
-        speedMax={isMobile ? 0.95 : 1.1}
-        opacity={isMobile ? 0.22 : 0.28}
-      />
-      <div
-        className="fixed inset-0 z-0 bg-black pointer-events-none"
-        style={{ opacity: matrixOverlay, transition: "opacity 600ms ease" }}
-      />
-
-      <div className="fixed inset-0 -z-[1] bg-noise opacity-60" />
-
-      {/* NAV */}
-      <header className="fixed top-0 left-0 right-0 z-20 h-16 backdrop-blur-sm bg-black/40 border-b border-white/5">
-        <div className="mx-auto max-w-6xl h-full px-4 sm:px-6 flex items-center justify-between">
-          <a
-            href="#"
-            className="text-white text-lg font-semibold transition-opacity duration-1000 ease-in-out"
-          >
-            LB<span className="opacity-60">.portfolio</span>
+      <header className="header-glass fixed top-0 left-0 right-0 z-20">
+        <div className="container flex h-full items-center justify-between gap-6">
+          <a href="#" className="nav-brand">
+            Luka<span className="nav-brand-accent">.builds</span>
           </a>
 
-          <nav className="hidden md:flex h-full items-center gap-1">
+          <nav className="hidden h-full items-center gap-3 md:flex">
             <a
               className={`nav-link ${active === "#about" ? "active" : ""}`}
               href="#about"
@@ -258,10 +213,9 @@ export default function Home() {
             </a>
           </nav>
 
-          {/* mobile hamburger */}
           <button
             aria-label="Menu"
-            className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-white/15 hover:border-white/30 transition-all duration-1000 ease-in-out"
+            className="menu-toggle md:hidden"
             onClick={() => setMenuOpen(true)}
           >
             <span className="sr-only">Open menu</span>
@@ -276,20 +230,39 @@ export default function Home() {
           </button>
         </div>
 
-        {/* mobile sheet */}
         {menuOpen && (
           <div className="mobile-sheet">
             <div
-              className="absolute inset-0 bg-black/60"
+              className="absolute inset-0 bg-slate-900/35"
               onClick={() => setMenuOpen(false)}
             />
             <motion.div
               initial={useAnim ? { y: -12, opacity: 0 } : false}
               animate={useAnim ? { y: 0, opacity: 1 } : false}
               exit={useAnim ? { y: -12, opacity: 0 } : false}
-              transition={{ type: "tween", duration: 0.5, ease: EASE }}
+              transition={{ type: "tween", duration: 0.45, ease: EASE }}
               className="mobile-panel"
             >
+              <div className="flex items-center justify-between border-b border-slate-200/70 px-5 py-4">
+                <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+                  Menu
+                </span>
+                <button
+                  type="button"
+                  className="mobile-close"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M6 6l12 12M18 6l-12 12"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <span className="sr-only">Close menu</span>
+                </button>
+              </div>
               <div className="p-2">
                 {[
                   ["About", "#about"],
@@ -313,162 +286,232 @@ export default function Home() {
         )}
       </header>
 
-      {/* HERO */}
-      <section className="relative h-[calc(100svh-var(--header-h))] overflow-hidden">
-        {/* glow */}
-        <div className="pointer-events-none absolute inset-0 -z-[1] flex items-center justify-center">
-          <div
-            className="h-[44vh] w-[90vw] md:w-[82vw] max-w-6xl rounded-full blur-3xl opacity-35"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(34,255,136,.22), transparent 60%)",
-              transition: "opacity 1000ms ease",
-            }}
-          />
-        </div>
+      <section className="hero-section">
+        <div className="container hero-grid items-center py-24 sm:py-28">
+          <div className="space-y-8 text-left">
+            <motion.div
+              variants={fadeUp}
+              viewport={{ once: true }}
+              className="hero-badge"
+            >
+              <span className="badge-dot" />
+              Senior frontend & product partner · Split, Croatia
+            </motion.div>
 
-        <div className="container h-full flex flex-col items-center justify-center text-center">
-          <div>
             <motion.h1
               variants={fadeUp}
               viewport={{ once: true }}
-              className="hero-title text-balance mx-auto font-extrabold tracking-tight text-white leading-[0.98]
-                         text-[clamp(2.2rem,8.5vw,5.6rem)]"
+              className="hero-heading"
             >
-              Luka <span className="text-[--color-neon-500]">Bartulović</span>
+              Luka <span className="hero-highlight">Bartulović</span>
             </motion.h1>
 
             <motion.p
               variants={fadeIn}
               viewport={{ once: true }}
-              className="mt-3 text-[clamp(1rem,3.2vw,1.35rem)] text-[--color-neon-200] max-w-[80ch]"
+              className="hero-copy"
             >
-              Turning Ideas into{" "}
-              <span className="text-[--color-neon-500]">Scalable</span>,
-              Beautiful Apps
+              Product-minded frontend partner building luminous, matrix-tinged
+              experiences for startups. I blend system thinking, cinematic
+              motion, and AI copilots to ship interfaces that feel inevitable,
+              fast, and unmistakably premium.
             </motion.p>
 
             <motion.div
               variants={fadeUp}
               viewport={{ once: true }}
-              className="mt-15 w-full text-sm text-white/90 "
+              className="hero-motto"
             >
+              <span className="hero-motto-label">Operating mantra</span>
               <TypeMotto />
             </motion.div>
+
+            <motion.div
+              variants={fadeUp}
+              viewport={{ once: true }}
+              className="hero-actions"
+            >
+              <a
+                href="mailto:bartul123@outlook.com"
+                className="hero-cta hero-cta--primary"
+              >
+                Start a project
+              </a>
+              <a href="#projects" className="hero-cta hero-cta--secondary">
+                View case studies
+              </a>
+            </motion.div>
+
+            <motion.ul
+              variants={fadeUp}
+              viewport={{ once: true }}
+              className="hero-meta"
+            >
+              <li>⚡ Interactive prototypes in under 48h to de-risk vision.</li>
+              <li>🧭 Narrative + systems design so every pixel supports the goal.</li>
+              <li>🤖 AI orchestration with guardrails, evals, and velocity baked in.</li>
+            </motion.ul>
           </div>
 
-          <a
-            href="#about"
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-70 hover:opacity-100 transition-opacity duration-1000 ease-in-out text-sm"
+          <motion.div
+            variants={fadeIn}
+            viewport={{ once: true }}
+            className="hero-panel"
+            onMouseMove={onSheenMove}
+            onMouseLeave={onSheenLeave}
           >
-            ↓ Scroll
-          </a>
+            <div className="panel-header">
+              <span>Signal log</span>
+              <span className="panel-dot" />
+            </div>
+
+            <p className="panel-intro">
+              Partnering with EU startups to map, design, and deploy end-to-end
+              product journeys — from napkin sketch to production launch.
+            </p>
+
+            <div className="panel-grid">
+              <div className="panel-card">
+                <span className="panel-label">Matrix UX</span>
+                <p>Design systems and motion grammar that feel native from day one.</p>
+              </div>
+              <div className="panel-card">
+                <span className="panel-label">Latency & Vitality</span>
+                <p>Performance budgets, observability, and launch-ready SEO baked in.</p>
+              </div>
+              <div className="panel-card">
+                <span className="panel-label">Delivery Ops</span>
+                <p>Weekly shipping rhythms, QA guardrails, and crisp stakeholder comms.</p>
+              </div>
+            </div>
+
+            <div className="panel-footer">
+              <div className="avatar-ring">LB</div>
+              <div>
+                <p className="panel-footer-title">
+                  Let’s build the next breakout product.
+                </p>
+                <p className="panel-footer-sub">
+                  Open to remote-first teams & venture-backed founders in 2024.
+                </p>
+              </div>
+            </div>
+          </motion.div>
         </div>
+
+        <a href="#about" className="hero-scroll">
+          Scroll to explore
+        </a>
       </section>
 
-      {/* ABOUT */}
-      <section id="about" className="relative z-10 py-16 md:py-20">
+      <section id="about" className="section-spacing">
         <div className="container">
-          <div
-            className="rounded-2xl"
-            onMouseMove={(e) => {
-              const r = e.currentTarget.getBoundingClientRect();
-              e.currentTarget.style.setProperty(
-                "--mx",
-                `${e.clientX - r.left}px`
-              );
-              e.currentTarget.style.setProperty(
-                "--my",
-                `${e.clientY - r.top}px`
-              );
-            }}
+          <SectionTitle
+            eyebrow="Profile"
+            description="Crafting resilient products end-to-end — from concept and UX flows to production releases backed by measurable outcomes."
           >
-            <SectionTitle>About Me</SectionTitle>
+            About Luka
+          </SectionTitle>
 
-            <div className="mt-6 md:mt-8 grid md:grid-cols-2 gap-6 md:gap-8">
-              <p className="text-base md:text-lg leading-relaxed text-gray-200 p-2">
-                I’m Luka — a frontend engineer and product builder. I create{" "}
-                <b>fast</b>, <b>beautifully designed</b> web and mobile apps.
-                I’m also interested in the <b>backend</b> side — so I can own
-                the full vertical slice. My mindset is
-                <b> Maximum Game</b>: focus, speed, problem-solving and
-                delivery.
+          <div className="about-grid">
+            <div className="about-copy">
+              <p>
+                I’m Luka, a frontend specialist who thinks in systems and ships
+                like a founder. My focus is on pairing visual finesse with
+                technical depth so ambitious ideas feel inevitable. From launch
+                marketing to data-heavy product work, I design and build the
+                entire journey.
+              </p>
+              <p>
+                I thrive in fast-moving environments — aligning stakeholders,
+                clarifying the narrative, and translating insights into shipped
+                features. With strong mobile experience and an AI-first toolkit,
+                I help teams move from idea to market in weeks, not quarters.
               </p>
 
-              <ul className="grid gap-3">
-                {[
-                  ["Speed", "Prototype in 24–48h. Fast → validate → iterate."],
-                  ["Clarity", "One clean path to value. No friction."],
-                  ["Delivery", "No excuses. Shipped > perfect."],
-                ].map(([t, d], i) => (
-                  <li key={i} className="card p-4">
-                    <div className="font-semibold text-emerald-200">{t}</div>
-                    <div className="text-sm opacity-80 mt-1">{d}</div>
-                  </li>
-                ))}
+              <ul className="about-points">
+                <li>Full-stack capable: Next.js, Supabase, edge runtimes.</li>
+                <li>Motion-first polish that elevates perceived product quality.</li>
+                <li>Story-driven artifacts — decks, demos, and launch playbooks.</li>
               </ul>
             </div>
 
-            <div className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
-              <Stat to={25} label="Shipped features / month" />
-              <Stat to={12} label="Production projects" />
-              <Stat to={48} label="Hours to first prototype" />
+            <div className="about-panel">
+              <div className="about-pill">Principles</div>
+              <div className="about-card-grid">
+                {[
+                  ["Speed", "Prototype in 24–48h. Validate → iterate."],
+                  ["Clarity", "One polished path to value. Zero fog."],
+                  ["Delivery", "Ship relentlessly. Momentum beats perfection."],
+                ].map(([title, desc]) => (
+                  <div key={title} className="about-card">
+                    <div className="about-card-title">{title}</div>
+                    <p>{desc}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="about-metrics">
+                <Stat to={25} label="Shipped features / month" />
+                <Stat to={12} label="Production projects" />
+                <Stat to={48} label="Hours to first prototype" />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CHESS */}
       <ChessShowcase />
 
-      {/* PROJECTS */}
-      <section id="projects" className="relative z-10 py-16 md:py-20">
+      <section id="projects" className="section-spacing">
         <div className="container">
-          <SectionTitle>Projects</SectionTitle>
-          <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          <SectionTitle
+            eyebrow="Selected Work"
+            description="Case studies and live products that blend storytelling with rock-solid engineering."
+          >
+            Projects
+          </SectionTitle>
+
+          <div className="projects-grid">
             {projects.map((p, i) => (
               <a
                 key={i}
                 href={p.link}
                 target="_blank"
                 rel="noreferrer"
-                className="group card ambient-neon sheen-static p-5 transition-transform duration-1000 ease-in-out project-card"
-                onMouseMove={(e) => {
-                  const el = e.currentTarget;
-                  const r = el.getBoundingClientRect();
-                  el.style.setProperty("--x", `${e.clientX - r.left}px`);
-                  el.style.setProperty("--y", `${e.clientY - r.top}px`);
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.setProperty("--r", `0px`);
-                }}
+                className="project-card"
+                onMouseMove={onSheenMove}
+                onMouseLeave={onSheenLeave}
               >
                 {p.image && (
-                  <span
-                    className="reveal"
-                    style={{ backgroundImage: `url('${p.image}')` }}
-                  />
+                  <div className="project-card__media">
+                    <Image
+                      src={p.image}
+                      alt={p.imageAlt ?? p.title}
+                      fill
+                      className="project-card__image"
+                      sizes="(min-width: 1280px) 360px, (min-width: 1024px) 33vw, (min-width: 640px) 45vw, 90vw"
+                      priority={i === 0}
+                    />
+                    <div className="project-card__shine" aria-hidden />
+                  </div>
                 )}
-
-                <div className="content">
-                  <h3 className="text-lg md:text-xl font-semibold text-white">
-                    {p.title}
-                  </h3>
-                  <p className="mt-2 text-sm opacity-85">{p.desc}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
+                <div className="project-card__body">
+                  <h3 className="project-card__title">{p.title}</h3>
+                  <p className="project-card__desc">{p.desc}</p>
+                  <div className="project-card__tags">
                     {p.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="text-[11px] px-2 py-0.5 rounded-full border border-white/15 bg-black/30 backdrop-blur-[2px]"
-                      >
+                      <span key={t} className="project-tag">
                         {t}
                       </span>
                     ))}
                   </div>
-                  <div className="mt-6 flex items-center gap-2 text-[--color-neon-500]">
-                    <span>Open</span>
-                    <span aria-hidden>↗</span>
-                  </div>
+                  <span className="project-card__link">
+                    View project
+                    <span className="project-card__arrow" aria-hidden>
+                      ↗
+                    </span>
+                  </span>
                 </div>
               </a>
             ))}
@@ -476,37 +519,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* AI LAB */}
-      <section id="ai" className="py-16 md:py-20">
-        <div className="container relative z-10 ">
-          <SectionTitle>AI Lab</SectionTitle>
+      <section id="ai" className="section-spacing">
+        <div className="container">
+          <SectionTitle
+            eyebrow="AI Systems"
+            description="Designing dependable AI that ships: structured outputs, guardrails, evaluation, and UX that feels magical."
+          >
+            AI Lab
+          </SectionTitle>
 
-          <p className="max-w-3xl text-md mt-8">
-            I build AI features that serve the user: structured outputs, stable
-            chains, evaluation, and real product value. No fog — only results.
-          </p>
-          <div className="relative z-10 ai-section px-6 pt-4 pb-12  rounded-xl mt-8">
-            <NeuralMesh />
-
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          <div className="ai-lab">
+            <div className="ai-grid">
               {aiCaps.map((c, i) => (
                 <div
                   key={i}
-                  className="ai-card p-5 backdrop-blur-lg bg-black/40"
-                  onMouseMove={(e) => {
-                    const r = e.currentTarget.getBoundingClientRect();
-                    e.currentTarget.style.setProperty(
-                      "--x",
-                      `${e.clientX - r.left}px`
-                    );
-                    e.currentTarget.style.setProperty(
-                      "--y",
-                      `${e.clientY - r.top}px`
-                    );
-                  }}
+                  className="ai-card"
+                  onMouseMove={onSheenMove}
+                  onMouseLeave={onSheenLeave}
                 >
-                  <div className="font-semibold text-white">{c.title}</div>
-                  <div className="mt-2 text-sm opacity-85">{c.desc}</div>
+                  <div className="ai-card-title">{c.title}</div>
+                  <p>{c.desc}</p>
                 </div>
               ))}
             </div>
@@ -514,16 +546,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SKILLS */}
-      <section id="skills" className="relative z-10 py-16 md:py-24">
+      <section id="skills" className="section-spacing">
         <div className="container">
-          <SectionTitle>Skills</SectionTitle>
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <SectionTitle
+            eyebrow="Tooling"
+            description="A curated stack chosen for velocity, quality, and maintainability."
+          >
+            Skills
+          </SectionTitle>
+
+          <div className="skills-cloud">
             {skills.map((s, i) => (
-              <span
-                key={i}
-                className="skill-chip text-[11px] px-2 py-0.5 rounded-full border chip-glow"
-              >
+              <span key={i} className="skill-chip">
                 {s}
               </span>
             ))}
@@ -531,59 +565,54 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CONTACT */}
-      <section id="contact" className="relative z-10 py-20 md:py-28">
-        <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-semibold text-white">
-            Let’s Build Something Legendary
-          </h2>
-
-          <p className="mt-4 opacity-90">
-            Open to frontend / React / RN roles and ambitious AI products.
-          </p>
-
+      <section id="contact" className="section-spacing">
+        <div className="container">
           <div
-            className="cta-wrap mx-auto mt-8 w-fit  max-w-3xl"
+            className="contact-panel"
             onMouseMove={onSheenMove}
+            onMouseLeave={onSheenLeave}
           >
-            <div className="flex items-stretch justify-center gap-2">
-              <a
-                title="Send Email"
-                href="mailto:bartul123@outlook.com"
-                className="cta-btn transition-all duration-1000 ease-in-out"
+            <div>
+              <SectionTitle
+                eyebrow="Collaborate"
+                align="center"
+                description="Let’s co-create software that feels inevitable. I’m ready for ambitious teams, product-minded founders, and bold roadmaps."
               >
-                <Mail className="w-5 h-5" />
+                Let’s Build Something Legendary
+              </SectionTitle>
+            </div>
+
+            <div className="contact-actions">
+              <a href="mailto:bartul123@outlook.com" className="contact-cta">
+                <Mail className="h-5 w-5" />
+                <span>Email</span>
               </a>
-              <span className="cta-sep" />
               <a
                 href="https://github.com/bartul9"
                 target="_blank"
                 rel="noreferrer"
-                title="GitHub"
-                className="cta-btn transition-all duration-1000 ease-in-out"
+                className="contact-cta"
               >
-                <Github className="w-5 h-5" />
+                <Github className="h-5 w-5" />
+                <span>GitHub</span>
               </a>
-              <span className="cta-sep" />
               <a
                 href="https://www.linkedin.com/in/luka-bartulović-5b562b200/"
                 target="_blank"
                 rel="noreferrer"
-                className="cta-btn transition-all duration-1000 ease-in-out"
-                title="LinkedIn"
+                className="contact-cta"
               >
-                <Linkedin className="w-5 h-5" />
+                <Linkedin className="h-5 w-5" />
+                <span>LinkedIn</span>
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      <footer className="relative z-10 py-6 border-t border-white/10 bg-black/40 backdrop-blur-sm">
-        <div className="container flex flex-col sm:flex-row items-center justify-center gap-3">
-          <p className="text-xs opacity-60">
-            © {new Date().getFullYear()} Luka Bartulović — MP13
-          </p>
+      <footer className="footer">
+        <div className="container footer-inner">
+          <p>© {new Date().getFullYear()} Luka Bartulović — Crafted with maximum game.</p>
         </div>
       </footer>
     </main>

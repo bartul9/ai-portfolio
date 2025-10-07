@@ -15,12 +15,12 @@ export default function Stat({ to = 100, label = "", duration = 1400 }) {
     return () => cancelAnimationFrame(raf);
   }, [to, duration]);
   return (
-    <div className="card ambient-neon p-5 text-center">
-      <div className="text-4xl md:text-5xl font-extrabold text-white">
+    <div className="stat-card">
+      <div className="stat-number">
         {n}
-        <span className="opacity-70">+</span>
+        <span className="stat-symbol">+</span>
       </div>
-      <div className="mt-2 text-sm text-[--color-neon-200]">{label}</div>
+      <div className="stat-label">{label}</div>
     </div>
   );
 }
