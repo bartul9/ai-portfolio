@@ -311,13 +311,8 @@ export default function Home() {
         )}
       </header>
 
-      <section className="hero-section relative h-[calc(100svh-var(--header-h))] overflow-hidden">
-        <div className="hero-gradient" />
-        <div className="hero-grid" />
-        <div className="hero-orb hero-orb--one" />
-        <div className="hero-orb hero-orb--two" />
-
-        <div className="container grid h-full items-center gap-12 py-24 sm:py-28 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+      <section className="hero-section">
+        <div className="container hero-grid items-center py-24 sm:py-28">
           <div className="space-y-8 text-left">
             <motion.div
               variants={fadeUp}
@@ -325,7 +320,7 @@ export default function Home() {
               className="hero-badge"
             >
               <span className="badge-dot" />
-              Available for senior frontend & product roles · Split, Croatia
+              Senior frontend & product partner · Split, Croatia
             </motion.div>
 
             <motion.h1
@@ -341,10 +336,10 @@ export default function Home() {
               viewport={{ once: true }}
               className="hero-copy"
             >
-              Product-minded frontend engineer crafting launch-ready experiences
-              for ambitious teams. I blend motion, polish, and AI-driven
-              workflows to ship interfaces that feel alive, fast, and future
-              proof.
+              Product-minded frontend engineer helping startups go from idea to
+              launch with conviction. I blend motion craft, design systems, and
+              AI-assisted workflows to ship interfaces that feel alive, fast,
+              and unmistakably premium.
             </motion.p>
 
             <motion.div
@@ -377,9 +372,9 @@ export default function Home() {
               viewport={{ once: true }}
               className="hero-meta"
             >
-              <li>⚡ Prototype in 48h — validate faster than doubt.</li>
-              <li>🎯 Product partner from UX mapping to polished ship.</li>
-              <li>🤖 AI-first mindset — structured, reliable, production-ready.</li>
+              <li>⚡ Prototype in 48h — align vision before the week is out.</li>
+              <li>🎯 Product partner — UX, storytelling, and polished delivery.</li>
+              <li>🤖 AI-first mindset — structured, reliable, production ready.</li>
             </motion.ul>
           </div>
 
@@ -391,13 +386,13 @@ export default function Home() {
             onMouseLeave={onSheenLeave}
           >
             <div className="panel-header">
-              <span>Recent Wins</span>
+              <span>Recent wins</span>
               <span className="panel-dot" />
             </div>
 
             <p className="panel-intro">
               Partnering with EU startups & founders to design seamless product
-              journeys, from napkin sketch to production release.
+              journeys — from napkin sketch to production release.
             </p>
 
             <div className="panel-grid">
@@ -418,7 +413,9 @@ export default function Home() {
             <div className="panel-footer">
               <div className="avatar-ring">LB</div>
               <div>
-                <p className="panel-footer-title">Let’s build the next breakout product.</p>
+                <p className="panel-footer-title">
+                  Let’s build the next breakout product.
+                </p>
                 <p className="panel-footer-sub">
                   Open to remote-first teams & venture-backed founders in 2024.
                 </p>
@@ -445,23 +442,22 @@ export default function Home() {
             <div className="about-copy">
               <p>
                 I’m Luka, a frontend specialist who thinks in systems and ships
-                like a founder. My focus is on delivering experiences that marry
-                visual finesse, real-time responsiveness, and technical depth.
-                From marketing sites to complex dashboards, I design and build
-                the entire journey.
+                like a founder. My focus is on pairing visual finesse with
+                technical depth so ambitious ideas feel inevitable. From launch
+                marketing to data-heavy product work, I design and build the
+                entire journey.
               </p>
               <p>
                 I thrive in fast-moving environments — aligning stakeholders,
-                clarifying the product narrative, and turning insights into
-                shipped features. With strong mobile experience and an AI-first
-                toolkit, I help teams move from idea to market in weeks, not
-                quarters.
+                clarifying the narrative, and translating insights into shipped
+                features. With strong mobile experience and an AI-first toolkit,
+                I help teams move from idea to market in weeks, not quarters.
               </p>
 
               <ul className="about-points">
-                <li>Full-stack capable: Next.js, Supabase, edge functions.</li>
-                <li>Motion-first: micro-interactions that elevate perceived quality.</li>
-                <li>Story-driven: messaging, decks, and demos that win buy-in.</li>
+                <li>Full-stack capable: Next.js, Supabase, edge runtimes.</li>
+                <li>Motion-first polish that elevates perceived product quality.</li>
+                <li>Story-driven artifacts — decks, demos, and launch playbooks.</li>
               </ul>
             </div>
 
