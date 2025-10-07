@@ -2,11 +2,8 @@
 
 export default function SectionTitle({ children, id }) {
   return (
-    <h2
-      id={id}
-      className="section-scroll text-3xl md:text-4xl font-semibold border-b border-emerald-200/50 pb-3"
-    >
-      {children}
+    <h2 id={id} className="section-title">
+      <span>{children}</span>
     </h2>
   );
 }

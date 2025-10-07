@@ -1,30 +1,29 @@
 "use client";
 
-import { Github, Linkedin, Mail } from "lucide-react";
+import {
+  ArrowUpRight,
+  Github,
+  Linkedin,
+  Mail,
+  Rocket,
+  Sparkles,
+  Workflow,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import MatrixRain from "@/components/MatrixRain";
 import SectionTitle from "@/components/SectionTitle";
 import Stat from "@/components/Stat";
 import NeuralMesh from "@/components/NeuralMesh";
 import TypeMotto from "@/components/TypeMotto";
 import ChessShowcase from "@/components/ChessShowcase";
 
-/* ---------------- helpers ---------------- */
-
-function onSheenMove(e) {
-  const r = e.currentTarget.getBoundingClientRect();
-  e.currentTarget.style.setProperty("--x", `${e.clientX - r.left}px`);
-  e.currentTarget.style.setProperty("--y", `${e.clientY - r.top}px`);
-}
-
 /* -------- scroll spy (center-of-viewport) -------- */
 function useScrollSpy(selectors = [], { offset = "header" } = {}) {
   const [active, setActive] = useState(null);
 
   useEffect(() => {
-    const sections = selectors
-      .map((s) => document.querySelector(s))
+    const sectionEls = selectors
+      .map((selector) => document.querySelector(selector))
       .filter(Boolean);
 
     const getOffset = () => {
@@ -43,7 +42,7 @@ function useScrollSpy(selectors = [], { offset = "header" } = {}) {
       const y = window.scrollY + window.innerHeight * 0.5 + getOffset();
       let cur = null;
 
-      for (const el of sections) {
+      for (const el of sectionEls) {
         const top = el.offsetTop;
         const bottom = top + el.offsetHeight;
         if (y >= top && y < bottom) {
@@ -71,25 +70,9 @@ function useScrollSpy(selectors = [], { offset = "header" } = {}) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [JSON.stringify(selectors), offset]);
+  }, [selectors, offset]);
 
   return active;
-}
-
-function useMatrixFade(headerPx = 64) {
-  const [overlay, setOverlay] = useState(0);
-  useEffect(() => {
-    const onScroll = () => {
-      const h = Math.max(200, window.innerHeight - headerPx);
-      const y = window.scrollY;
-      const v = Math.min(1, Math.max(0, y / (h * 0.75)));
-      setOverlay(v * 0.45);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [headerPx]);
-  return overlay;
 }
 
 /* -------- data -------- */
@@ -97,72 +80,104 @@ function useMatrixFade(headerPx = 64) {
 const projects = [
   {
     title: "ConsigliereX",
-    desc: "Gamified self development app with AI guidance.",
+    desc: "Productivty RPG that guides users with adaptive AI quests and live metrics.",
     link: "https://consigliere-x.vercel.app",
-    tags: ["Next.js", "SQL", "AI"],
-    image: "/images/projects/consigliere-x.png", // put your real path here
-    imageOpacity: 0.55, // tweak per-card if you want
+    tags: ["Next.js", "Supabase", "AI"],
+    image: "/images/projects/consigliere-x.png",
   },
   {
     title: "Tarot + Natal AI",
-    desc: "AI-powered tarot & natal chart. Structured, multilingual, fast.",
+    desc: "Realtime divination studio with multilingual prompts, SEO automation and share cards.",
     link: "https://tarot-hrvatska.vercel.app",
-    tags: ["Next.js", "AI", "OG/SEO", "Edge"],
+    tags: ["Next.js", "AI", "Edge"],
     image: "/images/projects/tarot.png",
-    imageOpacity: 0.5,
   },
   {
     title: "DollarTrack",
-    desc: "Expense tracking app for small personal budgets.",
+    desc: "Cashflow dashboard for small budgets with offline sync and receipt parsing.",
     link: "https://dollar-track.vercel.app/",
-    tags: ["React", "SQL"],
+    tags: ["React", "SQLite", "Automation"],
     image: "/images/projects/dollar-track.png",
-    imageOpacity: 0.5,
   },
 ];
-const skills = [
-  "React / Next.js",
-  "React Native",
-  "MobX / Zustand",
-  "Tailwind / MUI",
-  "Supabase",
-  "Node.js",
-  "SEO / Performance",
-  "Product Thinking",
-  "Pitch & Storytelling",
+
+const heroHighlights = [
+  {
+    title: "Design-led engineering",
+    desc: "I architect flows, craft UI and sweat the micro-interactions before I touch code.",
+    Icon: Sparkles,
+  },
+  {
+    title: "Launch velocity",
+    desc: "24–48h from concept to working prototype. Shipping cadence beats slide decks.",
+    Icon: Rocket,
+  },
+  {
+    title: "Systems thinking",
+    desc: "From data to DX — predictable pipelines, guardrails and reliable delivery.",
+    Icon: Workflow,
+  },
 ];
+
+const navItems = [
+  { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
+  { label: "AI Lab", href: "#ai" },
+  { label: "Process", href: "#process" },
+  { label: "Skills", href: "#skills" },
+  { label: "Contact", href: "#contact" },
+];
+
+const navAnchors = navItems.map((item) => item.href);
 
 const aiCaps = [
   {
     title: "AI Product Design",
-    desc: "Idea → prototype in 24–48h. UX, value props, screen flows.",
+    desc: "Idea → prototype in under 48h. UX flows, positioning and storytelling that converts.",
   },
   {
     title: "LLM Orchestration",
-    desc: "Structured output, function calling, chains, evals, guardrails.",
+    desc: "Structured outputs, multi-step agents, evals and failure recovery baked in.",
   },
   {
     title: "RAG + Vector Search",
-    desc: "Supabase pgvector, embeddings, hybrid queries, caching.",
+    desc: "pgvector, embeddings strategy, hybrid search and caching for low latency.",
   },
   {
     title: "Realtime & Edge",
-    desc: "Supabase Realtime, Edge Functions, cron & webhooks.",
+    desc: "Supabase realtime, edge functions and webhooks powering reactive experiences.",
   },
 ];
 
-/* -------- helper: isMobile for Matrix tuning -------- */
-function useIsMobile() {
-  const [m, setM] = useState(false);
-  useEffect(() => {
-    const q = matchMedia("(max-width: 768px)");
-    const fn = () => setM(q.matches);
-    fn();
-    q.addEventListener?.("change", fn);
-    return () => q.removeEventListener?.("change", fn);
-  }, []);
-  return m;
-}
+const skills = [
+  "Next.js",
+  "React Native",
+  "TypeScript",
+  "Tailwind & CSS Architecture",
+  "Supabase",
+  "Node.js",
+  "MobX / Zustand",
+  "Product Strategy",
+  "Pitch & Storytelling",
+  "SEO & Performance",
+  "LLM Evaluation",
+  "Growth Experimentation",
+];
+
+const process = [
+  {
+    title: "Discover & Frame",
+    desc: "Clarify value, map the user moments that matter and frame success metrics.",
+  },
+  {
+    title: "Design the System",
+    desc: "Design flows, component structure and data contracts so build moves fast.",
+  },
+  {
+    title: "Build & Validate",
+    desc: "Ship the prototype, instrument it and iterate with qualitative & quantitative feedback.",
+  },
+];
 
 /* ---------------- animation system (1s tween, smooth) ---------------- */
 
@@ -183,106 +198,64 @@ const fadeIn = {
 /* ---------------- page ---------------- */
 
 export default function Home() {
-  const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
   const reduceMotion = useReducedMotion();
 
-  const active = useScrollSpy([
-    "#about",
-    "#projects",
-    "#ai",
-    "#skills",
-    "#contact",
-  ]);
-  const matrixOverlay = useMatrixFade(64);
+  const active = useScrollSpy(navAnchors);
 
   // if the user prefers reduced motion or animations are disabled, no variants
   const useAnim = ANIMATIONS_ENABLED && !reduceMotion;
 
   return (
-    <main className="relative min-h-screen overflow-x-clip site-bg">
-      {/* BACKGROUND */}
-      <MatrixRain
-        fontBase={isMobile ? 20 : 16}
-        speedMin={0.45}
-        speedMax={isMobile ? 0.95 : 1.1}
-        opacity={isMobile ? 0.22 : 0.28}
-      />
-      <div
-        className="fixed inset-0 z-0 bg-black pointer-events-none"
-        style={{ opacity: matrixOverlay, transition: "opacity 600ms ease" }}
-      />
-
-      <div className="fixed inset-0 -z-[1] bg-noise opacity-60" />
+    <main className="relative min-h-screen overflow-x-clip bg-canvas text-slate-100">
+      <div className="pointer-events-none fixed inset-0 -z-10">
+        <div className="absolute -top-48 left-1/2 h-[38rem] w-[38rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,_rgba(129,140,248,0.25),_transparent_65%)] blur-3xl" />
+        <div className="absolute bottom-[-28rem] left-[-18rem] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle_at_center,_rgba(168,85,247,0.22),_transparent_68%)] blur-3xl" />
+        <div className="absolute -bottom-24 right-[-12rem] h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle_at_center,_rgba(56,189,248,0.25),_transparent_70%)] blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.08),transparent_55%)]" />
+      </div>
 
       {/* NAV */}
-      <header className="fixed top-0 left-0 right-0 z-20 h-16 backdrop-blur-sm bg-black/40 border-b border-white/5">
-        <div className="mx-auto max-w-6xl h-full px-4 sm:px-6 flex items-center justify-between">
-          <a
-            href="#"
-            className="text-white text-lg font-semibold transition-opacity duration-1000 ease-in-out"
-          >
-            LB<span className="opacity-60">.portfolio</span>
-          </a>
+      <header className="fixed inset-x-0 top-0 z-30 pt-6">
+        <div className="container">
+          <div className="nav-shell">
+            <a href="#" className="nav-brand">
+              <span className="nav-brand-dot" /> Luka Bartulović
+            </a>
 
-          <nav className="hidden md:flex h-full items-center gap-1">
-            <a
-              className={`nav-link ${active === "#about" ? "active" : ""}`}
-              href="#about"
-            >
-              About
-            </a>
-            <a
-              className={`nav-link ${active === "#projects" ? "active" : ""}`}
-              href="#projects"
-            >
-              Projects
-            </a>
-            <a
-              className={`nav-link ${active === "#ai" ? "active" : ""}`}
-              href="#ai"
-            >
-              AI Lab
-            </a>
-            <a
-              className={`nav-link ${active === "#skills" ? "active" : ""}`}
-              href="#skills"
-            >
-              Skills
-            </a>
-            <a
-              className={`nav-link ${active === "#contact" ? "active" : ""}`}
-              href="#contact"
-            >
-              Contact
-            </a>
-          </nav>
+            <nav className="hidden md:flex items-center gap-1">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  className={`nav-link ${active === item.href ? "active" : ""}`}
+                  href={item.href}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
 
-          {/* mobile hamburger */}
-          <button
-            aria-label="Menu"
-            className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-white/15 hover:border-white/30 transition-all duration-1000 ease-in-out"
-            onClick={() => setMenuOpen(true)}
-          >
-            <span className="sr-only">Open menu</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M4 7h16M4 12h16M4 17h16"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
+            <button
+              aria-label="Menu"
+              className="nav-menu-btn md:hidden"
+              onClick={() => setMenuOpen(true)}
+            >
+              <span className="sr-only">Open menu</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 7h16M4 12h16M4 17h16"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
 
-        {/* mobile sheet */}
         {menuOpen && (
           <div className="mobile-sheet">
-            <div
-              className="absolute inset-0 bg-black/60"
-              onClick={() => setMenuOpen(false)}
-            />
+            <div className="absolute inset-0 bg-slate-950/70" onClick={() => setMenuOpen(false)} />
             <motion.div
               initial={useAnim ? { y: -12, opacity: 0 } : false}
               animate={useAnim ? { y: 0, opacity: 1 } : false}
@@ -291,20 +264,14 @@ export default function Home() {
               className="mobile-panel"
             >
               <div className="p-2">
-                {[
-                  ["About", "#about"],
-                  ["Projects", "#projects"],
-                  ["AI Lab", "#ai"],
-                  ["Skills", "#skills"],
-                  ["Contact", "#contact"],
-                ].map(([label, href]) => (
+                {navItems.map((item) => (
                   <a
-                    key={href}
-                    href={href}
+                    key={item.href}
+                    href={item.href}
                     className="mobile-link"
                     onClick={() => setMenuOpen(false)}
                   >
-                    {label}
+                    {item.label}
                   </a>
                 ))}
               </div>
@@ -314,105 +281,181 @@ export default function Home() {
       </header>
 
       {/* HERO */}
-      <section className="relative h-[calc(100svh-var(--header-h))] overflow-hidden">
-        {/* glow */}
-        <div className="pointer-events-none absolute inset-0 -z-[1] flex items-center justify-center">
-          <div
-            className="h-[44vh] w-[90vw] md:w-[82vw] max-w-6xl rounded-full blur-3xl opacity-35"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(34,255,136,.22), transparent 60%)",
-              transition: "opacity 1000ms ease",
-            }}
-          />
-        </div>
+      <section className="relative pt-[clamp(7rem,12vw,9rem)] pb-24 md:pb-32">
+        <div className="container grid items-center gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+          <div className="space-y-8">
+            <motion.span
+              variants={fadeUp}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs uppercase tracking-[0.28em] text-slate-200/80 backdrop-blur"
+            >
+              Product Engineer &amp; AI partner
+            </motion.span>
 
-        <div className="container h-full flex flex-col items-center justify-center text-center">
-          <div>
             <motion.h1
               variants={fadeUp}
               viewport={{ once: true }}
-              className="hero-title text-balance mx-auto font-extrabold tracking-tight text-white leading-[0.98]
-                         text-[clamp(2.2rem,8.5vw,5.6rem)]"
+              className="text-balance text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight text-white"
             >
-              Luka <span className="text-[--color-neon-500]">Bartulović</span>
+              Digital products that feel inevitable — built end to end.
             </motion.h1>
 
             <motion.p
               variants={fadeIn}
               viewport={{ once: true }}
-              className="mt-3 text-[clamp(1rem,3.2vw,1.35rem)] text-[--color-neon-200] max-w-[80ch]"
+              className="max-w-xl text-base sm:text-lg text-slate-200/80"
             >
-              Turning Ideas into{" "}
-              <span className="text-[--color-neon-500]">Scalable</span>,
-              Beautiful Apps
+              I turn ambitious ideas into elegant, scalable software. Design systems,
+              architecture, AI orchestration and go-to-market thinking come together in
+              focused delivery sprints.
             </motion.p>
 
             <motion.div
               variants={fadeUp}
               viewport={{ once: true }}
-              className="mt-15 w-full text-sm text-white/90 "
+              className="text-sm text-slate-200/70"
             >
               <TypeMotto />
             </motion.div>
+
+            <motion.div
+              variants={fadeUp}
+              viewport={{ once: true }}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2"
+            >
+              <a href="mailto:bartul123@outlook.com" className="btn btn-primary btn-lg btn-glow">
+                Start a project
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+              <a href="#projects" className="btn btn-outline btn-lg">
+                View case studies
+              </a>
+            </motion.div>
+
+            <motion.div
+              variants={fadeUp}
+              viewport={{ once: true }}
+              className="grid gap-4 pt-10 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {heroHighlights.map(({ title, desc, Icon }) => (
+                <div key={title} className="glass-tile">
+                  <div className="glass-icon">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <div className="text-sm font-semibold text-white">{title}</div>
+                  <p className="text-xs leading-relaxed text-slate-200/70">{desc}</p>
+                </div>
+              ))}
+            </motion.div>
           </div>
 
-          <a
-            href="#about"
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-70 hover:opacity-100 transition-opacity duration-1000 ease-in-out text-sm"
+          <motion.div
+            variants={fadeUp}
+            viewport={{ once: true }}
+            className="relative"
           >
-            ↓ Scroll
-          </a>
+            <div className="hero-card">
+              <div className="flex items-center justify-between gap-4">
+                <span className="badge-soft">Currently shipping</span>
+                <span className="text-sm font-medium text-slate-100/90">ConsigliereX</span>
+              </div>
+              <p className="mt-4 text-sm text-slate-200/75">
+                Gamified personal growth platform. AI quests, real-time progress, community loops.
+                Designed the brand language, product narrative and engineered the launch.
+              </p>
+
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="stat-tile">
+                  <span className="stat-value">48h</span>
+                  <span className="stat-label">from concept to live prototype</span>
+                </div>
+                <div className="stat-tile">
+                  <span className="stat-value">92%</span>
+                  <span className="stat-label">retention across first 3 cohorts</span>
+                </div>
+                <div className="stat-tile">
+                  <span className="stat-value">3x</span>
+                  <span className="stat-label">increase in challenge completion</span>
+                </div>
+                <div className="stat-tile">
+                  <span className="stat-value">0→1</span>
+                  <span className="stat-label">strategy, design, build &amp; launch</span>
+                </div>
+              </div>
+
+              <div className="mt-8 flex items-center justify-between gap-4 rounded-2xl border border-white/5 bg-white/5 px-4 py-3 text-xs text-slate-200/70">
+                <span>Toolchain: Next.js · Supabase · Tailwind · LLM Agents</span>
+                <span className="hidden sm:inline-flex items-center gap-1 text-slate-100/80">
+                  Live <ArrowUpRight className="h-3.5 w-3.5" />
+                </span>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="relative z-10 py-16 md:py-20">
-        <div className="container">
-          <div
-            className="rounded-2xl"
-            onMouseMove={(e) => {
-              const r = e.currentTarget.getBoundingClientRect();
-              e.currentTarget.style.setProperty(
-                "--mx",
-                `${e.clientX - r.left}px`
-              );
-              e.currentTarget.style.setProperty(
-                "--my",
-                `${e.clientY - r.top}px`
-              );
-            }}
-          >
-            <SectionTitle>About Me</SectionTitle>
+      <section id="about" className="relative py-24">
+        <div className="container grid items-start gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+          <div className="space-y-6">
+            <SectionTitle>About</SectionTitle>
+            <p className="text-base sm:text-lg leading-relaxed text-slate-200/80">
+              I’m Luka, a product engineer who moves from vision to launch without losing the
+              craft. I design the experience, build the stack and translate every sprint into
+              outcomes the business can feel. No waiting on handoffs — just clarity, velocity and
+              ownership.
+            </p>
 
-            <div className="mt-6 md:mt-8 grid md:grid-cols-2 gap-6 md:gap-8">
-              <p className="text-base md:text-lg leading-relaxed text-gray-200 p-2">
-                I’m Luka — a frontend engineer and product builder. I create{" "}
-                <b>fast</b>, <b>beautifully designed</b> web and mobile apps.
-                I’m also interested in the <b>backend</b> side — so I can own
-                the full vertical slice. My mindset is
-                <b> Maximum Game</b>: focus, speed, problem-solving and
-                delivery.
-              </p>
-
-              <ul className="grid gap-3">
-                {[
-                  ["Speed", "Prototype in 24–48h. Fast → validate → iterate."],
-                  ["Clarity", "One clean path to value. No friction."],
-                  ["Delivery", "No excuses. Shipped > perfect."],
-                ].map(([t, d], i) => (
-                  <li key={i} className="card p-4">
-                    <div className="font-semibold text-emerald-200">{t}</div>
-                    <div className="text-sm opacity-80 mt-1">{d}</div>
-                  </li>
-                ))}
-              </ul>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[
+                [
+                  "Speed",
+                  "Prototype, validate and iterate in compressed cycles so teams can learn fast.",
+                ],
+                [
+                  "Clarity",
+                  "Give every feature a narrative and a north star metric. Design isn’t decoration.",
+                ],
+                [
+                  "Delivery",
+                  "Ship the slice end-to-end — from data layer to the micro-interactions.",
+                ],
+                [
+                  "Story",
+                  "Translate the product into pitches, demos and launch-ready assets.",
+                ],
+              ].map(([title, desc]) => (
+                <div key={title} className="about-tile">
+                  <h3>{title}</h3>
+                  <p>{desc}</p>
+                </div>
+              ))}
             </div>
+          </div>
 
-            <div className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
-              <Stat to={25} label="Shipped features / month" />
-              <Stat to={12} label="Production projects" />
-              <Stat to={48} label="Hours to first prototype" />
+          <div className="about-panel">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold text-white">Lead the build, own the finish</h3>
+                <p className="mt-2 text-sm text-slate-200/70">
+                  I join teams as the person who can see the product, tell the story and implement
+                  the solution. Whether it’s a greenfield app or rebuilding a core flow, I align the
+                  design, data model, AI strategy and release plan.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <Stat to={25} label="Shipped features / month" />
+                <Stat to={12} label="Production launches" />
+                <Stat to={48} label="Hours to first prototype" />
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-slate-200/75">
+                <p>
+                  &ldquo;Luka is the builder you want when there’s no room for bloated timelines. He
+                  designs, codes and communicates like a founder.&rdquo; — <span className="text-white">Stef, CEO @ ConsigliereX</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -422,52 +465,40 @@ export default function Home() {
       <ChessShowcase />
 
       {/* PROJECTS */}
-      <section id="projects" className="relative z-10 py-16 md:py-20">
-        <div className="container">
-          <SectionTitle>Projects</SectionTitle>
-          <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            {projects.map((p, i) => (
+      <section id="projects" className="relative py-24">
+        <div className="container space-y-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <SectionTitle>Selected builds</SectionTitle>
+            <p className="max-w-2xl text-sm text-slate-200/70">
+              Each project blends strategy, systems design and relentless iteration. These are the
+              shipped pieces I’d show a founder when they ask how I work.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {projects.map((project) => (
               <a
-                key={i}
-                href={p.link}
+                key={project.title}
+                href={project.link}
                 target="_blank"
                 rel="noreferrer"
-                className="group card ambient-neon sheen-static p-5 transition-transform duration-1000 ease-in-out project-card"
-                onMouseMove={(e) => {
-                  const el = e.currentTarget;
-                  const r = el.getBoundingClientRect();
-                  el.style.setProperty("--x", `${e.clientX - r.left}px`);
-                  el.style.setProperty("--y", `${e.clientY - r.top}px`);
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.setProperty("--r", `0px`);
-                }}
+                className="project-card"
               >
-                {p.image && (
-                  <span
-                    className="reveal"
-                    style={{ backgroundImage: `url('${p.image}')` }}
-                  />
-                )}
+                <div
+                  className="project-media"
+                  style={{ backgroundImage: `url('${project.image}')` }}
+                />
 
-                <div className="content">
-                  <h3 className="text-lg md:text-xl font-semibold text-white">
-                    {p.title}
-                  </h3>
-                  <p className="mt-2 text-sm opacity-85">{p.desc}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {p.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="text-[11px] px-2 py-0.5 rounded-full border border-white/15 bg-black/30 backdrop-blur-[2px]"
-                      >
-                        {t}
-                      </span>
-                    ))}
+                <div className="project-body">
+                  <div className="flex items-center justify-between gap-4">
+                    <h3>{project.title}</h3>
+                    <ArrowUpRight className="h-4 w-4" />
                   </div>
-                  <div className="mt-6 flex items-center gap-2 text-[--color-neon-500]">
-                    <span>Open</span>
-                    <span aria-hidden>↗</span>
+                  <p>{project.desc}</p>
+                  <div className="project-tags">
+                    {project.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
                   </div>
                 </div>
               </a>
@@ -477,54 +508,64 @@ export default function Home() {
       </section>
 
       {/* AI LAB */}
-      <section id="ai" className="py-16 md:py-20">
-        <div className="container relative z-10 ">
-          <SectionTitle>AI Lab</SectionTitle>
-
-          <p className="max-w-3xl text-md mt-8">
-            I build AI features that serve the user: structured outputs, stable
-            chains, evaluation, and real product value. No fog — only results.
-          </p>
-          <div className="relative z-10 ai-section px-6 pt-4 pb-12  rounded-xl mt-8">
+      <section id="ai" className="relative py-24">
+        <div className="container">
+          <div className="ai-shell">
+            <div className="ai-overlay" />
             <NeuralMesh />
 
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-              {aiCaps.map((c, i) => (
-                <div
-                  key={i}
-                  className="ai-card p-5 backdrop-blur-lg bg-black/40"
-                  onMouseMove={(e) => {
-                    const r = e.currentTarget.getBoundingClientRect();
-                    e.currentTarget.style.setProperty(
-                      "--x",
-                      `${e.clientX - r.left}px`
-                    );
-                    e.currentTarget.style.setProperty(
-                      "--y",
-                      `${e.clientY - r.top}px`
-                    );
-                  }}
-                >
-                  <div className="font-semibold text-white">{c.title}</div>
-                  <div className="mt-2 text-sm opacity-85">{c.desc}</div>
-                </div>
-              ))}
+            <div className="ai-content">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <SectionTitle>AI Studio</SectionTitle>
+                <p className="max-w-xl text-sm text-slate-200/70">
+                  Production-ready AI features with predictable outputs and clear guardrails. I
+                  connect the model, UX and measurement into a cohesive system.
+                </p>
+              </div>
+
+              <div className="grid gap-4 pt-8 sm:grid-cols-2 lg:grid-cols-4">
+                {aiCaps.map((cap) => (
+                  <div key={cap.title} className="ai-card">
+                    <h3>{cap.title}</h3>
+                    <p>{cap.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* SKILLS */}
-      <section id="skills" className="relative z-10 py-16 md:py-24">
+      <section id="process" className="relative py-24">
+        <div className="container space-y-10">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <SectionTitle>Workflow</SectionTitle>
+            <p className="max-w-2xl text-sm text-slate-200/70">
+              Every engagement moves through a tight loop: align on value, design the system,
+              deliver the experience. This keeps momentum high and decisions clear.
+            </p>
+          </div>
+
+          <div className="process-grid">
+            {process.map((step, index) => (
+              <div key={step.title} className="process-card">
+                <span className="process-step">0{index + 1}</span>
+                <h3>{step.title}</h3>
+                <p>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" className="relative z-10 py-24">
         <div className="container">
           <SectionTitle>Skills</SectionTitle>
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {skills.map((s, i) => (
-              <span
-                key={i}
-                className="skill-chip text-[11px] px-2 py-0.5 rounded-full border chip-glow"
-              >
-                {s}
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {skills.map((skill) => (
+              <span key={skill} className="skill-chip">
+                {skill}
               </span>
             ))}
           </div>
@@ -532,58 +573,53 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="relative z-10 py-20 md:py-28">
-        <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-semibold text-white">
-            Let’s Build Something Legendary
-          </h2>
+      <section id="contact" className="relative py-24">
+        <div className="container">
+          <div className="contact-card">
+            <div className="space-y-4">
+              <h2 className="text-3xl sm:text-4xl font-semibold text-white">
+                Let’s build the product your investors can’t stop demoing.
+              </h2>
+              <p className="text-sm sm:text-base text-slate-200/75">
+                I’m open to senior frontend roles, product engineering mandates and AI ventures
+                that need a builder who can own the narrative and the code.
+              </p>
+            </div>
 
-          <p className="mt-4 opacity-90">
-            Open to frontend / React / RN roles and ambitious AI products.
-          </p>
-
-          <div
-            className="cta-wrap mx-auto mt-8 w-fit  max-w-3xl"
-            onMouseMove={onSheenMove}
-          >
-            <div className="flex items-stretch justify-center gap-2">
-              <a
-                title="Send Email"
-                href="mailto:bartul123@outlook.com"
-                className="cta-btn transition-all duration-1000 ease-in-out"
-              >
-                <Mail className="w-5 h-5" />
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <a href="mailto:bartul123@outlook.com" className="btn btn-primary btn-lg btn-glow">
+                Drop me a line
+                <Mail className="h-4 w-4" />
               </a>
-              <span className="cta-sep" />
-              <a
-                href="https://github.com/bartul9"
-                target="_blank"
-                rel="noreferrer"
-                title="GitHub"
-                className="cta-btn transition-all duration-1000 ease-in-out"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-              <span className="cta-sep" />
-              <a
-                href="https://www.linkedin.com/in/luka-bartulović-5b562b200/"
-                target="_blank"
-                rel="noreferrer"
-                className="cta-btn transition-all duration-1000 ease-in-out"
-                title="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
+              <div className="flex items-center gap-2 text-slate-200/70">
+                <a
+                  href="https://github.com/bartul9"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-link"
+                >
+                  <Github className="h-5 w-5" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/luka-bartulović-5b562b200/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-link"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <footer className="relative z-10 py-6 border-t border-white/10 bg-black/40 backdrop-blur-sm">
-        <div className="container flex flex-col sm:flex-row items-center justify-center gap-3">
-          <p className="text-xs opacity-60">
-            © {new Date().getFullYear()} Luka Bartulović — MP13
-          </p>
+      <footer className="relative z-20 border-t border-white/5 bg-slate-950/70 backdrop-blur">
+        <div className="container flex flex-col items-center justify-between gap-3 py-8 text-xs text-slate-400/80 sm:flex-row">
+          <span>© {new Date().getFullYear()} Luka Bartulović. Built with intention in Split, HR.</span>
+          <span className="flex items-center gap-1 text-slate-400/70">
+            v2 portfolio refresh · <span className="font-medium text-slate-200/80">Maximum Game</span>
+          </span>
         </div>
       </footer>
     </main>
