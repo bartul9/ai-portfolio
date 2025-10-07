@@ -311,10 +311,10 @@ export default function Home() {
               viewport={{ once: true }}
               className="hero-copy"
             >
-              Product-minded frontend engineer helping startups go from idea to
-              launch with conviction. I blend motion craft, design systems, and
-              AI-assisted workflows to ship interfaces that feel alive, fast,
-              and unmistakably premium.
+              Product-minded frontend engineer transforming hazy 0 → 1 ideas
+              into luminous, matrix-tinged experiences. I choreograph design
+              systems, realtime UX, and AI copilots so every release feels
+              orchestrated, blisteringly fast, and impossible to ignore.
             </motion.p>
 
             <motion.div
@@ -347,9 +347,9 @@ export default function Home() {
               viewport={{ once: true }}
               className="hero-meta"
             >
-              <li>⚡ Prototype in 48h — align vision before the week is out.</li>
-              <li>🎯 Product partner — UX, storytelling, and polished delivery.</li>
-              <li>🤖 AI-first mindset — structured, reliable, production ready.</li>
+              <li>⚡ 0 → 1 momentum — interactive proof in under 48 hours.</li>
+              <li>🎯 Narrative clarity — product stories that win stakeholders.</li>
+              <li>🤖 AI copilots — orchestrated LLMs with guardrails and evals.</li>
             </motion.ul>
           </div>
 
@@ -366,18 +366,18 @@ export default function Home() {
             </div>
 
             <p className="panel-intro">
-              Partnering with EU startups & founders to design seamless product
-              journeys — from napkin sketch to production release.
+              Partnering with EU & US teams to turn complex products into
+              intuitive journeys — from first spark to production release.
             </p>
 
             <div className="panel-grid">
               <div className="panel-card">
                 <span className="panel-label">AI Product Design</span>
-                <p>Idea → clickable prototype within 48 hours.</p>
+                <p>Clickable prototype + story deck in 48 hours or less.</p>
               </div>
               <div className="panel-card">
                 <span className="panel-label">Performance</span>
-                <p>Core Web Vitals & SEO dialed in before launch.</p>
+                <p>Core Web Vitals, SEO, analytics — wired in before launch.</p>
               </div>
               <div className="panel-card">
                 <span className="panel-label">Team Velocity</span>
@@ -389,10 +389,11 @@ export default function Home() {
               <div className="avatar-ring">LB</div>
               <div>
                 <p className="panel-footer-title">
-                  Let’s build the next breakout product.
+                  Let’s prototype your next breakout release.
                 </p>
                 <p className="panel-footer-sub">
-                  Open to remote-first teams & venture-backed founders in 2024.
+                  Remote-first partner for venture-backed founders & product
+                  teams in 2024.
                 </p>
               </div>
             </div>
@@ -408,7 +409,7 @@ export default function Home() {
         <div className="container">
           <SectionTitle
             eyebrow="Profile"
-            description="Crafting resilient products end-to-end — from concept and UX flows to production releases backed by measurable outcomes."
+            description="Crafting resilient products end-to-end — from concept and UX flows to measurable releases that look polished and behave flawlessly."
           >
             About Luka
           </SectionTitle>
@@ -424,7 +425,7 @@ export default function Home() {
               </p>
               <p>
                 I thrive in fast-moving environments — aligning stakeholders,
-                clarifying the narrative, and translating insights into shipped
+                clarifying the story, and translating insights into shipped
                 features. With strong mobile experience and an AI-first toolkit,
                 I help teams move from idea to market in weeks, not quarters.
               </p>
@@ -441,7 +442,7 @@ export default function Home() {
               <div className="about-card-grid">
                 {[
                   ["Speed", "Prototype in 24–48h. Validate → iterate."],
-                  ["Clarity", "One polished path to value. Zero fog."],
+                  ["Clarity", "One polished path to value. No fog, no friction."],
                   ["Delivery", "Ship relentlessly. Momentum beats perfection."],
                 ].map(([title, desc]) => (
                   <div key={title} className="about-card">
@@ -467,7 +468,7 @@ export default function Home() {
         <div className="container">
           <SectionTitle
             eyebrow="Selected Work"
-            description="Case studies and live products that blend storytelling with rock-solid engineering."
+            description="Case studies and live products that fuse cinematic storytelling with resilient engineering and a hint of matrix glow."
           >
             Projects
           </SectionTitle>
@@ -523,7 +524,7 @@ export default function Home() {
         <div className="container">
           <SectionTitle
             eyebrow="AI Systems"
-            description="Designing dependable AI that ships: structured outputs, guardrails, evaluation, and UX that feels magical."
+            description="Designing dependable AI that ships: structured outputs, realtime guardrails, evaluation loops, and UX that still feels magical."
           >
             AI Lab
           </SectionTitle>
@@ -550,7 +551,7 @@ export default function Home() {
         <div className="container">
           <SectionTitle
             eyebrow="Tooling"
-            description="A curated stack chosen for velocity, quality, and maintainability."
+            description="A curated stack tuned for velocity, quality, and long-term maintainability."
           >
             Skills
           </SectionTitle>
