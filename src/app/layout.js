@@ -65,6 +65,18 @@ import Script from "next/script";
 
 import "./globals.css";
 
+import { Space_Grotesk, Inter_Tight } from "next/font/google";
+
+const display = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
+
+const body = Inter_Tight({
+  subsets: ["latin"],
+  variable: "--font-body",
+});
+
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -111,7 +123,7 @@ export default function RootLayout({ children }) {
           {JSON.stringify(structuredData)}
         </Script>
       </head>
-      <body className="bg-black relative">
+      <body className={`${display.variable} ${body.variable} bg-black relative`}>
         <Analytics />
         {children}
       </body>
