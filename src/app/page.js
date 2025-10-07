@@ -1,6 +1,7 @@
 "use client";
 
 import { Github, Linkedin, Mail } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import SectionTitle from "@/components/SectionTitle";
@@ -91,7 +92,7 @@ const projects = [
     link: "https://consigliere-x.vercel.app",
     tags: ["Next.js", "SQL", "AI"],
     image: "/images/projects/consigliere-x.png", // put your real path here
-    imageOpacity: 0.55, // tweak per-card if you want
+    imageAlt: "ConsigliereX personal growth dashboard",
   },
   {
     title: "Tarot + Natal AI",
@@ -99,7 +100,7 @@ const projects = [
     link: "https://tarot-hrvatska.vercel.app",
     tags: ["Next.js", "AI", "OG/SEO", "Edge"],
     image: "/images/projects/tarot.png",
-    imageOpacity: 0.5,
+    imageAlt: "Tarot and natal AI readings interface",
   },
   {
     title: "DollarTrack",
@@ -107,7 +108,7 @@ const projects = [
     link: "https://dollar-track.vercel.app/",
     tags: ["React", "SQL"],
     image: "/images/projects/dollar-track.png",
-    imageOpacity: 0.5,
+    imageAlt: "DollarTrack budgeting experience",
   },
 ];
 const skills = [
@@ -174,12 +175,12 @@ export default function Home() {
   return (
     <main className="relative min-h-screen overflow-x-clip site-bg">
       <header className="header-glass fixed top-0 left-0 right-0 z-20">
-        <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-4 sm:px-6">
+        <div className="container flex h-full items-center justify-between gap-6">
           <a href="#" className="nav-brand">
             Luka<span className="nav-brand-accent">.builds</span>
           </a>
 
-          <nav className="hidden h-full items-center gap-1 md:flex">
+          <nav className="hidden h-full items-center gap-3 md:flex">
             <a
               className={`nav-link ${active === "#about" ? "active" : ""}`}
               href="#about"
@@ -483,15 +484,19 @@ export default function Home() {
                 onMouseLeave={onSheenLeave}
               >
                 {p.image && (
-                  <span
-                    className="project-card__bg"
-                    style={{
-                      backgroundImage: `linear-gradient(180deg, rgba(6,10,20,0.2), rgba(6,10,20,0.8)), url('${p.image}')`,
-                      opacity: p.imageOpacity ?? 0.55,
-                    }}
-                  />
+                  <div className="project-card__media">
+                    <Image
+                      src={p.image}
+                      alt={p.imageAlt ?? p.title}
+                      fill
+                      className="project-card__image"
+                      sizes="(min-width: 1280px) 360px, (min-width: 1024px) 33vw, (min-width: 640px) 45vw, 90vw"
+                      priority={i === 0}
+                    />
+                    <div className="project-card__shine" aria-hidden />
+                  </div>
                 )}
-                <div className="project-card__content">
+                <div className="project-card__body">
                   <h3 className="project-card__title">{p.title}</h3>
                   <p className="project-card__desc">{p.desc}</p>
                   <div className="project-card__tags">
@@ -502,7 +507,10 @@ export default function Home() {
                     ))}
                   </div>
                   <span className="project-card__link">
-                    View project <span aria-hidden>↗</span>
+                    View project
+                    <span className="project-card__arrow" aria-hidden>
+                      ↗
+                    </span>
                   </span>
                 </div>
               </a>

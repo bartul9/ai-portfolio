@@ -17,7 +17,7 @@ export default function ChessShowcase() {
       <div className="container">
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center">
-          <SectionTitle>The Chess Challenge</SectionTitle>
+          <SectionTitle align="center">The Chess Challenge</SectionTitle>
         </div>
 
         <div className="mt-6 md:mt-10 flex flex-col items-center gap-6 md:gap-8">
