@@ -45,8 +45,8 @@ function BoardCard() {
         className="relative card overflow-hidden p-0 max-w-xl"
         title="Click to toggle the story"
       >
-        <div className="relative w-full aspect-square bg-black/40">
-          <div className="absolute inset-4 rounded-xl overflow-hidden ring-1 ring-white/10 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.25)]">
+        <div className="relative w-full aspect-square rounded-[28px] bg-gradient-to-br from-blue-50 via-white to-white">
+          <div className="absolute inset-4 overflow-hidden rounded-2xl ring-1 ring-slate-200/70 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6)] bg-white">
             <BoardGrid />
             <BoardCoords />
 
@@ -108,7 +108,7 @@ function BoardCard() {
           )}
 
           {/* vignette */}
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,transparent,rgba(0,0,0,.6))]" />
+          <div className="pointer-events-none absolute inset-0 rounded-[28px] bg-[radial-gradient(circle_at_50%_32%,transparent,rgba(37,99,235,.18))]" />
 
           {/* Show/Hide toggle button (on board) */}
           <button
@@ -117,9 +117,9 @@ function BoardCard() {
               e.stopPropagation(); // prevent board click toggle twice
               setOpen((v) => !v);
             }}
-            className="absolute cursor-pointer bottom-2 right-2 rounded-md border border-emerald-300/30 bg-black/40
-                       px-2.5 py-1 text-[11px] text-emerald-100/90 hover:bg-green-400/10
-                       ring-1 ring-white/10"
+            className="absolute bottom-2 right-2 cursor-pointer rounded-md border border-blue-200/70 bg-white/85
+                       px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-blue-600 hover:bg-blue-50
+                       ring-1 ring-white/70"
           >
             {open ? "Hide text" : "Show text"}
           </button>
@@ -199,22 +199,22 @@ function TypeInBoard({ active }) {
       {active && (
         <div key="crt" className="absolute inset-0">
           {/* glass/scanlines */}
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0)_0%,rgba(0,0,0,.35)_100%)]" />
+          <div className="pointer-events-none absolute inset-0 rounded-[28px] bg-[linear-gradient(rgba(255,255,255,0)_0%,rgba(148,163,184,.35)_100%)]" />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-[0.25] mix-blend-overlay"
+            className="pointer-events-none absolute inset-0 opacity-[0.22] mix-blend-overlay"
             style={{
               backgroundImage:
-                "repeating-linear-gradient(to bottom, rgba(0,0,0,.25) 0px, rgba(0,0,0,.25) 1px, transparent 2px, transparent 4px)",
+                "repeating-linear-gradient(to bottom, rgba(59,130,246,.18) 0px, rgba(59,130,246,.18) 1px, transparent 2px, transparent 4px)",
             }}
           />
           {/* text area */}
-          <div className="absolute inset-2 md:inset-3 p-2 md:p-3 rounded-lg bg-black/35 ring-1 ring-emerald-300/10 overflow-hidden">
+          <div className="absolute inset-2 md:inset-3 overflow-hidden rounded-xl bg-blue-50/80 p-2 md:p-3 ring-1 ring-blue-200/60 shadow-[inset_0_0_18px_rgba(37,99,235,0.12)]">
             <pre
               className="h-full w-full whitespace-pre-wrap break-word text-start overflow-y-auto
                          font-mono text-[11px] md:text-[12px] leading-relaxed
-                         text-emerald-200/90 drop-shadow-[0_0_6px_rgba(0,255,180,.25)]"
-              style={{ textShadow: "0 0 6px rgba(0,255,180,.25)" }}
+                         text-blue-700/90 drop-shadow-[0_0_8px_rgba(37,99,235,.15)]"
+              style={{ textShadow: "0 0 8px rgba(37,99,235,.15)" }}
             >
               {shown}
               <span
@@ -242,8 +242,8 @@ function BoardGrid() {
         return (
           <div
             key={i}
-            className={light ? "bg-emerald-200/10" : "bg-emerald-900/35"}
-            style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.04)" }}
+            className={light ? "bg-blue-100/60" : "bg-indigo-200/70"}
+            style={{ boxShadow: "inset 0 0 0 1px rgba(15,23,42,0.05)" }}
           />
         );
       })}
@@ -253,7 +253,7 @@ function BoardGrid() {
 
 function BoardCoords() {
   return (
-    <div className="pointer-events-none absolute inset-0 text-[10px] md:text-xs text-emerald-300/35">
+    <div className="pointer-events-none absolute inset-0 text-[10px] md:text-xs text-blue-500/35">
       {Array.from({ length: 8 }).map((_, f) => (
         <span
           key={`f${f}`}

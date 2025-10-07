@@ -3,10 +3,8 @@
 import { Github, Linkedin, Mail } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import MatrixRain from "@/components/MatrixRain";
 import SectionTitle from "@/components/SectionTitle";
 import Stat from "@/components/Stat";
-import NeuralMesh from "@/components/NeuralMesh";
 import TypeMotto from "@/components/TypeMotto";
 import ChessShowcase from "@/components/ChessShowcase";
 
@@ -84,22 +82,6 @@ function useScrollSpy(selectors = [], { offset = "header" } = {}) {
   return active;
 }
 
-function useMatrixFade(headerPx = 64) {
-  const [overlay, setOverlay] = useState(0);
-  useEffect(() => {
-    const onScroll = () => {
-      const h = Math.max(200, window.innerHeight - headerPx);
-      const y = window.scrollY;
-      const v = Math.min(1, Math.max(0, y / (h * 0.75)));
-      setOverlay(v * 0.45);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [headerPx]);
-  return overlay;
-}
-
 /* -------- data -------- */
 
 const projects = [
@@ -159,19 +141,6 @@ const aiCaps = [
   },
 ];
 
-/* -------- helper: isMobile for Matrix tuning -------- */
-function useIsMobile() {
-  const [m, setM] = useState(false);
-  useEffect(() => {
-    const q = matchMedia("(max-width: 768px)");
-    const fn = () => setM(q.matches);
-    fn();
-    q.addEventListener?.("change", fn);
-    return () => q.removeEventListener?.("change", fn);
-  }, []);
-  return m;
-}
-
 /* ---------------- animation system (1s tween, smooth) ---------------- */
 
 const ANIMATIONS_ENABLED = true; // set to false to remove all animations
@@ -191,7 +160,6 @@ const fadeIn = {
 /* ---------------- page ---------------- */
 
 export default function Home() {
-  const isMobile = useIsMobile();
   const [menuOpen, setMenuOpen] = useState(false);
   const reduceMotion = useReducedMotion();
 
@@ -200,26 +168,12 @@ export default function Home() {
     []
   );
   const active = useScrollSpy(sectionIds);
-  const matrixOverlay = useMatrixFade(64);
-
   // if the user prefers reduced motion or animations are disabled, no variants
   const useAnim = ANIMATIONS_ENABLED && !reduceMotion;
 
   return (
     <main className="relative min-h-screen overflow-x-clip site-bg">
-      <MatrixRain
-        fontBase={isMobile ? 20 : 16}
-        speedMin={0.45}
-        speedMax={isMobile ? 0.95 : 1.1}
-        opacity={isMobile ? 0.22 : 0.28}
-      />
-      <div
-        className="fixed inset-0 z-0 pointer-events-none bg-gradient-to-b from-black/70 via-black/40 to-black/80"
-        style={{ opacity: matrixOverlay, transition: "opacity 600ms ease" }}
-      />
-      <div className="fixed inset-0 -z-[1] bg-noise opacity-60" />
-
-      <header className="header-glass fixed top-0 left-0 right-0 z-20 h-16">
+      <header className="header-glass fixed top-0 left-0 right-0 z-20">
         <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-4 sm:px-6">
           <a href="#" className="nav-brand">
             Luka<span className="nav-brand-accent">.builds</span>
@@ -260,7 +214,7 @@ export default function Home() {
 
           <button
             aria-label="Menu"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:border-white/30 md:hidden"
+            className="menu-toggle md:hidden"
             onClick={() => setMenuOpen(true)}
           >
             <span className="sr-only">Open menu</span>
@@ -278,7 +232,7 @@ export default function Home() {
         {menuOpen && (
           <div className="mobile-sheet">
             <div
-              className="absolute inset-0 bg-black/60"
+              className="absolute inset-0 bg-slate-900/35"
               onClick={() => setMenuOpen(false)}
             />
             <motion.div
@@ -288,6 +242,26 @@ export default function Home() {
               transition={{ type: "tween", duration: 0.45, ease: EASE }}
               className="mobile-panel"
             >
+              <div className="flex items-center justify-between border-b border-slate-200/70 px-5 py-4">
+                <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+                  Menu
+                </span>
+                <button
+                  type="button"
+                  className="mobile-close"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M6 6l12 12M18 6l-12 12"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <span className="sr-only">Close menu</span>
+                </button>
+              </div>
               <div className="p-2">
                 {[
                   ["About", "#about"],
@@ -547,7 +521,6 @@ export default function Home() {
           </SectionTitle>
 
           <div className="ai-lab">
-            <NeuralMesh />
             <div className="ai-grid">
               {aiCaps.map((c, i) => (
                 <div

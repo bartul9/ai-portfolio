@@ -123,7 +123,7 @@ export default function RootLayout({ children }) {
           {JSON.stringify(structuredData)}
         </Script>
       </head>
-      <body className={`${display.variable} ${body.variable} bg-black relative`}>
+      <body className={`${display.variable} ${body.variable}`}>
         <Analytics />
         {children}
       </body>
