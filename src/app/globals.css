@@ -437,7 +437,7 @@ header nav a {
   padding: 2.4rem 1.8rem 2.2rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 0.9rem;
   color: var(--ink);
   background: radial-gradient(
@@ -458,10 +458,10 @@ header nav a {
   pointer-events: none;
   opacity: 0.28;
   background-image: linear-gradient(
-      rgba(255, 255, 255, 0.05) 1px,
+      rgba(255, 255, 255, 0.2) 1px,
       transparent 1px
     ),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
   background-size: 30px 30px;
   mask: radial-gradient(180% 120% at 40% 0%, black 40%, transparent 70%);
 }
@@ -508,18 +508,17 @@ header nav a {
   opacity: 0.7;
 }
 .book-title {
-  font-size: clamp(1.6rem, 3.2vw, 2.35rem);
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  line-height: 1.15;
+  font-size: clamp(1.6rem, 3.2vw, 2rem);
+  font-weight: 600;
+  text-align: center;
   text-transform: uppercase;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
 }
 .book-author {
   font-size: 0.8rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  opacity: 0.6;
+  font-style: italic;
+  text-align: center;
+  opacity: 0.8;
 }
 
 /* --- Spine --- */

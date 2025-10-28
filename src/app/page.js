@@ -564,7 +564,6 @@ export default function Home() {
                 <div className="book-grid" aria-hidden />
                 <div className="book-glare" aria-hidden />
                 <div className="book-shine" aria-hidden />
-                <span className="book-kicker">MP13 EDITION</span>
                 <span className="book-title">
                   Life as a game
                   <br />
@@ -593,9 +592,6 @@ export default function Home() {
 
               {/* Ribbon bookmark */}
               <div className="book-ribbon" aria-hidden />
-
-              {/* Ambient particles */}
-              <div className="book-dust" aria-hidden />
             </div>
           </a>
         </motion.div>
