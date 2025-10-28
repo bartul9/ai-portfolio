@@ -94,6 +94,12 @@ function useMatrixFade(headerPx = 64) {
 
 /* -------- data -------- */
 
+const bookHighlights = [
+  "Unlock the Maximum Game mindset to ship with fearless velocity.",
+  "Frameworks for weaving narrative, UI polish, and AI systems together.",
+  "Battle-tested rituals from real product sprints — zero fluff, only signal.",
+];
+
 const projects = [
   {
     title: "ConsigliereX",
@@ -192,6 +198,7 @@ export default function Home() {
     "#projects",
     "#ai",
     "#skills",
+    "#book",
     "#contact",
   ]);
   const matrixOverlay = useMatrixFade(64);
@@ -527,6 +534,70 @@ export default function Home() {
                 {s}
               </span>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BOOK */}
+      <section id="book" className="relative z-10 py-20 md:py-28">
+        <div className="container">
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 via-white/2 to-transparent p-[1px]">
+            <div className="book-wrap">
+              <motion.div
+                variants={fadeUp}
+                viewport={{ once: true, amount: 0.35 }}
+                className="space-y-6"
+              >
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-xs uppercase tracking-[0.3em] text-white/60">
+                  <span className="inline-block h-2 w-2 rounded-full bg-[--color-neon-500] animate-ping-slow" />
+                  Field Notes
+                </div>
+                <SectionTitle>The Maximum Game Playbook</SectionTitle>
+                <p className="max-w-2xl text-base md:text-lg leading-relaxed text-gray-200/90">
+                  Dive into my personal operating system for product craftsmanship: stories from the frontier,
+                  frameworks for momentum, and exercises that turn curiosity into legendary shipping power. Learn
+                  the rituals, mindsets, and AI-assisted workflows that keep me moving at hyperspeed.
+                </p>
+                <ul className="grid gap-3 text-sm md:text-base text-gray-200/90">
+                  {bookHighlights.map((line, i) => (
+                    <li key={i} className="book-bullet">
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  <a
+                    href="https://drive.google.com/file/d/1g9qB5-b_9f6VB0LsngXlClE_68OF7DHw/view?usp=drive_link"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-primary btn-glow btn-lg"
+                  >
+                    Read the Book ↗
+                  </a>
+                  <span className="text-xs uppercase tracking-[0.3em] text-white/50">
+                    Want to learn more about me?
+                  </span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                variants={fadeUp}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ delay: 0.1 }}
+                className="book-display"
+              >
+                <div className="book-card">
+                  <div className="book-cover">
+                    <div className="book-grid" />
+                    <span className="book-title">Maximum Game</span>
+                    <span className="book-sub">Playbook for High-Velocity Makers</span>
+                    <span className="book-author">by Luka Bartulović</span>
+                  </div>
+                  <div className="book-spine" aria-hidden />
+                </div>
+                <div className="book-orb" aria-hidden />
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
