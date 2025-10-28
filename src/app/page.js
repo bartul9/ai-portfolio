@@ -94,6 +94,12 @@ function useMatrixFade(headerPx = 64) {
 
 /* -------- data -------- */
 
+const bookHighlights = [
+  "Unlock the Maximum Game mindset to ship with fearless velocity.",
+  "Frameworks for weaving narrative, UI polish, and AI systems together.",
+  "Battle-tested rituals from real product sprints — zero fluff, only signal.",
+];
+
 const projects = [
   {
     title: "ConsigliereX",
@@ -192,6 +198,7 @@ export default function Home() {
     "#projects",
     "#ai",
     "#skills",
+    "#book",
     "#contact",
   ]);
   const matrixOverlay = useMatrixFade(64);
@@ -367,7 +374,7 @@ export default function Home() {
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="relative z-10 py-16 md:py-20">
+      <section id="about" className="relative z-10 py-16 md:py-24">
         <div className="container">
           <div
             className="rounded-2xl"
@@ -418,11 +425,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CHESS */}
-      <ChessShowcase />
-
       {/* PROJECTS */}
-      <section id="projects" className="relative z-10 py-16 md:py-20">
+      <section id="projects" className="relative z-10 py-16 md:py-24">
         <div className="container">
           <SectionTitle>Projects</SectionTitle>
           <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
@@ -477,7 +481,7 @@ export default function Home() {
       </section>
 
       {/* AI LAB */}
-      <section id="ai" className="py-16 md:py-20">
+      <section id="ai" className="py-16 md:py-24">
         <div className="container relative z-10 ">
           <SectionTitle>AI Lab</SectionTitle>
 
@@ -529,6 +533,68 @@ export default function Home() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* CHESS */}
+      <ChessShowcase />
+
+      {/* BOOK */}
+      <section
+        id="book"
+        className="relative z-10 py-16 md:py-24 flex flex-col items-center justify-center"
+      >
+        <div className="mx-auto max-w-3xl mb-12 min-w-[310px] md:min-w-xl text-left sm:text-center">
+          <SectionTitle>My book</SectionTitle>
+        </div>
+        <motion.div
+          variants={fadeUp}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ delay: 0.1 }}
+          className="book-display"
+        >
+          <a
+            href="https://drive.google.com/file/d/1g9qB5-b_9f6VB0LsngXlClE_68OF7DHw/view?usp=drive_link"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open PDF: Life as a game and me as Maximal Player 13"
+          >
+            <div className="book-card" role="img" aria-label="3D book cover">
+              {/* Cover */}
+              <div className="book-cover">
+                <div className="book-grid" aria-hidden />
+                <div className="book-glare" aria-hidden />
+                <div className="book-shine" aria-hidden />
+                <span className="book-title">
+                  Life as a game
+                  <br />
+                  and me as
+                  <br />
+                  Maximal Player 13
+                </span>
+                <span className="book-author">by Luka Bartulović</span>
+              </div>
+
+              {/* Spine */}
+              <div className="book-spine" aria-hidden>
+                <span className="spine-text">
+                  LIFE AS A GAME — MAXIMAL PLAYER 13 • BARTULOVIĆ
+                </span>
+              </div>
+
+              {/* Page block */}
+              <div className="book-pages" aria-hidden>
+                <div className="page-edges" />
+                <div className="page-curl" />
+              </div>
+
+              {/* Bottom edge / thickness */}
+              <div className="book-bottom" aria-hidden />
+
+              {/* Ribbon bookmark */}
+              <div className="book-ribbon" aria-hidden />
+            </div>
+          </a>
+        </motion.div>
       </section>
 
       {/* CONTACT */}

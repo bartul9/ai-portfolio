@@ -16,7 +16,7 @@ export default function ChessShowcase() {
     <section id="chess" className="section-scrim relative z-10 py-16 md:py-24">
       <div className="container">
         {/* Header */}
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-3xl text-left sm:text-center">
           <SectionTitle>The Chess Challenge</SectionTitle>
         </div>
 
