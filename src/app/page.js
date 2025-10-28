@@ -374,7 +374,7 @@ export default function Home() {
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="relative z-10 py-16 md:py-20">
+      <section id="about" className="relative z-10 py-16 md:py-24">
         <div className="container">
           <div
             className="rounded-2xl"
@@ -425,11 +425,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CHESS */}
-      <ChessShowcase />
-
       {/* PROJECTS */}
-      <section id="projects" className="relative z-10 py-16 md:py-20">
+      <section id="projects" className="relative z-10 py-16 md:py-24">
         <div className="container">
           <SectionTitle>Projects</SectionTitle>
           <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
@@ -484,7 +481,7 @@ export default function Home() {
       </section>
 
       {/* AI LAB */}
-      <section id="ai" className="py-16 md:py-20">
+      <section id="ai" className="py-16 md:py-24">
         <div className="container relative z-10 ">
           <SectionTitle>AI Lab</SectionTitle>
 
@@ -538,68 +535,70 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BOOK */}
-      <section id="book" className="relative z-10 py-20 md:py-28">
-        <div className="container">
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 via-white/2 to-transparent p-[1px]">
-            <div className="book-wrap">
-              <motion.div
-                variants={fadeUp}
-                viewport={{ once: true, amount: 0.35 }}
-                className="space-y-6"
-              >
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-xs uppercase tracking-[0.3em] text-white/60">
-                  <span className="inline-block h-2 w-2 rounded-full bg-[--color-neon-500] animate-ping-slow" />
-                  Field Notes
-                </div>
-                <SectionTitle>The Maximum Game Playbook</SectionTitle>
-                <p className="max-w-2xl text-base md:text-lg leading-relaxed text-gray-200/90">
-                  Dive into my personal operating system for product craftsmanship: stories from the frontier,
-                  frameworks for momentum, and exercises that turn curiosity into legendary shipping power. Learn
-                  the rituals, mindsets, and AI-assisted workflows that keep me moving at hyperspeed.
-                </p>
-                <ul className="grid gap-3 text-sm md:text-base text-gray-200/90">
-                  {bookHighlights.map((line, i) => (
-                    <li key={i} className="book-bullet">
-                      {line}
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap items-center gap-3 pt-2">
-                  <a
-                    href="https://drive.google.com/file/d/1g9qB5-b_9f6VB0LsngXlClE_68OF7DHw/view?usp=drive_link"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn btn-primary btn-glow btn-lg"
-                  >
-                    Read the Book ↗
-                  </a>
-                  <span className="text-xs uppercase tracking-[0.3em] text-white/50">
-                    Want to learn more about me?
-                  </span>
-                </div>
-              </motion.div>
+      {/* CHESS */}
+      <ChessShowcase />
 
-              <motion.div
-                variants={fadeUp}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ delay: 0.1 }}
-                className="book-display"
-              >
-                <div className="book-card">
-                  <div className="book-cover">
-                    <div className="book-grid" />
-                    <span className="book-title">Maximum Game</span>
-                    <span className="book-sub">Playbook for High-Velocity Makers</span>
-                    <span className="book-author">by Luka Bartulović</span>
-                  </div>
-                  <div className="book-spine" aria-hidden />
-                </div>
-                <div className="book-orb" aria-hidden />
-              </motion.div>
-            </div>
-          </div>
+      {/* BOOK */}
+      <section
+        id="book"
+        className="relative z-10 py-16 md:py-24 flex flex-col items-center justify-center"
+      >
+        <div className="mx-auto max-w-3xl mb-12 min-w-[310px] md:min-w-xl text-left sm:text-center">
+          <SectionTitle>My book</SectionTitle>
         </div>
+        <motion.div
+          variants={fadeUp}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ delay: 0.1 }}
+          className="book-display"
+        >
+          <a
+            href="https://drive.google.com/file/d/1g9qB5-b_9f6VB0LsngXlClE_68OF7DHw/view?usp=drive_link"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open PDF: Life as a game and me as Maximal Player 13"
+          >
+            <div className="book-card" role="img" aria-label="3D book cover">
+              {/* Cover */}
+              <div className="book-cover">
+                <div className="book-grid" aria-hidden />
+                <div className="book-glare" aria-hidden />
+                <div className="book-shine" aria-hidden />
+                <span className="book-kicker">MP13 EDITION</span>
+                <span className="book-title">
+                  Life as a game
+                  <br />
+                  and me as
+                  <br />
+                  Maximal Player 13
+                </span>
+                <span className="book-author">by Luka Bartulović</span>
+              </div>
+
+              {/* Spine */}
+              <div className="book-spine" aria-hidden>
+                <span className="spine-text">
+                  LIFE AS A GAME — MAXIMAL PLAYER 13 • BARTULOVIĆ
+                </span>
+              </div>
+
+              {/* Page block */}
+              <div className="book-pages" aria-hidden>
+                <div className="page-edges" />
+                <div className="page-curl" />
+              </div>
+
+              {/* Bottom edge / thickness */}
+              <div className="book-bottom" aria-hidden />
+
+              {/* Ribbon bookmark */}
+              <div className="book-ribbon" aria-hidden />
+
+              {/* Ambient particles */}
+              <div className="book-dust" aria-hidden />
+            </div>
+          </a>
+        </motion.div>
       </section>
 
       {/* CONTACT */}
