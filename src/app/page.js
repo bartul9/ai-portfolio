@@ -287,7 +287,7 @@ export default function Home() {
         {menuOpen && (
           <div className="mobile-sheet">
             <div
-              className="absolute inset-0 bg-black/60"
+              className="absolute inset-0"
               onClick={() => setMenuOpen(false)}
             />
             <motion.div

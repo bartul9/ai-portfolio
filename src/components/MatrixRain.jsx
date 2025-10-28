@@ -69,23 +69,23 @@ export default function MatrixRain({
         const y = d.y;
 
         // “head” znak (svjetliji)
-        ctx.fillStyle = "rgba(34,255,136,0.9)";
+        ctx.fillStyle = "rgba(34,255,136,1)";
         ctx.fillText(chars[(Math.random() * chars.length) | 0], x, y);
 
         // trag ispod “head”-a (par koraka unatrag, sve tamnije)
-        ctx.fillStyle = "rgba(34,255,136,0.20)";
+        ctx.fillStyle = "rgba(34,255,136,0.30)";
         ctx.fillText(
           chars[(Math.random() * chars.length) | 0],
           x,
           y - fontSize
         );
-        ctx.fillStyle = "rgba(34,255,136,0.12)";
+        ctx.fillStyle = "rgba(34,255,136,0.22)";
         ctx.fillText(
           chars[(Math.random() * chars.length) | 0],
           x,
           y - fontSize * 2
         );
-        ctx.fillStyle = "rgba(34,255,136,0.08)";
+        ctx.fillStyle = "rgba(34,255,136,0.13)";
         ctx.fillText(
           chars[(Math.random() * chars.length) | 0],
           x,
