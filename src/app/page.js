@@ -9,6 +9,7 @@ import Stat from "@/components/Stat";
 import NeuralMesh from "@/components/NeuralMesh";
 import TypeMotto from "@/components/TypeMotto";
 import ChessShowcase from "@/components/ChessShowcase";
+import Image from "next/image";
 
 /* ---------------- helpers ---------------- */
 
@@ -104,17 +105,17 @@ const projects = [
   {
     title: "Tarot + Natal AI",
     desc: "AI-powered tarot & natal chart. Structured, multilingual, fast.",
-    link: "https://tarot-hrvatska.vercel.app",
+    link: "https://tarot-hr.cards",
     tags: ["Next.js", "AI", "OG/SEO", "Edge"],
     image: "/images/projects/tarot.png",
     imageOpacity: 0.5,
   },
   {
-    title: "DollarTrack",
-    desc: "Expense tracking app for small personal budgets.",
-    link: "https://dollar-track.vercel.app/",
+    title: "PartyGate",
+    desc: "Event planning app.",
+    link: "https://partygate.app",
     tags: ["React", "SQL"],
-    image: "/images/projects/dollar-track.png",
+    image: "/images/projects/partygate.png",
     imageOpacity: 0.5,
   },
 ];
