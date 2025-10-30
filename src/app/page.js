@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Globe, Linkedin, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import MatrixRain from "@/components/MatrixRain";
@@ -91,14 +91,6 @@ function useMatrixFade(headerPx = 64) {
   }, [headerPx]);
   return overlay;
 }
-
-/* -------- data -------- */
-
-const bookHighlights = [
-  "Unlock the Maximum Game mindset to ship with fearless velocity.",
-  "Frameworks for weaving narrative, UI polish, and AI systems together.",
-  "Battle-tested rituals from real product sprints — zero fluff, only signal.",
-];
 
 const projects = [
   {
@@ -417,9 +409,9 @@ export default function Home() {
             </div>
 
             <div className="mt-8 md:mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
-              <Stat to={25} label="Shipped features / month" />
-              <Stat to={12} label="Production projects" />
-              <Stat to={48} label="Hours to first prototype" />
+              <Stat to={5} label="Years of experience" />
+              <Stat to={10} label="Production projects shipped" />
+              <Stat to={88} label="Hours to first prototype" />
             </div>
           </div>
         </div>
@@ -629,6 +621,16 @@ export default function Home() {
                 className="cta-btn transition-all duration-1000 ease-in-out"
               >
                 <Github className="w-5 h-5" />
+              </a>
+              <span className="cta-sep" />
+              <a
+                href="https://ap13-creative.company/"
+                target="_blank"
+                rel="noreferrer"
+                title="AP13 Creative"
+                className="cta-btn transition-all duration-1000 ease-in-out"
+              >
+                <Globe className="w-5 h-5" />
               </a>
               <span className="cta-sep" />
               <a

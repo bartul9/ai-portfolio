@@ -82,6 +82,7 @@ const structuredData = {
   sameAs: [
     "https://www.linkedin.com/in/luka-bartulović-5b562b200/",
     "https://github.com/bartul9",
+    "https://ap13-creative.company/",
     "mailto:bartul123@outlook.com",
   ],
   knowsAbout: [
