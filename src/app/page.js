@@ -532,7 +532,7 @@ export default function Home() {
       <ChessShowcase />
 
       {/* BOOK */}
-      <section
+      {/*  <section
         id="book"
         className="relative z-10 py-16 md:py-24 flex flex-col items-center justify-center"
       >
@@ -552,7 +552,6 @@ export default function Home() {
             aria-label="Open PDF: Life as a game and me as Maximal Player 13"
           >
             <div className="book-card" role="img" aria-label="3D book cover">
-              {/* Cover */}
               <div className="book-cover">
                 <div className="book-grid" aria-hidden />
                 <div className="book-glare" aria-hidden />
@@ -567,31 +566,27 @@ export default function Home() {
                 <span className="book-author">by Luka Bartulović</span>
               </div>
 
-              {/* Spine */}
               <div className="book-spine" aria-hidden>
                 <span className="spine-text">
                   LIFE AS A GAME — MAXIMAL PLAYER 13 • BARTULOVIĆ
                 </span>
               </div>
 
-              {/* Page block */}
               <div className="book-pages" aria-hidden>
                 <div className="page-edges" />
                 <div className="page-curl" />
               </div>
 
-              {/* Bottom edge / thickness */}
               <div className="book-bottom" aria-hidden />
 
-              {/* Ribbon bookmark */}
               <div className="book-ribbon" aria-hidden />
             </div>
           </a>
         </motion.div>
-      </section>
+      </section> */}
 
       {/* CONTACT */}
-      <section id="contact" className="relative z-10 py-20 md:py-28">
+      <section id="contact" className="relative z-10 py-16 md:py-24">
         <div className="container text-center">
           <h2 className="text-3xl md:text-4xl font-semibold text-white">
             Let’s Build Something Legendary
