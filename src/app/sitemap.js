@@ -1,4 +1,4 @@
-const siteUrl = "https://lukabartulovic.com";
+const siteUrl = "https://luka-bartulovic.com/";
 
 export default function sitemap() {
   const lastModified = new Date();
