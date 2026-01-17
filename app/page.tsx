@@ -73,7 +73,7 @@ export default function Portfolio() {
         </div>
       </header>
 
-      <main className="container mx-auto px-6 pt-32 pb-20 relative z-10">
+      <main className="container mx-auto px-6 pt-22 sm:pt-32 sm:pb-20 relative z-10">
         {/* Hero Section */}
         <section className="mb-32 pt-10">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(180px,auto)]">
@@ -463,11 +463,11 @@ export default function Portfolio() {
         </section>
 
         {/* Marquee */}
-        <section className="mb-20 overflow-hidden py-10 border-y border-border bg-secondary/30">
-          <div className="flex whitespace-nowrap animate-marquee">
+        <section className="mb-25 overflow-hidden py-5 sm:py-10 border-y border-border bg-secondary/30">
+          <div className="flex whitespace-nowrap animate-marquee-mobile sm:animate-marquee">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="flex items-center gap-12 mx-6">
-                <span className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-foreground/30 to-foreground/10">
+                <span className="text-2xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-foreground/30 to-foreground/10">
                   BE CREATIVE
                 </span>
                 <StarIcon className="w-10 h-10 text-neon-pink animate-spin-slow" />
@@ -667,7 +667,7 @@ function ChessBoard() {
         <div className="aspect-square max-w-sm mx-auto mb-6">
           <div className="relative">
             <div
-              className={`grid grid-cols-8 gap-0 border border-emerald-500/30 rounded-lg overflow-hidden transition-opacity duration-500 ${showText ? "opacity-20" : "opacity-100"}`}
+              className={`grid grid-cols-8 gap-0 border border-emerald-500/30 rounded-lg overflow-hidden transition-opacity duration-500 ${showText ? "opacity-20" : "opacity-100"} `}
             >
               {Array.from({ length: 64 }, (_, i) => {
                 const row = Math.floor(i / 8);
@@ -678,7 +678,7 @@ function ChessBoard() {
                 return (
                   <div
                     key={i}
-                    className={`aspect-square flex items-center justify-center text-2xl md:text-3xl transition-colors ${
+                    className={`aspect-square flex items-center justify-center text-2xl md:text-3xl transition-colors${
                       isLight ? "bg-emerald-200/10" : "bg-emerald-900/40"
                     }`}
                     style={{
@@ -704,7 +704,7 @@ function ChessBoard() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="absolute inset-0 bg-black/80 backdrop-blur-sm rounded-lg border border-emerald-500/20 overflow-hidden "
+                className="absolute inset-0 bg-black/80 backdrop-blur-sm rounded-lg border border-emerald-500/20 overflow-hidden  px-1 "
               >
                 <div className="absolute inset-0 p-3 md:p-4">
                   <div className="h-full overflow-y-auto scrollbar-emerald">

@@ -134,6 +134,7 @@
   --animate-shake: shake 3s ease-in-out infinite;
   --animate-glitch: glitch 2s infinite;
   --animate-marquee: marquee 20s linear infinite;
+  --animate-marquee-mobile: marquee 3s linear infinite;
   --animate-blob: blob 7s infinite;
 
   @keyframes float {
