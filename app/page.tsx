@@ -54,7 +54,7 @@ export default function Portfolio() {
               </span>
             </div>
           </Link>
-          <div className="hidden md:flex group items-center gap-1 justify-center leading-relaxed tracking-wide uppercase text-sky-400 text-sm sm:text-lg font-semibold hover:text-sky-300">
+          <div className="hidden md:flex group items-center gap-1 justify-center leading-relaxed tracking-wide uppercase text-sky-400 text-sm sm:text-base  font-semibold hover:text-sky-300">
             <a href="https://ap13-creative.company/" target="_blank">
               AP13 Creative
             </a>{" "}
