@@ -13,9 +13,11 @@ import {
   Code,
   Sparkles,
   Globe,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import clsx from "clsx";
 
 export default function Portfolio() {
   return (
@@ -52,24 +54,12 @@ export default function Portfolio() {
               </span>
             </div>
           </Link>
-          <nav className="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-widest">
-            {["About", "Projects", "AI Lab", "Skills", "Contact"].map(
-              (item) => (
-                <Link
-                  key={item}
-                  href={`#${item.toLowerCase().replace(" ", "-")}`}
-                  className="relative overflow-hidden group py-1"
-                >
-                  <span className="block group-hover:-translate-y-full transition-transform duration-300 ease-in-out">
-                    {item}
-                  </span>
-                  <span className="absolute top-0 left-0 block translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out text-neon-pink">
-                    {item}
-                  </span>
-                </Link>
-              ),
-            )}
-          </nav>
+          <div className="hidden md:flex group items-center gap-1 justify-center leading-relaxed tracking-wide uppercase text-sky-400 text-sm sm:text-lg font-semibold hover:text-sky-300">
+            <a href="https://ap13-creative.company/" target="_blank">
+              AP13 Creative
+            </a>{" "}
+            <ArrowRight className="group-hover:scale-125 transition-transform duration-300" />
+          </div>
         </div>
       </header>
 
@@ -215,7 +205,7 @@ export default function Portfolio() {
               </p>
               <p className="text-xl md:text-2xl leading-relaxed text-muted-foreground relative z-10">
                 My mindset is{" "}
-                <span className="font-black text-foreground bg-neon-yellow/30 px-2 py-1 rounded">
+                <span className="font-bold text-white bg-neon-yellow/50 px-2 py-1 rounded">
                   Maximum Game
                 </span>
                 : focus, speed, problem-solving and delivery.
@@ -280,7 +270,7 @@ export default function Portfolio() {
                 SELECTED WORK
               </p>
               <p className="font-mono text-sm text-muted-foreground">
-                2023 — 2025
+                2025 — 2026
               </p>
             </div>
           </div>
@@ -497,19 +487,32 @@ export default function Portfolio() {
             </a>
             <div className="flex gap-2">
               {[
-                { icon: Github, href: "https://github.com/bartul9" },
+                {
+                  icon: Github,
+                  href: "https://github.com/bartul9",
+                  color: "text-gray-300",
+                },
                 {
                   icon: Linkedin,
                   href: "https://www.linkedin.com/in/luka-bartulovi%C4%87-5b562b200",
+                  color: "text-blue-400",
                 },
-                { icon: Globe, href: "https://ap13-creative.company/" },
+                {
+                  icon: Globe,
+                  href: "https://ap13-creative.company/",
+                  color: "text-emerald-400",
+                },
               ].map((Social, i) => (
                 <a
                   key={i}
                   href={Social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-14 h-14 bg-secondary border border-border rounded-full flex items-center justify-center hover:bg-background hover:border-foreground transition-colors hover:scale-110"
+                  className={clsx(
+                    "w-14 h-14 bg-secondary border border-border rounded-full flex items-center justify-center hover:bg-background  transition-colors hover:scale-110",
+                    Social.color,
+                    `hover:border-orange-100/20`,
+                  )}
                 >
                   <Social.icon className="w-6 h-6" />
                 </a>
