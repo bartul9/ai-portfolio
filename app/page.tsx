@@ -560,9 +560,7 @@ function ProjectCard({
       className={`bg-card border-2 border-border rounded-2xl p-6 transition-all duration-300 shadow-lg ${colorClasses[color]}`}
     >
       <div className="flex items-start justify-between mb-4">
-        <div className={`p-3 rounded-xl bg-${color}/20 text-${color}`}>
-          {icon}
-        </div>
+        <div className={`p-3 rounded-xl text-${color}`}>{icon}</div>
         <a
           href={href}
           target="_blank"
