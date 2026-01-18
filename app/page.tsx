@@ -107,8 +107,8 @@ export default function Portfolio() {
               className="col-span-1 md:col-span-4 bg-neon-yellow rounded-[2rem] p-6 border-2 border-border flex flex-col justify-center items-center text-center relative overflow-hidden group rotate-1 hover:rotate-0 transition-transform duration-300"
             >
               <div className="w-28 h-28 bg-white rounded-full border-4 border-black mb-4 overflow-hidden relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-neon-blue to-neon-pink" />
-                <div className="absolute inset-0 flex items-center justify-center text-4xl font-black text-white mix-blend-difference">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-200 to-sky-400" />
+                <div className="absolute inset-0 flex items-center justify-center text-4xl font-black text-blue-500">
                   LB
                 </div>
               </div>
@@ -398,12 +398,12 @@ export default function Portfolio() {
           </h2>
           <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
             {[
-              "React / Next.js",
-              "React Native",
+              "React / React Native / Next.js",
+              "AI Integration",
               "MobX / Zustand",
               "Tailwind / MUI",
-              "Supabase",
-              "Node.js",
+              "SQL",
+              "Desing",
               "SEO / Performance",
               "Product Thinking",
               "Pitch & Storytelling",
