@@ -54,12 +54,6 @@ export default function Portfolio() {
               </span>
             </div>
           </Link>
-          <div className="hidden md:flex group items-center gap-1 justify-center leading-relaxed tracking-wide uppercase text-sky-400 text-sm sm:text-base  font-semibold hover:text-sky-300">
-            <a href="https://ap13-creative.company/" target="_blank">
-              AP13 Creative
-            </a>{" "}
-            <ArrowRight className="group-hover:scale-125 transition-transform duration-300" />
-          </div>
         </div>
       </header>
 
@@ -496,11 +490,6 @@ export default function Portfolio() {
                   icon: Linkedin,
                   href: "https://www.linkedin.com/in/luka-bartulovi%C4%87-5b562b200",
                   color: "text-blue-400",
-                },
-                {
-                  icon: Globe,
-                  href: "https://ap13-creative.company/",
-                  color: "text-emerald-400",
                 },
               ].map((Social, i) => (
                 <a
