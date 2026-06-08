@@ -292,7 +292,7 @@ export default function Portfolio() {
               tags={["React", "SQL"]}
               color="neon-green"
               icon={<Sparkles className="w-8 h-8" />}
-              href="https://www.partygate.app/"
+              href="https://www.partygate.site/"
             />
           </div>
         </section>
