@@ -268,19 +268,7 @@ function HorizonSun() {
     uniforms.uTime.value = clock.getElapsedTime();
   });
 
-  return (
-    <mesh position={[42, 10, -290]} frustumCulled={false}>
-      <planeGeometry args={[170, 170]} />
-      <shaderMaterial
-        vertexShader={SUN_VERTEX}
-        fragmentShader={SUN_FRAGMENT}
-        uniforms={uniforms}
-        transparent
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-      />
-    </mesh>
-  );
+  return <mesh position={[42, 10, -290]} frustumCulled={false}></mesh>;
 }
 
 function Dust({ count }: { count: number }) {
@@ -345,8 +333,7 @@ function Rig() {
     const driftX = Math.sin(time * 0.12) * 1.6;
     const driftY = Math.sin(time * 0.23) * 0.45;
     camera.position.x += (pointer.x * 4.5 + driftX - camera.position.x) * t;
-    camera.position.y +=
-      (7 + pointer.y * 1.8 + driftY - camera.position.y) * t;
+    camera.position.y += (7 + pointer.y * 1.8 + driftY - camera.position.y) * t;
     camera.lookAt(0, 6, -200);
   });
   return null;
