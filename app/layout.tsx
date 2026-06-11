@@ -75,13 +75,18 @@ export const metadata = {
   },
 };
 
+export const viewport = {
+  themeColor: "#070a12",
+  colorScheme: "dark" as const,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background text-foreground antialiased`}
       >
