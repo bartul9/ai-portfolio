@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, type ReactNode } from "react";
-import type React from "react";
 
 import {
   ArrowUpRight,
@@ -506,10 +505,10 @@ export default function Portfolio() {
               index="001"
             />
             <ProjectCard
-              title="Tarot + Natal AI"
-              description="AI-powered tarot & natal chart readings. Structured, multilingual, fast."
+              title="Tarot + AI"
+              description="AI-powered tarot, natal chart readings, dream interpretation, etc. Structured, multilingual, fast."
               tags={["Next.js", "AI", "Edge", "SEO"]}
-              accent="red"
+              accent="gold"
               image="/images/projects/tarot.png"
               href="https://www.tarot-hr.cards"
               index="002"
@@ -771,13 +770,13 @@ function ProjectCard({
   title: string;
   description: string;
   tags: string[];
-  accent: "blue" | "red";
+  accent: "blue" | "red" | "gold";
   image: string;
   href: string;
   index: string;
   delay?: number;
 }) {
-  const accentColor = accent === "blue" ? "neon-blue" : "neon-red";
+  const accentColor = accent === "blue" ? "neon-blue" : "orange-200";
   return (
     <motion.a
       href={href}
@@ -791,12 +790,14 @@ function ProjectCard({
       className={`group relative block border border-white/10 bg-card transition-colors duration-300 ${
         accent === "blue"
           ? "hover:border-neon-blue/60 hover:box-glow-blue"
-          : "hover:border-neon-red/60 hover:box-glow-red"
+          : accent === "red"
+            ? "hover:border-neon-red/60 hover:box-glow-red"
+            : "hover:border-orange-200/60 hover:box-glow-orange-200"
       }`}
     >
       <Corners
         className={`z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
-          accent === "blue" ? "text-neon-blue" : "text-neon-red"
+          accent === "blue" ? "text-neon-blue" : "text-orange-200"
         }`}
       />
 
@@ -812,7 +813,11 @@ function ProjectCard({
         <div className="scanlines absolute inset-0 opacity-20" />
         <div
           className={`absolute inset-0 opacity-10 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-0 ${
-            accent === "blue" ? "bg-neon-blue" : "bg-neon-red"
+            accent === "blue"
+              ? "bg-neon-blue"
+              : accent === "red"
+                ? "bg-neon-red"
+                : "bg-orange-400"
           }`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
@@ -829,7 +834,11 @@ function ProjectCard({
           <h3 className="text-xl font-bold tracking-tight">{title}</h3>
           <span
             className={`mt-0.5 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 ${
-              accent === "blue" ? "text-neon-blue" : "text-neon-red"
+              accent === "blue"
+                ? "text-neon-blue"
+                : accent === "red"
+                  ? "text-neon-red"
+                  : "text-orange-200"
             }`}
           >
             <ArrowUpRight className="h-5 w-5" />
