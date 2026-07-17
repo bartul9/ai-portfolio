@@ -132,12 +132,12 @@ export default function Portfolio() {
               LB
               <span className="animate-blink text-neon-red">_</span>
             </span>
-            <span className="hidden font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground transition-colors group-hover:text-neon-blue sm:inline">
+            <span className="hidden font-mono text-[12px] uppercase tracking-[0.3em] text-muted-foreground transition-colors group-hover:text-neon-blue sm:inline">
               portfolio
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-8 font-mono text-[11px] uppercase tracking-[0.25em] md:flex">
+          <nav className="hidden items-center gap-8 font-mono text-[13px] uppercase tracking-[0.25em] md:flex">
             {[
               ["01", "About", "#about"],
               ["02", "Work", "#projects"],
@@ -147,9 +147,9 @@ export default function Portfolio() {
               <a
                 key={href}
                 href={href}
-                className="group text-muted-foreground transition-colors hover:text-neon-blue"
+                className="group text-neon-blue/90 transition-colors hover:text-neon-blue"
               >
-                <span className="mr-1 text-neon-red/70 group-hover:text-neon-red">
+                <span className="mr-1 text-neon-red/90 group-hover:text-neon-red">
                   {n}
                 </span>
                 {label}
@@ -157,10 +157,46 @@ export default function Portfolio() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2 border border-neon-blue/30 bg-neon-blue/5 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-neon-blue">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-neon-blue" />
-            Open to work
-          </div>
+          <a
+            href="https://ap13-creative.company/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="AP13 Creative — visit the company site"
+            className="group relative flex items-center gap-2.5 overflow-hidden border border-neon-blue/80 bg-neon-blue/[0.06] px-3.5 py-2 font-mono text-[12px] uppercase tracking-[0.2em] transition-all duration-300 hover:border-neon-blue/90 hover:bg-neon-blue/[0.12] hover:box-glow-red"
+          >
+            {/* bracket corners */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-0 text-neon-blue transition-colors duration-300 group-hover:text-neon-blue/60"
+            >
+              <span className="absolute left-0 top-0 h-2 w-2 border-l border-t border-current" />
+              <span className="absolute right-0 top-0 h-2 w-2 border-r border-t border-current" />
+              <span className="absolute bottom-0 left-0 h-2 w-2 border-b border-l border-current" />
+              <span className="absolute bottom-0 right-0 h-2 w-2 border-b border-r border-current" />
+            </span>
+
+            {/* periodic light sweep */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 left-0 w-1/3 animate-sheen bg-gradient-to-r from-transparent via-white/15 to-transparent"
+            />
+
+            {/* beacon */}
+            <span className="relative h-1.5 w-1.5 rounded-full bg-neon-blue shadow-[0_0_10px_var(--neon-blue)]">
+              <span className="absolute inset-0 animate-ping rounded-full bg-neon-blue/60" />
+            </span>
+
+            <span className="whitespace-nowrap">
+              <span className="animate-flicker font-bold text-neon-blue text-glow-blue">
+                AP13
+              </span>{" "}
+              <span className="text-foreground/85 transition-colors duration-300 group-hover:text-foreground">
+                Creative
+              </span>
+            </span>
+
+            <ArrowUpRight className="h-3.5 w-3.5 text-neon-blue transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </a>
         </div>
       </header>
 
@@ -661,8 +697,8 @@ export default function Portfolio() {
             <span className="text-neon-red text-glow-red">legendary</span>
           </h2>
           <p className="mx-auto mb-12 max-w-xl text-lg text-muted-foreground">
-            Open to full-stack / frontend / React Native roles and ambitious
-            AI products. Based in Split, Croatia — working worldwide.
+            Open to full-stack / frontend / React Native roles and ambitious AI
+            products. Based in Split, Croatia — working worldwide.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
