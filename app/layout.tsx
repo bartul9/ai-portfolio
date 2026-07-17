@@ -18,14 +18,16 @@ const siteUrl = "https://luka-bartulovic.com/";
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Luka Bartulović | Frontend Developer in Croatia",
-    template: "%s | Luka Bartulović — Frontend Developer in Croatia",
+    default: "Luka Bartulović | Full-Stack Developer in Croatia",
+    template: "%s | Luka Bartulović — Full-Stack Developer in Croatia",
   },
   description:
-    "Luka Bartulović is a Croatia-based front-end engineer building fast, scalable web and mobile products for startups and ambitious teams.",
+    "Luka Bartulović is a Croatia-based full-stack engineer with a frontend core, building fast, scalable web and mobile products for startups and ambitious teams.",
   keywords: [
     "Luka Bartulović",
     "Luka Bartulovic",
+    "full stack developer Croatia",
+    "full stack engineer",
     "frontend developer Croatia",
     "front end hrvatska",
     "React consultant",
@@ -44,25 +46,25 @@ export const metadata = {
     type: "profile",
     locale: "en_US",
     url: siteUrl,
-    title: "Luka Bartulović | Frontend Developer in Croatia",
+    title: "Luka Bartulović | Full-Stack Developer in Croatia",
     description:
-      "Freelance front-end developer from Split, Croatia creating high-performing digital experiences with React and Next.js.",
+      "Freelance full-stack developer from Split, Croatia creating high-performing digital experiences with React, Next.js and AI.",
     siteName: "Luka Bartulović Portfolio",
     images: [
       {
         url: `${siteUrl}/api/og`,
         width: 1200,
         height: 630,
-        alt: "Luka Bartulović — Croatia Frontend Developer",
+        alt: "Luka Bartulović — Croatia Full-Stack Developer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     site: "@lukabartulovic",
-    title: "Luka Bartulović | Frontend Developer in Croatia",
+    title: "Luka Bartulović | Full-Stack Developer in Croatia",
     description:
-      "Front-end engineer in Croatia delivering fast, modern interfaces with React, Next.js and strong SEO foundations.",
+      "Full-stack engineer in Croatia delivering fast, modern products with React, Next.js and strong SEO foundations.",
     images: [`${siteUrl}/api/og`],
   },
   category: "technology",

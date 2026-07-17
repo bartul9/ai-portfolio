@@ -182,7 +182,7 @@ export default function Portfolio() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-6 font-mono text-[11px] uppercase tracking-[0.35em] text-neon-blue sm:text-xs"
           >
-            <Decode text="FRONTEND ENGINEER × PRODUCT BUILDER" />
+            <Decode text="FULL-STACK ENGINEER × PRODUCT BUILDER" />
           </motion.div>
 
           <h1 className="mb-8 uppercase leading-[0.95]">
@@ -301,7 +301,7 @@ export default function Portfolio() {
                 <span className="font-semibold text-foreground">
                   Luka Bartulović
                 </span>{" "}
-                — a frontend engineer and product builder based in Split,
+                - a full-stack engineer and product builder based in Split,
                 Croatia. For{" "}
                 <span className="font-semibold text-neon-blue">5+ years</span>{" "}
                 I've been building web and mobile products end-to-end:
@@ -309,20 +309,15 @@ export default function Portfolio() {
                 underneath.
               </p>
               <p>
-                My work sits where engineering meets product.{" "}
+                My work sits where engineering meets product. Frontend is where
+                I started and where I'm sharpest -{" "}
                 <span className="text-foreground">
                   React, Next.js and React Native
                 </span>{" "}
-                on the surface — SQL, edge functions and LLM pipelines below.
-                I've shipped{" "}
-                <span className="font-semibold text-neon-red">
-                  10+ production projects
-                </span>
-                , and I usually take an idea to a working prototype in{" "}
-                <span className="font-semibold text-foreground">48 hours</span>.
+                on the surface, SQL, edge functions and LLM pipelines below.
               </p>
               <p>
-                I'm self-taught — nobody ever handed me a roadmap. I learned by
+                I'm self-taught - nobody ever handed me a roadmap. I learned by
                 building, breaking and shipping, and that's still how I operate:{" "}
                 <span className="font-semibold text-foreground">
                   focus, speed, problem-solving, delivery
@@ -392,8 +387,8 @@ export default function Portfolio() {
 
                   <dl className="space-y-0">
                     {[
-                      ["Designation", "Frontend Engineer"],
-                      ["Specialty", "Product Building"],
+                      ["Designation", "Full-Stack Engineer"],
+                      ["Specialty", "Frontend & Product"],
                       ["Base", "Split, Croatia"],
                       ["Experience", "5+ years"],
                       ["Core", "React · Next.js · RN"],
@@ -606,6 +601,7 @@ export default function Portfolio() {
               "MobX / Zustand",
               "Tailwind / MUI",
               "SQL",
+              "Supabase / Edge Functions",
               "Design",
               "SEO / Performance",
               "Product Thinking",
@@ -665,8 +661,8 @@ export default function Portfolio() {
             <span className="text-neon-red text-glow-red">legendary</span>
           </h2>
           <p className="mx-auto mb-12 max-w-xl text-lg text-muted-foreground">
-            Open to frontend / React / React Native roles and ambitious AI
-            products. Based in Split, Croatia — working worldwide.
+            Open to full-stack / frontend / React Native roles and ambitious
+            AI products. Based in Split, Croatia — working worldwide.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
